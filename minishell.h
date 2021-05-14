@@ -11,7 +11,7 @@ typedef struct		s_token
 {
     char            *command;
     char            *option;
-    char            *data;
+    char			*data;
 }                   t_token;
 
 typedef struct		s_cline

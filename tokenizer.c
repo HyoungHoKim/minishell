@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 14:27:59 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/14 12:44:25 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/14 13:26:21 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char 		*get_command(char **new, char *com_line)
 	return (temp);
 }
 
-/*
+
 char		get_option(char **new, char *option)
 {
 	int		pos;
@@ -45,9 +45,9 @@ char		get_option(char **new, char *option)
 	pos = get_chr_pos(com_line, ' ');
 	if (ft_strncmp("-n", option, pos) == 0)
 		*new = ft_substr(option, 0, pos + 1);
-	temp = ft_substr(option, pos + 1)
+	temp = ft_substr(option, pos + 1);
 }
-*/
+
 
 void		tokenizer(t_cline **head)
 {
@@ -59,7 +59,7 @@ void		tokenizer(t_cline **head)
 	{
 		com_line = ft_strdup(temp->com_line);
 		com_line = get_command(&temp->token.command, com_line);
-		
+		printf("temp->com_line : %s\n", temp->token.command);
 		temp = temp->next;
 		free(com_line);
 	}
