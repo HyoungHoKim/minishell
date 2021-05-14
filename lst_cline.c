@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:11:08 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/13 16:32:31 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/14 15:34:28 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void        cline_print(t_cline *head)
     while (temp != NULL)
     {
         printf("flag : [%c] com_line : [%s]\n", temp->flag, temp->com_line);
+		printf("command : [%s] option : [%s] data : [%s]\n", temp->token.command, temp->token.option, temp->token.data);
         temp = temp->next;
     }
 }
