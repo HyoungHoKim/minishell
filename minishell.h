@@ -7,27 +7,35 @@
 #define	STDIN		0
 #define MAXSIZE		1024
 
-typedef struct		s_cline
+typedef struct		s_hist
 {
-	char			flag;
-	char			*com_line;
-	char			**token;
-	struct	s_cline *next;
-}					t_cline;
+	char			*line;
 
-extern char         **g_envp;
+	struct s_hist	*prev;
+	struct s_hist	*next;
+}					t_hist;
+
+typedef struct		s_cmd
+{
+	char			**token;
+	int				flag;
+
+	struct s_cmd	*prev;
+	struct s_cmd	*next;
+}					t_cmd;
+
+extern int			g_exit;
 
 void				show_prompt();
 char				**copy_envp(char **envs);
 void				handle_signal(int signo);
+
 int					get_line(char **line);
 int					get_chr_pos(char *line, char c);
-void				parser(t_cline **head, char *line);
-t_cline		        *cline_new(char *com_line, char flag);
-void				cline_add_back(t_cline **lst, t_cline *new);
+
 void                cline_print(t_cline *head);
 char				*del_side_space(char *com_line);
-void				tokenizer(t_cline **head);
 
+char				**tokenizer(char *line);
 
 #endif

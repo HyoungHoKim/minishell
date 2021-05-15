@@ -6,70 +6,50 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 14:27:59 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/14 15:46:57 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/15 16:29:31 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char		*get_command(char **new, char *com_line)
+/*
+** line에서 찾아야 할 문자:
+** 1. "
+** 2. '
+** 3. |
+** 4. ;
+** 5. >, >>, <
+*/
+char		**tokenizer(char *line)
 {
-	int		pos;
-	char	*temp;
+	char	**res;
 
-	pos = get_chr_pos(com_line, ' ');
-	if (ft_strncmp("echo", com_line, pos) == 0)
-		*new = ft_substr(com_line, 0, pos);
-	else if (ft_strncmp("cd", com_line, pos) == 0)
-		*new = ft_substr(com_line, 0, pos);
-	else if (ft_strncmp("pwd", com_line, pos) == 0)
-		*new = ft_substr(com_line, 0, pos);
-	else if (ft_strncmp("export", com_line, pos) == 0)
-		*new = ft_substr(com_line, 0, pos);
-	else if (ft_strncmp("unset", com_line, pos) == 0)
-		*new = ft_substr(com_line, 0, pos);
-	else if (ft_strncmp("env", com_line, pos) == 0)
-		*new = ft_substr(com_line, 0, pos);
-	else
-		temp = com_line;
-	if (*new)
+	res = NULL;
+	while (*line)
 	{
-		temp = ft_substr(com_line, pos + 1, ft_strlen(com_line) - pos);
-		free(com_line);
+		if (*line != '\'' && *line != '\"')
+			// 공백으로 문자 끝까지 잘라냄
+			;
+		else if (*line == '|' || *line == ';')
+			// 파이프, 세미콜론, 리다이렉트일 경우 따로 처리
+			;
+		else
+			// 해당하는 따옴표를 quote 배열에 넣고? 넣을 필요가 있나.
+			// 같은 따옴표의 짝이 있는 곳까지 잘라냄.
+			;
+		// 잘라낸 토큰을 res에 하나씩 push함.
 	}
-	return (temp);
+	return (res);
 }
 
-char		*get_option(char **new, char *option)
+int			parse(char *line, t_cmd *cmd)
 {
-	int		pos;
-	char	*temp;
+	char	**token;
 
-	pos = get_chr_pos(option, ' ');
-	if (option[0] == '-')
-	{
-		*new = ft_substr(option, 0, pos);
-		temp = ft_substr(option, pos + 1, ft_strlen(option) - pos);
-		free(option);
-	}
-	else
-		temp = option;
-	return (temp);
-}
-
-void		tokenizer(t_cline **head)
-{
-	t_cline	*temp;
-	char	*com_line;
-
-	temp = *head;
-	while (temp != NULL)
-	{
-		com_line = ft_strdup(temp->com_line);
-		com_line = get_command(&temp->token.command, com_line);
-		com_line = get_option(&temp->token.option, com_line);
-		temp->token.data = ft_strdup(com_line);
-		temp = temp->next;
-		free(com_line);
-	}
+	token = tokenizer(line);
+	//토큰 전처리 + 토큰을 파이프, 세미콜론 등을 기준으로 잘라냄
+	//while문을 돌면서 토큰의 끝을 만날 때까지 커맨드 단위로 나눠서 생성
+	//혹은 토크나이저가 커맨드 단위로 나눠줄 수도 있겠다.
+	//free_strs(token);
+	return (EXIT_SUCCESS);
 }
