@@ -9,6 +9,10 @@
 #define SUCCESS		0
 #define FAILURE		1
 
+#define SEMI		0
+#define PIPE		1
+#define REDIR		2
+
 typedef struct		s_hist
 {
 	char			*line;
@@ -27,12 +31,12 @@ typedef struct		s_cmd
 	struct s_cmd	*next;
 }					t_cmd;
 
-typedef struct		s_token
+typedef struct		s_parse
 {
 	char			*input;
 	char			*buf;
 	char			quote;
-}					t_token;
+}					t_parse;
 
 typedef struct		s_state
 {
@@ -49,7 +53,7 @@ void				handle_signal(int signo);
 int					get_line(char **line);
 int					get_chr_pos(char *line, char c);
 
-int					parser(char *line, t_cmd *cmd);
+int					parser(char *line, t_cmd **cmd);
 char				*del_side_space(char *line);
 
 char				**tokenizer(char *line);
