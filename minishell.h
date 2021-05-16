@@ -63,5 +63,6 @@ t_cmd				*create_cmd(void);
 void				free_cmd(t_cmd *cmd);
 
 char				*get_env(char *key);
+char				*get_env_value(char *key);
 
 #endif

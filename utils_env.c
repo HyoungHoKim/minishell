@@ -35,3 +35,13 @@ char		*get_env(char *key)
 	}
 	return (NULL);
 }
+
+char		*get_env_value(char *key)
+{
+	char	*env;
+	char	*value;
+
+	if ((env = get_env(key)) && (value = ft_strchr(env, '=')))
+			return (value + 1);
+	return (NULL);
+}
