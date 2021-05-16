@@ -6,6 +6,8 @@
 
 #define	STDIN		0
 #define MAXSIZE		1024
+#define SUCCESS		0
+#define FAILURE		1
 
 typedef struct		s_hist
 {
@@ -51,5 +53,11 @@ int					parser(char *line, t_cmd *cmd);
 char				*del_side_space(char *line);
 
 char				**tokenizer(char *line);
+
+char				**create_token(void);
+int					token_size(char **token);
+int					token_push_back(char ***token, char *str);
+
+t_cmd				*create_cmd(void);
 
 #endif
