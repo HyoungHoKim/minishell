@@ -6,13 +6,15 @@ SRCS	= main.c utils_env.c utils_sig.c utils.c get_line.c \
 LIBFT	= libft.a
 LIBS	= -L./libft -lft
 
+SANITIZE	= -fsanitize=address
+
 all: $(NAME)
 
 $(LIBFT):
 	$(MAKE) -C ./libft
 
 $(NAME): $(LIBFT)
-	$(CC) $(SRCS) $(LIBS) -o $(NAME)
+	$(CC) $(SANITIZE) $(SRCS) $(LIBS) -o $(NAME)
 
 clean:
 	$(MAKE) -C ./libft clean

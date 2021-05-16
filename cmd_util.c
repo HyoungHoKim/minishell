@@ -27,7 +27,7 @@ t_cmd		*add_cmd(t_cmd *cur)
 {
 	t_cmd	*new;
 
-	if ((new = create_cmd()))
+	if (!(new = create_cmd()))
 		return (NULL);
 	cur->next = new;
 	new->prev = cur;
