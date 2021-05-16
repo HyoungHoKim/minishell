@@ -57,7 +57,9 @@ char				**tokenizer(char *line);
 char				**create_token(void);
 int					token_size(char **token);
 int					token_push_back(char ***token, char *str);
+void				free_token(char **token);
 
 t_cmd				*create_cmd(void);
+void				free_cmd(t_cmd *cmd);
 
 #endif

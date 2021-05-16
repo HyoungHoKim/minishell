@@ -15,3 +15,16 @@ t_cmd		*create_cmd(void)
 	}
 	return (res);
 }
+
+void		free_cmd(t_cmd *cmd)
+{
+	t_cmd	*prev;
+
+	while (cmd)
+	{
+		free_token(cmd->token);
+		prev = cmd;
+		cmd = cmd->next;
+		free(prev);
+	}
+}
