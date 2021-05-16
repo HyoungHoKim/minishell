@@ -5,12 +5,10 @@ t_state		g_state;
 
 void		process(t_cmd *cmd)
 {
-}
-
-void		free_cmd(t_cmd *cmd)
-{
-	if (!cmd)
-		return ;
+	char **token = cmd->token;
+	int idx = -1;
+	while (token[++idx] != NULL)
+		printf("%s\n", token[idx]);
 }
 
 // main문에 붙는 3번째 인자는 환경변수를 받는 매개변수이다.

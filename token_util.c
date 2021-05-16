@@ -49,6 +49,6 @@ void		free_token(char **token)
 
 	i = 0;
 	while (token && token[i])
-		free(token[i]);
+		free(token[i++]);
 	free(token);
 }

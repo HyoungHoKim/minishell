@@ -3,6 +3,7 @@
 
 #include "libft/libft.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 #define	STDIN		0
 #define MAXSIZE		1024

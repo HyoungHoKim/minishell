@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:58:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/16 17:05:04 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/16 17:25:09 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void					add_token(t_cmd *cmd, char *buf, int len)
 {
 	char			*temp;
 
+	if (ft_strlen(buf) == 0)
+		return ;
 	temp = ft_strdup(buf);
 	ft_memset(buf, 0, len);
 	token_push_back(&(cmd->token), temp);
@@ -104,10 +106,6 @@ int					parser(char *line, t_cmd **cmd)
 		}	
 	}
 	add_token(*cmd, parse->buf, j);
-	char **token = (*cmd)->token;
-	int idx = -1;
-	while (token[++idx] != NULL)
-		printf("%s\n", token[idx]);
 	//command_seperate(line, head);
-	return (1);
+	return (0);
 }
