@@ -23,6 +23,17 @@ t_cmd		*rewind_cmd(t_cmd *cmd)
 	return (cmd);
 }
 
+t_cmd		*add_cmd(t_cmd *cur)
+{
+	t_cmd	*new;
+
+	if ((new = create_cmd()))
+		return (NULL);
+	cur->next = new;
+	new->prev = cur;
+	return (new);
+}
+
 void		free_cmd(t_cmd *cmd)
 {
 	t_cmd	*prev;
