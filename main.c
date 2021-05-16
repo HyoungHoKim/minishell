@@ -7,8 +7,14 @@ void		process(t_cmd *cmd)
 {
 	char **token = cmd->token;
 	int idx = -1;
-	while (token[++idx] != NULL)
-		printf("%s\n", token[idx]);
+
+	cmd = rewind_cmd(cmd);
+	while (cmd)
+	{
+		while (token[++idx] != NULL)
+			printf("%s\n", token[idx]);
+		cmd = cmd->next;
+	}
 }
 
 // main문에 붙는 3번째 인자는 환경변수를 받는 매개변수이다.

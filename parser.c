@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:58:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/16 18:52:50 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/16 20:20:17 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ void				set_non_quote(t_cmd **cmd, t_parse *parse, int i, int *j)
 	if (parse->input[i] == '\"' || parse->input[i] == '\'')
 		parse->quote = parse->input[i];
 	else if (parse->input[i] == ';' || parse->input[i] == '|')
-		set_semi_pipe(cmd, parse->buf, parse->input[i], j);
+	{
+		(*cmd)->flag = set_semi_pipe(cmd, parse->buf, parse->input[i], j);
+		*cmd = add_cmd(*cmd);
+	}
 	else if (parse->input[i] == ' ')
 		add_token(*cmd, parse->buf, j);
 	else if (parse->input[i] != '\\')
@@ -64,7 +67,7 @@ int					parser(char *line, t_cmd **cmd)
 	t_parse			*parse;
 	int				i;
 	int				j;
-	
+
 	*cmd = create_cmd();
 	parse = init_parse(line);
 	i = -1;
