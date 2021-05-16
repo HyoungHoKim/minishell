@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 14:27:59 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/14 15:46:57 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/14 16:54:13 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,13 @@
 char		*get_command(char **new, char *com_line)
 {
 	int		pos;
-	char	*temp;
+	char	*cut_command;
 
 	pos = get_chr_pos(com_line, ' ');
-	if (ft_strncmp("echo", com_line, pos) == 0)
-		*new = ft_substr(com_line, 0, pos);
-	else if (ft_strncmp("cd", com_line, pos) == 0)
-		*new = ft_substr(com_line, 0, pos);
-	else if (ft_strncmp("pwd", com_line, pos) == 0)
-		*new = ft_substr(com_line, 0, pos);
-	else if (ft_strncmp("export", com_line, pos) == 0)
-		*new = ft_substr(com_line, 0, pos);
-	else if (ft_strncmp("unset", com_line, pos) == 0)
-		*new = ft_substr(com_line, 0, pos);
-	else if (ft_strncmp("env", com_line, pos) == 0)
-		*new = ft_substr(com_line, 0, pos);
-	else
-		temp = com_line;
-	if (*new)
-	{
-		temp = ft_substr(com_line, pos + 1, ft_strlen(com_line) - pos);
-		free(com_line);
-	}
-	return (temp);
+	cut_command = ft_substr(com_line, 0, pos);
+	*new = ft_strjoin("/bin/", cut_command);
+	free(cut_command);
+	return (com_line);
 }
 
 char		*get_option(char **new, char *option)
@@ -65,10 +49,12 @@ void		tokenizer(t_cline **head)
 	temp = *head;
 	while (temp != NULL)
 	{
+		temp->token = (char**)malloc(sizeof(char*) * 1)
 		com_line = ft_strdup(temp->com_line);
 		com_line = get_command(&temp->token.command, com_line);
-		com_line = get_option(&temp->token.option, com_line);
-		temp->token.data = ft_strdup(com_line);
+		printf("command : %s\n", temp->token.command);
+		//com_line = get_option(&temp->token.option, com_line);
+		//temp->token.data = ft_strdup(com_line);
 		temp = temp->next;
 		free(com_line);
 	}

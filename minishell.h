@@ -7,18 +7,11 @@
 #define	STDIN		0
 #define MAXSIZE		1024
 
-typedef struct		s_token
-{
-    char            *command;
-    char            *option;
-    char			*data;
-}                   t_token;
-
 typedef struct		s_cline
 {
 	char			flag;
 	char			*com_line;
-	t_token			token;
+	char			*token;
 	struct	s_cline *next;
 }					t_cline;
 

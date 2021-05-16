@@ -10,7 +10,7 @@ void		process(char *line)
 	head = NULL;
 	parser(&head, line);
 	tokenizer(&head);
-	cline_print(head);
+	//cline_print(head);
 }
 
 // main문에 붙는 3번째 인자는 환경변수를 받는 매개변수이다.
