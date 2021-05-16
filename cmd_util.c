@@ -16,6 +16,13 @@ t_cmd		*create_cmd(void)
 	return (res);
 }
 
+t_cmd		*rewind_cmd(t_cmd *cmd)
+{
+	while (cmd->prev)
+		cmd = cmd->prev;
+	return (cmd);
+}
+
 void		free_cmd(t_cmd *cmd)
 {
 	t_cmd	*prev;

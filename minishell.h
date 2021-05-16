@@ -60,6 +60,7 @@ int					token_push_back(char ***token, char *str);
 void				free_token(char **token);
 
 t_cmd				*create_cmd(void);
+t_cmd				*rewind_cmd(t_cmd *cmd);
 void				free_cmd(t_cmd *cmd);
 
 char				*get_env(char *key);
