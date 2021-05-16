@@ -53,6 +53,7 @@ void				handle_signal(int signo);
 
 int					get_line(char **line);
 int					get_chr_pos(char *line, char c);
+void				print_cmd_token(t_cmd *cmd);
 
 int					parser(char *line, t_cmd **cmd);
 char				*del_side_space(char *line);

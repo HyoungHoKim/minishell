@@ -3,17 +3,29 @@
 
 t_state		g_state;
 
+void		check_double_semi(t_cmd *cmd)
+{
+	
+}
+
 void		process(t_cmd *cmd)
 {
-	char **token = cmd->token;
-	int idx = -1;
+	t_cmd	*temp;
+	int		check;
 
-	cmd = rewind_cmd(cmd);
-	while (cmd)
+	rewind_cmd(cmd);
+	print_cmd_token(cmd);
+	while (temp)
 	{
-		while (token[++idx] != NULL)
-			printf("%s\n", token[idx]);
+		temp = cmd;
+		if (temp->flag == 0)
+			exec_command(cmd);
+		//else if (temp->flag == 1)
+		//	exec_pipe(cmd);
+		//else if (temp->flag == 2)
+		//	exec_redir(cmd);
 		cmd = cmd->next;
+		free_cmd(temp);
 	}
 }
 

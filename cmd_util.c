@@ -13,6 +13,8 @@ t_cmd		*create_cmd(void)
 		free(res);
 		res = NULL;
 	}
+	res->prev = NULL;
+	res->next = NULL;
 	return (res);
 }
 

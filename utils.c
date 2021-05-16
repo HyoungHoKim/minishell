@@ -42,3 +42,20 @@ char		*del_side_space(char *line)
 	free(line);
 	return (ret);
 }
+
+void		print_cmd_token(t_cmd *cmd)
+{
+    int     idx;
+	t_cmd   *temp;
+	
+	idx = -1;
+    temp = rewind_cmd(cmd);
+	while (temp)
+	{
+		idx = -1;
+		printf("flag : %d\n", temp->flag);
+		while (temp->token[++idx] != NULL)
+			printf("token : %s\n", temp->token[idx]);
+		temp = temp->next;
+	}
+}
