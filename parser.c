@@ -6,25 +6,11 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:58:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/16 17:25:09 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/16 18:30:01 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static char			*ft_strncpy(char *dest, char const *src, unsigned int n)
-{
-	unsigned int	idx;
-
-	idx = 0;
-	while (idx < n && src[idx] != '\0')
-	{
-		dest[idx] = src[idx];
-		idx++;
-	}
-	dest[idx] = '\0';
-	return (dest);
-}
 
 t_parse				*init_parse(char *line)
 {
@@ -42,15 +28,35 @@ t_parse				*init_parse(char *line)
 	return (temp);
 }
 
-void					add_token(t_cmd *cmd, char *buf, int len)
+void					add_token(t_cmd *cmd, char *buf, int *len)
 {
 	char			*temp;
 
 	if (ft_strlen(buf) == 0)
 		return ;
 	temp = ft_strdup(buf);
-	ft_memset(buf, 0, len);
+	ft_memset(buf, 0, *len);
+	*len = 0;
 	token_push_back(&(cmd->token), temp);
+}
+int					set_semi_pipe(t_cmd **cmd, char *buf, char c, int *len)
+{
+	add_token(*cmd, buf, len);
+	if (c == ';')
+		return (SEMI);
+	return (PIPE);
+}
+
+void				set_non_quote(t_cmd **cmd, t_parse *parse, int i, int *j)
+{
+	if (parse->input[i] == '\"' || parse->input[i] == '\'')
+		parse->quote = parse->input[i];
+	else if (parse->input[i] == ';' || parse->input[i] == '|')
+		set_semi_pipe(cmd, parse->buf, parse->input[i], j);
+	else if (parse->input[i] == ' ')
+		add_token(*cmd, parse->buf, j);
+	else if (parse->input[i] != '\\')
+		parse->buf[(*j)++] = parse->input[i];
 }
 
 int					parser(char *line, t_cmd **cmd)
@@ -65,47 +71,17 @@ int					parser(char *line, t_cmd **cmd)
 	j = 0;
 	while (parse->input[++i] != '\0')
 	{
-		if (parse->quote == 0 && parse->input[i] == '\"')
-			parse->quote = '\"';
-		else if (parse->quote == 0 && parse->input[i] == '\'')
-			parse->quote = '\'';
-		else if (parse->quote == 0 && parse->input[i] == ';')
-		{
-			(*cmd)->flag = SEMI;
-			add_token(*cmd, parse->buf, j);
-			j = 0;
-		}
-		else if (parse->quote == 0 && parse->input[i] == '|')
-		{
-			(*cmd)->flag = PIPE;
-			add_token(*cmd, parse->buf, j);
-			j = 0;
-		}
-		else if (parse->quote == '\"' && parse->input[i] == '\"')
+		if (parse->quote == 0)
+			set_non_quote(cmd, parse, i, &j);
+		else if ((parse->quote == '\"' && parse->input[i] == '\"')
+			|| (parse->quote == '\'' && parse->input[i] == '\''))
 		{
 			parse->quote = 0;
-			add_token(*cmd, parse->buf, j);
-			j = 0;
+			add_token(*cmd, parse->buf, &j);
 		}
-		else if (parse->quote == '\'' && parse->input[i] == '\'')
-		{
-			parse->quote = 0;
-			add_token(*cmd, parse->buf, j);
-			j = 0;
-		}
-		else if (parse->quote == 0 && parse->input[i] == ' ')
-		{
-			add_token(*cmd, parse->buf, j);
-			j = 0;
-		}
-		else{
-			if (parse->quote != 0)
-				parse->buf[j++] = parse->input[i];
-			if (parse->quote == 0 && parse->input[i] != '\\')
-				parse->buf[j++] = parse->input[i];
-		}	
+		else if (parse->quote != 0)
+			parse->buf[j++] = parse->input[i];
 	}
-	add_token(*cmd, parse->buf, j);
-	//command_seperate(line, head);
+	add_token(*cmd, parse->buf, &j);
 	return (0);
 }
