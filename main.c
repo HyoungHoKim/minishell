@@ -33,10 +33,10 @@ int			main(int argc, char **argv, char **envp)
 			ft_putstr_fd("exit\n", STDIN);
 			exit(0);
 		}
-		if (parse(input, cmd) == EXIT_SUCCESS)
+		if (parser(input, cmd) == EXIT_SUCCESS)
 			process(cmd);
 		//hist_push_back();
-		free(input);
+		//free(input);
 		free_cmd(cmd);
 	}
 	return (0);

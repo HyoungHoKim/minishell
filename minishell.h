@@ -47,8 +47,8 @@ void				handle_signal(int signo);
 int					get_line(char **line);
 int					get_chr_pos(char *line, char c);
 
-void                cline_print(t_cline *head);
-char				*del_side_space(char *com_line);
+int					parser(char *line, t_cmd *cmd);
+char				*del_side_space(char *line);
 
 char				**tokenizer(char *line);
 
