@@ -94,7 +94,7 @@ char		*expand_var(char *buf)
 	res[0] = '\0';
 	i = -1;
 	while (token[++i])
-		ft_strlcat(res, token[i], ft_strlen(token[i]));
+		ft_strlcat(res, token[i], len + 1);
 	free_token(token);
 	return (res);
 }
