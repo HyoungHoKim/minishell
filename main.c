@@ -1,7 +1,7 @@
 #include "minishell.h"
 #include <stdlib.h>
 
-int			g_exit;
+t_state		g_state;
 
 void		process(t_cmd *cmd)
 {
@@ -17,10 +17,9 @@ void		free_cmd(t_cmd *cmd)
 int			main(int argc, char **argv, char **envp)
 {
 	char	*input;
-	char	**env;
 	t_cmd	*cmd;
 
-	env = copy_envp(envp);
+	g_state.env = copy_envp(envp);
 	cmd = NULL;
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, handle_signal);
@@ -36,6 +35,7 @@ int			main(int argc, char **argv, char **envp)
 		}
 		if (parse(input, cmd) == EXIT_SUCCESS)
 			process(cmd);
+		//hist_push_back();
 		free(input);
 		free_cmd(cmd);
 	}

@@ -19,12 +19,26 @@ typedef struct		s_cmd
 {
 	char			**token;
 	int				flag;
+	int				fd[2];
 
 	struct s_cmd	*prev;
 	struct s_cmd	*next;
 }					t_cmd;
 
-extern int			g_exit;
+typedef struct		s_token
+{
+	char			*input;
+	char			*buf;
+	char			quote;
+}					t_token;
+
+typedef struct		s_state
+{
+	int				ext;
+	char			**env;
+}					t_state;
+
+extern t_state		g_state;
 
 void				show_prompt();
 char				**copy_envp(char **envs);

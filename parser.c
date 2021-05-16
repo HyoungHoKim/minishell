@@ -69,5 +69,4 @@ void				command_seperate(char const *str, t_cline **head)
 void				parser(t_cline **head, char *line)
 {
 	command_seperate(line, head);
-	
 }
