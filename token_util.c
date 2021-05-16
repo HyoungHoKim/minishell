@@ -42,3 +42,13 @@ int			token_push_back(char ***token, char *str)
 	*token = res;
 	return (SUCCESS);
 }
+
+void		free_token(char **token)
+{
+	int		i;
+
+	i = 0;
+	while (token && token[i])
+		free(token[i]);
+	free(token);
+}

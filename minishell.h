@@ -47,7 +47,7 @@ typedef struct		s_state
 extern t_state		g_state;
 
 void				show_prompt();
-char				**copy_envp(char **envs);
+char				**copy_envp(char **envp);
 void				handle_signal(int signo);
 
 int					get_line(char **line);
@@ -61,7 +61,14 @@ char				**tokenizer(char *line);
 char				**create_token(void);
 int					token_size(char **token);
 int					token_push_back(char ***token, char *str);
+void				free_token(char **token);
 
 t_cmd				*create_cmd(void);
+t_cmd				*add_cmd(t_cmd *cur);
+t_cmd				*rewind_cmd(t_cmd *cmd);
+void				free_cmd(t_cmd *cmd);
+
+char				*get_env(char *key);
+char				*get_env_value(char *key);
 
 #endif
