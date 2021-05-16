@@ -1,18 +1,37 @@
 #include "minishell.h"
 
-char		**copy_envp(char **envs)
+char		**copy_envp(char **envp)
 {
-	char	**new;
+	char	**res;
+	int		size;
 	int		i;
 
-	i = 0;
-	while (envs[i] != NULL)
-		i++;
-	if (!(new = malloc(sizeof(char *) * (i + 1))))
+	size = token_size(envp);
+	if (!(res = malloc(sizeof(char *) * (size + 1))))
 		return (NULL);
-	i = -1;
-	while (envs[++i] != NULL)
-		new[i] = ft_strdup(envs[i]);
-	new[i] = NULL;
-	return (new);
+	i = 0;
+	while (i < size)
+	{
+		res[i] = ft_strdup(envp[i]);
+		i++;
+	}
+	res[i] = NULL;
+	return (res);
+}
+
+char		*get_env(char *key)
+{
+	int		size;
+	int		i;
+
+	size = ft_strlen(key);
+	i = 0;
+	while (g_state.env[i])
+	{
+		if (ft_strncmp(g_state.env[i], key, size) == 0 &&
+				g_state.env[i][size] == '=')
+			return (g_state.env[i]);
+		i++;
+	}
+	return (NULL);
 }
