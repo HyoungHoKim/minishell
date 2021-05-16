@@ -7,13 +7,20 @@
 #define	STDIN		0
 #define MAXSIZE		1024
 
-typedef struct		s_cline
+typedef struct		s_data
 {
+	char			quote;
+	char			*line;
+	char			*buf;	
+}					t_data;
+
+typedef struct		s_cmd
+{
+	char			**com_line;
 	char			flag;
-	char			*com_line;
-	char			*token;
-	struct	s_cline *next;
-}					t_cline;
+	t_data			*data;
+	struct	s_cmd	*next;
+}					t_cmd;
 
 extern char         **g_envp;
 

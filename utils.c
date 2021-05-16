@@ -33,7 +33,7 @@ char		*del_side_space(char *com_line)
 	ed = ft_strlen(com_line) - 1;
 	while (com_line[st] == ' ')
 		st++;
-	while (com_line[ed] == ' ' || com_line[ed] == '\n')
+	while (com_line[ed] == ' ')
 		ed--;
 	ret = (char*)malloc(sizeof(char) * (ed - st + 2));
 	ft_strlcpy(ret, com_line + st, (ed - st + 2));

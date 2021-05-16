@@ -5,7 +5,7 @@ int			g_exit_status = 0;
 
 void		process(char *line)
 {
-	t_cline	*head;
+	t_cmd	*head;
 
 	head = NULL;
 	parser(&head, line);

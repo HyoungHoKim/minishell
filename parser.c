@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:58:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/13 17:38:58 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/16 12:50:54 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,4 @@ void				command_seperate(char const *str, t_cline **head)
 void				parser(t_cline **head, char *line)
 {
 	command_seperate(line, head);
-	
 }
