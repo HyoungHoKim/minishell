@@ -75,4 +75,8 @@ char				*get_env_value(char *key);
 
 char				*expand_var(char *buf);
 
+int					exec_command(char **token);
+
+void				ft_echo(char **token);
+
 #endif

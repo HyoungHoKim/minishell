@@ -2,7 +2,8 @@ CC		= gcc
 CFLAGS	= -Wall -Werror -Wextra
 NAME	= minishell
 SRCS	= main.c utils_env.c utils_sig.c utils.c get_line.c \
-		  parser.c tokenizer.c token_util.c cmd_util.c expand_var.c
+		  parser.c tokenizer.c token_util.c cmd_util.c expand_var.c \
+		  exec_command.c ft_echo.c
 LIBFT	= libft.a
 LIBS	= -L./libft -lft
 

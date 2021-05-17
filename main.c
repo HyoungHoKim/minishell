@@ -3,29 +3,44 @@
 
 t_state		g_state;
 
-void		check_double_semi(t_cmd *cmd)
+int         check_double_semi(t_cmd *cmd)
 {
-	
+	int		is_null;
+	t_cmd	*temp;
+
+	is_null = 0;
+	temp = cmd;
+	while (temp)
+	{
+		if (temp->token[0] == NULL)
+		{
+			if (is_null)
+				return (FAILURE);
+			is_null = 1;
+		}
+		temp = temp->next;
+	}
+	return (SUCCESS);
 }
 
 void		process(t_cmd *cmd)
 {
 	t_cmd	*temp;
-	int		check;
 
-	rewind_cmd(cmd);
+	cmd = rewind_cmd(cmd);
 	print_cmd_token(cmd);
+	if (check_double_semi(cmd))
+		return ;
+	temp = cmd;
 	while (temp)
 	{
-		temp = cmd;
 		if (temp->flag == 0)
-			exec_command(cmd);
+			exec_command(temp->token);
 		//else if (temp->flag == 1)
 		//	exec_pipe(cmd);
 		//else if (temp->flag == 2)
 		//	exec_redir(cmd);
-		cmd = cmd->next;
-		free_cmd(temp);
+		temp = temp->next;
 	}
 }
 

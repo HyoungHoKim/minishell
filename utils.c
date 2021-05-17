@@ -48,8 +48,7 @@ void		print_cmd_token(t_cmd *cmd)
     int     idx;
 	t_cmd   *temp;
 	
-	idx = -1;
-    temp = rewind_cmd(cmd);
+	temp = cmd;
 	while (temp)
 	{
 		idx = -1;
