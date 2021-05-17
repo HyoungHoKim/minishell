@@ -40,6 +40,9 @@ void		free_cmd(t_cmd *cmd)
 {
 	t_cmd	*prev;
 
+	if (!cmd)
+		return ;
+	cmd = rewind_cmd(cmd);
 	while (cmd)
 	{
 		free_token(cmd->token);
