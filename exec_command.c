@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 21:07:51 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/17 18:49:56 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/17 19:16:56 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,7 @@ int			exec_command(char **token)
 		ft_pwd();
 	if (ft_strncmp(token[0], "env", len) == 0)
 		ft_env(token);
+	if (ft_strncmp(token[0], "cd", len) == 0)
+		ft_cd(token);
 	return (SUCCESS);
 }

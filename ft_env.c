@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 18:47:28 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/17 19:14:05 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/17 19:34:56 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,6 @@ void		ft_env(char **token)
 {
 	if (token_size(token) == 1)
 		print_env();
+	//else
+	// 에러처리??
 }
