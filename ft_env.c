@@ -1,29 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_command.c                                     :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/16 21:07:51 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/17 18:49:56 by hyoukim          ###   ########.fr       */
+/*   Created: 2021/05/17 18:47:28 by hyoukim           #+#    #+#             */
+/*   Updated: 2021/05/17 19:14:05 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int			exec_command(char **token)
+t_state		g_state;
+
+void		print_env(void)
 {
-	int		len;
-	
-	if (token[0] == NULL)
-		return (SUCCESS);
-	len = ft_strlen(token[0]);
-	if (ft_strncmp(token[0], "echo", len) == 0)
-		ft_echo(token);
-	if (ft_strncmp(token[0], "pwd", len) == 0)
-		ft_pwd();
-	if (ft_strncmp(token[0], "env", len) == 0)
-		ft_env(token);
-	return (SUCCESS);
+	int		idx;
+
+	idx = -1;
+	while (g_state.env[++idx] != NULL)
+	{
+		ft_putstr_fd(g_state.env[idx], STDIN);
+		ft_putstr_fd("\n", STDIN);
+	}
+}
+
+void		ft_env(char **token)
+{
+	if (token_size(token) == 1)
+		print_env();
 }

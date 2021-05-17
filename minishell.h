@@ -80,5 +80,6 @@ int					exec_command(char **token);
 
 void				ft_echo(char **token);
 void				ft_pwd(void);
+void				ft_env(char **token);
 
 #endif
