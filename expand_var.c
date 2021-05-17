@@ -6,7 +6,11 @@ static int	get_dollar_idx(char *buf)
 	char	*dolr_loc;
 
 	if ((dolr_loc = ft_strchr(buf, '$')))
+	{
+		if (buf <= (dolr_loc - 1) && *(dolr_loc - 1) == '\\')
+			return (get_dollar_idx(dolr_loc + 1));
 		return (dolr_loc - buf);
+	}
 	return (-1);
 }
 
@@ -41,25 +45,48 @@ static char	*get_var(char *buf)
 	return (value);
 }
 
+static int	find_backslash(char *buf)
+{
+	char	*backslash;
+	char	*next_char;
+
+	if ((backslash = ft_strchr(buf, '\\')))
+	{
+		next_char = backslash + 1;
+		if (*next_char == '\\' || *next_char == '\"' || *next_char == '$')
+			return (backslash - buf);
+	}
+	return (-1);
+}
+
 static char	**split_buf(char *buf)
 {
 	char	**token;
 	int		sub_len;
 	int		dollar_idx;
+	int		backslash_idx;
 
 	token = create_token();
 	while (*buf)
 	{
-		if ((dollar_idx = get_dollar_idx(buf)) != -1)
+		if ((backslash_idx = find_backslash(buf)) != -1)
+			sub_len = backslash_idx;
+		else if ((dollar_idx = get_dollar_idx(buf)) != -1)
 			sub_len = dollar_idx;
 		else
 			sub_len = ft_strlen(buf);
 		token_push_back(&token, ft_substr(buf, 0, sub_len));
 		buf += sub_len;
-		if (dollar_idx != -1)
+		if (backslash_idx != -1)
+		{
+			token_push_back(&token, ft_substr(buf, 1, 1));
+			buf += 2;
+		}
+		else if (dollar_idx != -1)
 		{
 			token_push_back(&token, get_var(buf));
 			buf += get_var_len(buf) + 1;
+			dollar_idx = -1;
 		}
 	}
 	return (token);
