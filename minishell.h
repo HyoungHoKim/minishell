@@ -4,6 +4,7 @@
 #include "libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #define	STDIN		0
 #define MAXSIZE		1024
@@ -78,5 +79,6 @@ char				*expand_var(char *buf);
 int					exec_command(char **token);
 
 void				ft_echo(char **token);
+void				ft_pwd(void);
 
 #endif
