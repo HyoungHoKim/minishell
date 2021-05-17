@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:58:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/17 14:37:55 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/17 16:05:07 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ t_parse				*init_parse(char *line)
 	char			*input;
 	size_t			size;
 
+	if (!(input = del_side_space(line)))
+		return (NULL);
 	res = ft_calloc(sizeof(t_parse), 1);
-	input = del_side_space(line);
 	res->input = input;
 	size = ft_strlen(input);
 	res->buf = ft_calloc(sizeof(char), size + 1);
@@ -32,10 +33,10 @@ void				add_token(t_cmd *cmd, t_parse *parse, int *buf_i)
 
 	if (ft_strlen(parse->buf) == 0)
 		return ;
-	if (parse->quote == '\"')
-		temp = expand_var(parse->buf);
-	else
+	if (parse->quote == '\'')
 		temp = ft_strdup(parse->buf);
+	else
+		temp = expand_var(parse->buf);
 	ft_memset(parse->buf, 0, *buf_i);
 	*buf_i = 0;
 	token_push_back(&(cmd->token), temp);
@@ -69,8 +70,9 @@ int					parser(char *line, t_cmd **cmd)
 	t_parse			*parse;
 	int				buf_i;
 
+	if (!(parse = init_parse(line)))
+		return (FAILURE);
 	*cmd = create_cmd();
-	parse = init_parse(line);
 	buf_i = 0;
 	while (*parse->input != '\0')
 	{
@@ -86,5 +88,5 @@ int					parser(char *line, t_cmd **cmd)
 		parse->input++;
 	}
 	add_token(*cmd, parse, &buf_i);
-	return (0);
+	return (SUCCESS);
 }

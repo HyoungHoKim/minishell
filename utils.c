@@ -29,8 +29,8 @@ char		*del_side_space(char *line)
 	int		ed;
 	char	*ret;
 
-    if (!line)
-        return (0);
+    if (!line || !*line)
+        return (NULL);
 	st = 0;
 	ed = ft_strlen(line) - 1;
 	while (line[st] == ' ')
