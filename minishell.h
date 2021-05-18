@@ -76,6 +76,8 @@ char				*get_env_value(char *key);
 void				print_env(void);
 
 char				*expand_var(char *buf);
+int					get_split_idx(char *buf, int *bs_idx, int *dr_idx);
+int					is_set(char c, char *set);
 
 int					exec_command(char **token);
 
