@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:58:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/18 16:09:35 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/18 16:55:42 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,24 +85,34 @@ int					parser(char *line, t_cmd *cmd)
 	t_parse			*parse;
 	char			*tmp;
 	int				buf_i;
+	int				bs_flag;
 
 	if (!(parse = init_parse(line)))
 		return (FAILURE);
 	tmp = parse->input;
+	bs_flag = 0;
 	buf_i = 0;
 	while (*parse->input != '\0')
 	{
 		if (parse->quote == 0)
 			set_non_quote(&cmd, parse, &buf_i);
-		else if (parse->quote == *parse->input)
+		else if (parse->quote == *parse->input && !bs_flag)
 		{
 			add_token(cmd, parse, &buf_i);
 			parse->quote = 0;
 		}
 		else
+		{
+			if (bs_flag)
+				bs_flag = 0;
+			else if (*parse->input == '\\')
+				bs_flag = 1;
 			parse->buf[buf_i++] = *parse->input;
+		}
 		parse->input++;
 	}
+	if (parse->quote != 0)
+		return (FAILURE);
 	add_token(cmd, parse, &buf_i);
 	parse->input = tmp;
 	free_parse(parse);

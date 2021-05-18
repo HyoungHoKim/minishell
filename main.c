@@ -1,5 +1,6 @@
 #include "minishell.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 t_state		g_state;
 
@@ -64,7 +65,9 @@ int			main(int argc, char **argv, char **envp)
 			exit(0);
 		}
 		cmd = create_cmd();
-		if (parser(input, cmd) == SUCCESS)
+		if (parser(input, cmd))
+			ft_putstr_fd("bash: error\n", STDOUT_FILENO);
+		else
 			process(cmd);
 		//hist_push_back();
 		free(input);
