@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:58:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/18 16:02:08 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/18 16:09:35 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int					parser(char *line, t_cmd *cmd)
 	{
 		if (parse->quote == 0)
 			set_non_quote(&cmd, parse, &buf_i);
-		else if ((parse->quote == *parse->input && *(parse->input - 1) != '\\'))
+		else if (parse->quote == *parse->input)
 		{
 			add_token(cmd, parse, &buf_i);
 			parse->quote = 0;
