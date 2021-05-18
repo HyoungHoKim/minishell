@@ -27,7 +27,6 @@ void		process(t_cmd *cmd)
 {
 	t_cmd	*temp;
 
-	cmd = rewind_cmd(cmd);
 	print_cmd_token(cmd);
 	if (check_double_semi(cmd))
 		return ;
@@ -60,15 +59,15 @@ int			main(int argc, char **argv, char **envp)
 		show_prompt();
 		if (get_line(&input) <= 0)
 		{
-			// gnl error.
 			free(input);
 			ft_putstr_fd("exit\n", STDIN);
 			exit(0);
 		}
-		if (parser(input, &cmd) == SUCCESS)
+		cmd = create_cmd();
+		if (parser(input, cmd) == SUCCESS)
 			process(cmd);
 		//hist_push_back();
-		//free(input);
+		free(input);
 		input = NULL;
 		free_cmd(cmd);
 		cmd = NULL;

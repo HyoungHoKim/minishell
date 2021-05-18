@@ -20,6 +20,8 @@ t_cmd		*create_cmd(void)
 
 t_cmd		*rewind_cmd(t_cmd *cmd)
 {
+	if (!cmd)
+		return (cmd);
 	while (cmd->prev)
 		cmd = cmd->prev;
 	return (cmd);
@@ -40,14 +42,13 @@ void		free_cmd(t_cmd *cmd)
 {
 	t_cmd	*prev;
 
-	if (!cmd)
-		return ;
-	cmd = rewind_cmd(cmd);
 	while (cmd)
 	{
 		free_token(cmd->token);
+		cmd->prev = NULL;
 		prev = cmd;
 		cmd = cmd->next;
 		free(prev);
+		prev = NULL;
 	}
 }
