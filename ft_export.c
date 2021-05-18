@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 13:14:21 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/18 16:30:56 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/18 16:41:07 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,15 @@ void		print_sort_env(void)
 		value = add_back_slash(get_env_value(key));
 		ft_putstr_fd("declare -x ", STDIN);
 		ft_putstr_fd(key, STDIN);
-		ft_putstr_fd("=\"", STDIN);
-		ft_putstr_fd(value, STDIN);
-		ft_putstr_fd("\"\n", STDIN);
-		free(key);
+		if (value != NULL)
+		{
+			ft_putstr_fd("=\"", STDIN);
+			ft_putstr_fd(value, STDIN);
+			ft_putstr_fd("\"", STDIN);
+			ft_putstr_fd("\n", STDIN);
+		}
 		free(value);
+		free(key);
 		sorted_env++;
 	}
 	return ;

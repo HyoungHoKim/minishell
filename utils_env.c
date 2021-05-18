@@ -49,12 +49,20 @@ char		*get_env_value(char *key)
 void		print_env(void)
 {
 	int		idx;
+	char	*key;
+	char	*value;
 
 	idx = -1;
 	while (g_state.env[++idx] != NULL)
 	{
-		ft_putstr_fd(g_state.env[idx], STDIN);
-		ft_putstr_fd("\n", STDIN);
+		key = get_env_key(g_state.env[idx]);
+		value = get_env_value(key);
+		if (value != NULL)
+		{
+			ft_putstr_fd(g_state.env[idx], STDIN);
+			ft_putstr_fd("\n", STDIN);
+		}
+		free(key);
 	}
 }
 
