@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:11:15 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/18 15:19:45 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/18 18:20:48 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,12 @@ int			get_line(char **line)
 		temp = ft_strjoin(*line, buf);
 		free(*line);
 		*line = temp;
+		if (!temp)
+			return (-1);
 	}
-	if (n == 0 && handle_signal_in_gnl(line))
-			return (0);
+	if (n == -1)
+		return (-1);
+	else if (n == 0 && handle_signal_in_gnl(line))
+		return (0);
 	return (1);
 }

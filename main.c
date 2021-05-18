@@ -51,14 +51,13 @@ int			main(int argc, char **argv, char **envp)
 	t_cmd	*cmd;
 
 	g_state.env = copy_envp(envp);
-	cmd = NULL;
 	input = NULL;
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, handle_signal);
 	while (1)
 	{
 		show_prompt();
-		if (get_line(&input) <= 0)
+		if (get_line(&input) < 1)
 		{
 			free(input);
 			ft_putstr_fd("exit\n", STDIN);
