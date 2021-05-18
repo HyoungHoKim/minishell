@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int			set_semi_pipe(char c)
+int			get_flag(char c)
 {
 	if (c == ';')
 		return (SEMI);

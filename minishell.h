@@ -58,7 +58,7 @@ void				print_cmd_token(t_cmd *cmd);
 
 int					parser(char *line, t_cmd *cmd);
 int					tokenizer(t_parse *parse, t_cmd *cmd);
-int					set_semi_pipe(char c);
+int					get_flag(char c);
 
 char				**create_token(void);
 int					token_size(char **token);

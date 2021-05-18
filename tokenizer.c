@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 14:27:59 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/18 19:18:00 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/18 19:25:11 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int			parse_single_char(t_cmd **cmd, t_parse *parse, int *buf_i)
 	else if (is_set(*parse->input, ";|"))
 	{
 		add_token(*cmd, parse, buf_i);
-		(*cmd)->flag = set_semi_pipe(*parse->input);
+		(*cmd)->flag = get_flag(*parse->input);
 		if (!*(*cmd)->token)
 			return (FAILURE);
 		*cmd = add_cmd(*cmd);
