@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 13:14:21 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/18 16:41:07 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/18 17:20:24 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,15 +94,21 @@ void		print_sort_env(void)
 	return ;
 }
 
-
-
 int			ft_export(char **token)
 {
+	int		idx;
+	
+	idx = 0;
 	if (token_size(token) == 1)
 		print_sort_env();
 	else
 	{
-		
+		while (token[++idx] != NULL)
+		{
+			if (ft_isdigit(token[idx][0]))
+				return (FAILURE);
+			token_push_back(&g_state.env, ft_strdup(token[idx]));
+		}
 	}
 	return (SUCCESS);
 }
