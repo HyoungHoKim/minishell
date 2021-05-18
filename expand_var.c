@@ -1,12 +1,25 @@
 #include "libft/libft.h"
 #include "minishell.h"
 
+static int	is_set(char c, char *set)
+{
+	while (*set)
+	{
+		if (c == *set)
+			return (1);
+		set++;
+	}
+	return (0);
+}
+
 static int	get_dollar_idx(char *buf)
 {
 	char	*dolr_loc;
 
 	if ((dolr_loc = ft_strchr(buf, '$')))
 	{
+		if (*(dolr_loc + 1) == '\0' || *(dolr_loc + 1) == ' ')
+			return (-1);
 		if (buf <= (dolr_loc - 1) && *(dolr_loc - 1) == '\\')
 			return (get_dollar_idx(dolr_loc + 1));
 		return (dolr_loc - buf);
@@ -21,6 +34,8 @@ static int	get_var_len(char *buf)
 
 	len = 0;
 	i = 1;
+	if (ft_isdigit(buf[i]) || buf[i] == '$')
+		return (1);
 	while (buf[i] == '_' || ft_isalnum(buf[i]))
 	{
 		len++;
@@ -53,7 +68,7 @@ static int	find_backslash(char *buf)
 	if ((backslash = ft_strchr(buf, '\\')))
 	{
 		next_char = backslash + 1;
-		if (*next_char == '\\' || *next_char == '\"' || *next_char == '$')
+		if (is_set(*next_char, "\\\'\"`$"))
 			return (backslash - buf);
 	}
 	return (-1);
