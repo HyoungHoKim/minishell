@@ -45,3 +45,25 @@ char		*get_env_value(char *key)
 			return (value + 1);
 	return (NULL);
 }
+
+void		print_env(void)
+{
+	int		idx;
+
+	idx = -1;
+	while (g_state.env[++idx] != NULL)
+	{
+		ft_putstr_fd(g_state.env[idx], STDIN);
+		ft_putstr_fd("\n", STDIN);
+	}
+}
+
+char		*get_env_key(char *env)
+{
+	char	*key;
+	int		pos;
+
+	pos = get_chr_pos(env, '=');
+	key = ft_substr(env, 0, pos);
+	return (key);
+}

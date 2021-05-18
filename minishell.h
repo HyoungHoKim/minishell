@@ -72,7 +72,9 @@ t_cmd				*rewind_cmd(t_cmd *cmd);
 void				free_cmd(t_cmd *cmd);
 
 char				*get_env(char *key);
+char				*get_env_key(char *env);
 char				*get_env_value(char *key);
+void				print_env(void);
 
 char				*expand_var(char *buf);
 
@@ -82,5 +84,6 @@ void				ft_echo(char **token);
 void				ft_pwd(void);
 void				ft_env(char **token);
 int					ft_cd(char **token);
+int					ft_export(char **token);
 
 #endif

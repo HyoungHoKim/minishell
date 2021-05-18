@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/17 18:47:28 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/18 13:12:28 by hyoukim          ###   ########.fr       */
+/*   Created: 2021/05/18 13:22:53 by hyoukim           #+#    #+#             */
+/*   Updated: 2021/05/18 13:24:07 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-t_state		g_state;
-
-void		ft_env(char **token)
+int	ft_strcmp(char *s1, const char *s2)
 {
-	if (token_size(token) == 1)
-		print_env();
-	//else
-	// 외부 함수 실행
+	int x;
+
+	x = 0;
+	while (s1[x] == s2[x] && s1[x] != '\0' && s2[x] != '\0')
+		x++;
+	return (s1[x] - s2[x]);
 }
