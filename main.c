@@ -52,23 +52,26 @@ int			main(int argc, char **argv, char **envp)
 
 	g_state.env = copy_envp(envp);
 	cmd = NULL;
+	input = NULL;
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, handle_signal);
 	while (1)
 	{
 		show_prompt();
-		if (!get_line(&input))
+		if (get_line(&input) <= 0)
 		{
 			// gnl error.
 			free(input);
 			ft_putstr_fd("exit\n", STDIN);
 			exit(0);
 		}
-		if (parser(input, &cmd) == EXIT_SUCCESS)
+		if (parser(input, &cmd) == SUCCESS)
 			process(cmd);
 		//hist_push_back();
 		//free(input);
+		input = NULL;
 		free_cmd(cmd);
+		cmd = NULL;
 	}
 	return (0);
 }
