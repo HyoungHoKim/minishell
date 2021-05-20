@@ -71,6 +71,7 @@ t_cmd				*rewind_cmd(t_cmd *cmd);
 void				free_cmd(t_cmd *cmd);
 
 char				*get_env(char *key);
+int					get_env_idx(char *key);
 char				*get_env_key(char *env);
 char				*get_env_value(char *key);
 void				print_env(void);

@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 18:47:28 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/18 13:12:28 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/20 12:48:17 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,4 @@ void		ft_env(char **token)
 {
 	if (token_size(token) == 1)
 		print_env();
-	//else
-	// 외부 함수 실행
 }

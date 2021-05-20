@@ -21,6 +21,15 @@ char		**copy_envp(char **envp)
 
 char		*get_env(char *key)
 {
+	int		i;
+
+	if ((i = get_env_idx(key)) != -1)
+		return (g_state.env[i]);
+	return (NULL);
+}
+
+int			get_env_idx(char *key)
+{
 	int		size;
 	int		i;
 
@@ -30,10 +39,10 @@ char		*get_env(char *key)
 	{
 		if (ft_strncmp(g_state.env[i], key, size) == 0 &&
 				g_state.env[i][size] == '=')
-			return (g_state.env[i]);
+			return (i);
 		i++;
 	}
-	return (NULL);
+	return (-1);
 }
 
 char		*get_env_value(char *key)
