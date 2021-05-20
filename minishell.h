@@ -86,5 +86,6 @@ void				ft_pwd(void);
 void				ft_env(char **token);
 int					ft_cd(char **token);
 int					ft_export(char **token);
+int					ft_unset(char **token);
 
 #endif

@@ -37,8 +37,7 @@ int			get_env_idx(char *key)
 	i = 0;
 	while (g_state.env[i])
 	{
-		if (ft_strncmp(g_state.env[i], key, size) == 0 &&
-				g_state.env[i][size] == '=')
+		if (ft_strncmp(g_state.env[i], key, size) == 0)
 			return (i);
 		i++;
 	}
@@ -81,6 +80,8 @@ char		*get_env_key(char *env)
 	int		pos;
 
 	pos = get_chr_pos(env, '=');
+	if (pos == ft_strlen(env) + 1)
+		return (ft_strdup(env));
 	key = ft_substr(env, 0, pos);
 	return (key);
 }

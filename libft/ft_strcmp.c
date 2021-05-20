@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 13:22:53 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/18 13:24:07 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/20 15:49:56 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@ int	ft_strcmp(char *s1, const char *s2)
 	int x;
 
 	x = 0;
-	while (s1[x] == s2[x] && s1[x] != '\0' && s2[x] != '\0')
+	while (s1[x] || s2[x])
+	{
+		if (s1[x] != s2[x])
+			return (s1[x] - s2[x]);
 		x++;
-	return (s1[x] - s2[x]);
+	}
+	return (0);
 }

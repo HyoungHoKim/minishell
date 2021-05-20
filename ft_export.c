@@ -6,13 +6,27 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 13:14:21 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/20 14:37:51 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/20 16:14:21 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_state		g_state;
+
+int			compare_key(char *env1, char *env2)
+{
+	char	*key1;
+	char	*key2;
+	int		ret;
+
+	key1 = get_env_key(env1);
+	key2 = get_env_key(env2);
+	ret = ft_strcmp(key1, key2);
+	free(key1);
+	free(key2);
+	return (ret);
+}
 
 char		**sort_env(void)
 {
@@ -28,7 +42,7 @@ char		**sort_env(void)
 		j = i;
 		while (env[++j] != NULL)
 		{
-			if (ft_strcmp(env[i], env[j]) > 0)
+			if (compare_key(env[i], env[j]) > 0)
 			{
 				temp_env = env[i];
 				env[i] = env[j];
@@ -46,6 +60,8 @@ char		*add_back_slash(char *value)
 	int		size;
 	char	*ret;
 
+	if (value == NULL)
+		return (NULL);
 	i = -1;
 	size = 0;
 	while (value[++i] != '\0')
@@ -85,8 +101,8 @@ void		print_sort_env(void)
 			ft_putstr_fd("=\"", STDIN);
 			ft_putstr_fd(value, STDIN);
 			ft_putstr_fd("\"", STDIN);
-			ft_putstr_fd("\n", STDIN);
 		}
+		ft_putstr_fd("\n", STDIN);
 		free(value);
 		free(key);
 		sorted_env++;
