@@ -84,3 +84,18 @@ char		*get_env_key(char *env)
 	key = ft_substr(env, 0, pos);
 	return (key);
 }
+
+int			check_invalid_key(char *key)
+{
+	int		idx;
+
+	idx = -1;
+	if (ft_isdigit(key[0]))
+		return (FAILURE);
+	while (key[++idx] != '\0')
+	{
+		if (!ft_isalpha(key[idx]) && key[idx] != '_' && !ft_isdigit(key[idx]))
+			return (FAILURE);
+	}
+	return (SUCCESS);
+}

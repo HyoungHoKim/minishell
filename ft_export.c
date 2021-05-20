@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 13:14:21 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/20 12:43:58 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/20 14:37:51 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,9 @@ int			ft_export(char **token)
 	{
 		while (token[++idx] != NULL)
 		{
-			if (ft_isdigit(token[idx][0]))
-				return (FAILURE);
 			key = get_env_key(token[idx]);
+			if (check_invalid_key(key))
+				return (FAILURE);
 			if (!(get_env(key)))
 				token_push_back(&g_state.env, ft_strdup(token[idx]));
 			else

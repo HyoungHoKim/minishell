@@ -75,6 +75,7 @@ int					get_env_idx(char *key);
 char				*get_env_key(char *env);
 char				*get_env_value(char *key);
 void				print_env(void);
+int					check_invalid_key(char *key);
 
 char				*expand_var(char *buf);
 
