@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 19:17:09 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/18 12:43:56 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/21 18:47:27 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ int			ft_cd(char **token)
 {
 	char	*dir;
 	int		is_go;
-	
+
 	if (token_size(token) == 1)
 		dir = get_home_dir();
 	else
 	{
-		if(ft_strncmp(token[1], "~", ft_strlen(token[1])) == 0)
+		if (ft_strncmp(token[1], "~", ft_strlen(token[1])) == 0)
 			dir = get_home_dir();
 		else
 			dir = ft_strdup(token[1]);

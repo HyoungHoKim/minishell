@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
+/*   Updated: 2021/05/21 18:45:57 by seushin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include <stdlib.h>
 #include <unistd.h>
 
 t_state		g_state;
 
-int         check_double_semi(t_cmd *cmd)
+int			check_double_semi(t_cmd *cmd)
 {
 	int		is_null;
 	t_cmd	*temp;
@@ -44,7 +56,14 @@ void		process(t_cmd *cmd)
 	}
 }
 
-// main문에 붙는 3번째 인자는 환경변수를 받는 매개변수이다.
+static void	free_all(char *line, t_cmd *cmd)
+{
+	free(line);
+	line = NULL;
+	free_cmd(cmd);
+	cmd = NULL;
+}
+
 int			main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -68,11 +87,7 @@ int			main(int argc, char **argv, char **envp)
 			ft_putstr_fd("bash: error\n", STDOUT_FILENO);
 		else
 			process(cmd);
-		//hist_push_back();
-		free(line);
-		line = NULL;
-		free_cmd(cmd);
-		cmd = NULL;
+		free_all(line, cmd);
 	}
 	return (SUCCESS);
 }

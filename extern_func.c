@@ -6,20 +6,18 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:44:14 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/21 16:00:39 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/21 18:48:46 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_state		g_state;
-
 char		*find_extern_dir(char *token)
 {
-	char	**path_list;
-	char	**head;
-	char	*dir;
-	struct stat sb;
+	char		**path_list;
+	char		**head;
+	char		*dir;
+	struct stat	sb;
 
 	path_list = ft_split(get_env_value("PATH"), ':');
 	head = path_list;
@@ -40,11 +38,11 @@ char		*find_extern_dir(char *token)
 
 int			extern_func(char **token)
 {
-	char	*dir;
-	pid_t	pid;
-	int		ret;
-	int		status;
-	
+	char		*dir;
+	pid_t		pid;
+	int			ret;
+	int			status;
+
 	dir = find_extern_dir(token[0]);
 	pid = fork();
 	if (pid == 0)

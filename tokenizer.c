@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 14:27:59 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/18 19:25:11 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/21 18:41:18 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void			parse_in_quote(t_parse *parse, t_cmd *cmd, int *buf_i)
 	}
 }
 
-int			tokenizer(t_parse *parse, t_cmd *cmd)
+int					tokenizer(t_parse *parse, t_cmd *cmd)
 {
 	char			*head;
 	int				buf_i;

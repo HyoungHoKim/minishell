@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 21:07:51 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/21 14:50:58 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/21 18:47:37 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int			exec_command(char **token)
 {
 	int		len;
-	
+
 	if (token[0] == NULL)
 		return (SUCCESS);
 	else if (ft_strncmp(token[0], "echo", 5) == 0)

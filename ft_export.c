@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 13:14:21 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/20 16:14:21 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/21 18:50:24 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int			ft_export(char **token)
 {
 	int		idx;
 	char	*key;
-	
+
 	idx = 0;
 	if (token_size(token) == 1)
 		print_sort_env();

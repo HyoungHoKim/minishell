@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_var_util.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/21 18:43:20 by seushin           #+#    #+#             */
+/*   Updated: 2021/05/21 18:43:34 by seushin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-int	is_set(char c, char *set)
+int			is_set(char c, char *set)
 {
 	while (*set)
 	{
@@ -40,7 +52,7 @@ static int	find_backslash(char *buf)
 	return (-1);
 }
 
-int	get_split_idx(char *buf, int *bs_idx, int *dr_idx)
+int			get_split_idx(char *buf, int *bs_idx, int *dr_idx)
 {
 	if ((*bs_idx = find_backslash(buf)) != -1)
 		return (*bs_idx);
