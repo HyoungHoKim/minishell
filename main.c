@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/21 18:45:57 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/21 18:57:08 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ void		process(t_cmd *cmd)
 	}
 }
 
-static void	free_all(char *line, t_cmd *cmd)
+static void	free_all(char **line, t_cmd **cmd)
 {
-	free(line);
-	line = NULL;
-	free_cmd(cmd);
-	cmd = NULL;
+	free(*line);
+	*line = NULL;
+	free_cmd(*cmd);
+	*cmd = NULL;
 }
 
 int			main(int argc, char **argv, char **envp)
@@ -87,7 +87,7 @@ int			main(int argc, char **argv, char **envp)
 			ft_putstr_fd("bash: error\n", STDOUT_FILENO);
 		else
 			process(cmd);
-		free_all(line, cmd);
+		free_all(&line, &cmd);
 	}
 	return (SUCCESS);
 }
