@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_env.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/21 18:41:35 by seushin           #+#    #+#             */
+/*   Updated: 2021/05/21 18:42:35 by seushin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char		**copy_envp(char **envp)
@@ -49,7 +61,8 @@ char		*get_env_value(char *key)
 	char	*env;
 	char	*value;
 
-	if ((env = get_env(key)) && (value = ft_strchr(env, '=')))
+	if ((env = get_env(key)))
+		if ((value = ft_strchr(env, '=')))
 			return (value + 1);
 	return (NULL);
 }

@@ -1,35 +1,47 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/05/21 18:39:34 by seushin           #+#    #+#             */
+/*   Updated: 2021/05/21 18:40:03 by seushin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft/libft.h"
 #include "minishell.h"
 #include <unistd.h>
 
-int             get_chr_pos(char *line, char c)
+int				get_chr_pos(char *line, char c)
 {
-    int         idx;
+	int			idx;
 
-    idx = 0;
-    while (line[idx] != '\0')
-    {
-        if (line[idx] == c)
-            return (idx);
-        idx++;
-    }
-    return (idx);
+	idx = 0;
+	while (line[idx] != '\0')
+	{
+		if (line[idx] == c)
+			return (idx);
+		idx++;
+	}
+	return (idx);
 }
 
-void			show_prompt()
+void			show_prompt(void)
 {
-    static char	*path;
+	static char	*path;
 
-    path = getcwd(path, MAXSIZE);
-    ft_putstr_fd(path, STDOUT_FILENO);
-    ft_putstr_fd("$ ", STDOUT_FILENO);
+	path = getcwd(path, MAXSIZE);
+	ft_putstr_fd(path, STDOUT_FILENO);
+	ft_putstr_fd("$ ", STDOUT_FILENO);
 }
 
-void		print_cmd_token(t_cmd *cmd)
+void			print_cmd_token(t_cmd *cmd)
 {
-    int     idx;
-	t_cmd   *temp;
-	
+	int			idx;
+	t_cmd		*temp;
+
 	temp = cmd;
 	while (temp)
 	{
