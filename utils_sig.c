@@ -14,20 +14,15 @@ void		handle_signal(int signo)
 	{
 		// waitpid의 리턴값이 -1이면 자식 프로세스가 존재하지 않거나, 인터럽트시 반환
 		if (pid == -1)
-		{
-			ft_putstr_fd("\b\b  \n\0", STDOUT_FILENO);
-			show_prompt();
-		}
+			show_new_line();
 		else
-			ft_putstr_fd("\n", STDIN);
+			ft_putstr_fd("\n", STDOUT_FILENO);
 	}
 	else if (signo == SIGQUIT)
 	{
 		if (pid == -1)
-		{
-			ft_putstr_fd("\b\b  \b\b", STDIN);
-		}
+			show_new_line();
 		else
-			ft_putstr_fd("Quit...\n", STDIN);
+			ft_putstr_fd("Quit...\n", STDOUT_FILENO);
 	}
 }

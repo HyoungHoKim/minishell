@@ -1,19 +1,20 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include "libft/libft.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
+# include "libft/libft.h"
+# include "term.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
-#define	STDIN		0
-#define MAXSIZE		1024
-#define SUCCESS		0
-#define FAILURE		1
+# define STDIN		0
+# define MAXSIZE	1024
+# define SUCCESS	0
+# define FAILURE	1
 
-#define SEMI		0
-#define PIPE		1
-#define REDIR		2
+# define SEMI		0
+# define PIPE		1
+# define REDIR		2
 
 typedef struct		s_hist
 {
