@@ -60,7 +60,7 @@ int			main(int argc, char **argv, char **envp)
 		if (get_line(&input) < 1)
 		{
 			free(input);
-			ft_putstr_fd("exit\n", STDIN);
+			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			exit(0);
 		}
 		cmd = create_cmd();
