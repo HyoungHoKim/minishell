@@ -52,6 +52,7 @@ typedef struct		s_state
 
 extern t_state		g_state;
 
+int					init(char **line, char **envp);
 void				show_prompt();
 char				**copy_envp(char **envp);
 void				handle_signal(int signo);

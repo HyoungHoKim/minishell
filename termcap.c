@@ -11,18 +11,30 @@ t_input		*get_input(void)
 	return (&input);
 }
 
-int			init_term(t_input *input)
+int			init(char **line, char **envp)
 {
-	struct termios	term;
-	char			*termtype;
-	int				n;
+	char		*termtype;
+	int			n;
+	t_input		*input;
 
+	input = NULL;
+	g_state.env = copy_envp(envp);
+	signal(SIGINT, handle_signal);
+	signal(SIGQUIT, handle_signal);
+	tcgetattr(STDIN_FILENO, &(get_input()->backup));
 	if (!(termtype = getenv("TERM")))
 		return (FAILURE);
-	if ((n = tgetent(NULL, termtype)) < 1)
+	if ((n = tgetent(NULL, getenv("TERM"))) < 1)
 		return (FAILURE);
+	return (SUCCESS);
+}
+
+int			init_termios(t_input *input)
+{
+	struct termios	term;
+	int				n;
+
 	tcgetattr(STDIN_FILENO, &term);
-	tcgetattr(STDIN_FILENO, &(input->backup));
 	term.c_lflag &= ~(ICANON | ECHO);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
@@ -44,5 +56,5 @@ void		show_new_line(void)
 
 void		reset_input_mode(t_input *input)
 {
-	tcsetattr(STDIN_FILENO, TCSANOW, &input->backup);
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &(input->backup));
 }

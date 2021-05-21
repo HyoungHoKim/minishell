@@ -1,5 +1,6 @@
 #include "libft/libft.h"
 #include "minishell.h"
+#include <unistd.h>
 
 int             get_chr_pos(char *line, char c)
 {
@@ -20,8 +21,8 @@ void			show_prompt()
     static char	*path;
 
     path = getcwd(path, MAXSIZE);
-    ft_putstr_fd(path, STDIN);
-    ft_putstr_fd("$ ", STDIN);
+    ft_putstr_fd(path, STDOUT_FILENO);
+    ft_putstr_fd("$ ", STDOUT_FILENO);
 }
 
 void		print_cmd_token(t_cmd *cmd)
