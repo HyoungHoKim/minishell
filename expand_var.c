@@ -1,32 +1,6 @@
 #include "libft/libft.h"
 #include "minishell.h"
 
-static int	is_set(char c, char *set)
-{
-	while (*set)
-	{
-		if (c == *set)
-			return (1);
-		set++;
-	}
-	return (0);
-}
-
-static int	get_dollar_idx(char *buf)
-{
-	char	*dolr_loc;
-
-	if ((dolr_loc = ft_strchr(buf, '$')))
-	{
-		if (*(dolr_loc + 1) == '\0' || *(dolr_loc + 1) == ' ')
-			return (-1);
-		if (buf <= (dolr_loc - 1) && *(dolr_loc - 1) == '\\')
-			return (get_dollar_idx(dolr_loc + 1));
-		return (dolr_loc - buf);
-	}
-	return (-1);
-}
-
 static int	get_var_len(char *buf)
 {
 	int		len;
@@ -60,51 +34,32 @@ static char	*get_var(char *buf)
 	return (value);
 }
 
-static int	find_backslash(char *buf)
-{
-	char	*backslash;
-	char	*next_char;
-
-	if ((backslash = ft_strchr(buf, '\\')))
-	{
-		next_char = backslash + 1;
-		if (is_set(*next_char, "\\\'\"`$"))
-			return (backslash - buf);
-	}
-	return (-1);
-}
-
 static char	**split_buf(char *buf)
 {
-	char	**token;
+	char	**res;
 	int		sub_len;
 	int		dollar_idx;
 	int		backslash_idx;
 
-	token = create_token();
+	res = create_token();
 	while (*buf)
 	{
-		if ((backslash_idx = find_backslash(buf)) != -1)
-			sub_len = backslash_idx;
-		else if ((dollar_idx = get_dollar_idx(buf)) != -1)
-			sub_len = dollar_idx;
-		else
-			sub_len = ft_strlen(buf);
-		token_push_back(&token, ft_substr(buf, 0, sub_len));
+		sub_len = get_split_idx(buf, &backslash_idx, &dollar_idx);
+		token_push_back(&res, ft_substr(buf, 0, sub_len));
 		buf += sub_len;
 		if (backslash_idx != -1)
 		{
-			token_push_back(&token, ft_substr(buf, 1, 1));
+			token_push_back(&res, ft_substr(buf, 1, 1));
 			buf += 2;
 		}
 		else if (dollar_idx != -1)
 		{
-			token_push_back(&token, get_var(buf));
+			token_push_back(&res, get_var(buf));
 			buf += get_var_len(buf) + 1;
 			dollar_idx = -1;
 		}
 	}
-	return (token);
+	return (res);
 }
 
 static int	get_total_len(char **token)

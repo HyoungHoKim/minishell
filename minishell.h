@@ -1,22 +1,23 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include "libft/libft.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/wait.h>
-#include <unistd.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
+# include <unistd.h>
+# include "libft/libft.h"
+# include "term.h"
 
-#define	STDIN		0
-#define MAXSIZE		1024
-#define SUCCESS		0
-#define FAILURE		1
+# define STDIN		0
+# define MAXSIZE	1024
+# define SUCCESS	0
+# define FAILURE	1
 
-#define SEMI		0
-#define PIPE		1
-#define REDIR		2
+# define SEMI		0
+# define PIPE		1
+# define REDIR		2
 
 typedef struct		s_hist
 {
@@ -60,8 +61,8 @@ int					get_chr_pos(char *line, char c);
 void				print_cmd_token(t_cmd *cmd);
 
 int					parser(char *line, t_cmd *cmd);
-
-char				**tokenizer(char *line);
+int					tokenizer(t_parse *parse, t_cmd *cmd);
+int					get_flag(char c);
 
 char				**create_token(void);
 int					token_size(char **token);
@@ -81,6 +82,8 @@ void				print_env(void);
 int					check_invalid_key(char *key);
 
 char				*expand_var(char *buf);
+int					get_split_idx(char *buf, int *bs_idx, int *dr_idx);
+int					is_set(char c, char *set);
 
 int					exec_command(char **token);
 

@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 22:16:31 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/18 14:12:22 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/21 15:55:59 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,6 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 					void (*del)(void *));
 
+int					ft_numlen(int n);
+int					ft_putchar(int c);
 #endif
