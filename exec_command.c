@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 21:07:51 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/20 17:27:18 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/21 14:50:58 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,7 @@ int			exec_command(char **token)
 		ft_unset(token);
 	else if (ft_strncmp(token[0], "exit", 5) == 0)
 		ft_exit(token);
+	else
+		extern_func(token);
 	return (SUCCESS);
 }

@@ -4,6 +4,9 @@
 #include "libft/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
 #include <unistd.h>
 
 #define	STDIN		0
@@ -88,5 +91,7 @@ int					ft_cd(char **token);
 int					ft_export(char **token);
 int					ft_unset(char **token);
 void				ft_exit(char **token);
+
+int					extern_func(char **token);
 
 #endif
