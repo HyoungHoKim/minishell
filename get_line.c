@@ -6,7 +6,11 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:11:15 by hyoukim           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/05/21 18:30:43 by hyoukim          ###   ########.fr       */
+=======
+/*   Updated: 2021/05/21 18:26:13 by seushin          ###   ########.fr       */
+>>>>>>> 0013d0caab06df307a9726cabfbd1225707f149d
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +45,11 @@ int			get_line(char **line)
 	t_input	*input;
 
 	input = get_input();
-	ft_memset(input, 0, sizeof(t_input));
-	if (init_term(input))
-		return (FAILURE);
+	input->x = 0;
+	ft_memset(input->buf, 0, BUF_SIZE);
+	if (init_termios(input))
+		return (-1);
+	c = 0;
 	while ((n = read(STDIN_FILENO, &c, sizeof(c))) > 0)
 	{
 		if (c == '\n')
@@ -52,8 +58,8 @@ int			get_line(char **line)
 			return (0);
 		c = 0;
 	}
-	ft_putchar('\n');
 	reset_input_mode(input);
+	ft_putchar('\n');
 	if (n == -1)
 		return (-1);
 	*line = ft_strdup(input->buf);

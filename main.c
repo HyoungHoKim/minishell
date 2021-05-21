@@ -47,32 +47,32 @@ void		process(t_cmd *cmd)
 // main문에 붙는 3번째 인자는 환경변수를 받는 매개변수이다.
 int			main(int argc, char **argv, char **envp)
 {
-	char	*input;
+	char	*line;
 	t_cmd	*cmd;
 
-	g_state.env = copy_envp(envp);
-	input = NULL;
-	signal(SIGINT, handle_signal);
-	signal(SIGQUIT, handle_signal);
+	(void)argc;
+	(void)argv;
+	if (init(&line, envp))
+		return (FAILURE);
 	while (1)
 	{
 		show_prompt();
-		if (get_line(&input) < 1)
+		if (get_line(&line) < 1)
 		{
-			free(input);
+			free(line);
 			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			exit(0);
 		}
 		cmd = create_cmd();
-		if (parser(input, cmd))
+		if (parser(line, cmd))
 			ft_putstr_fd("bash: error\n", STDOUT_FILENO);
 		else
 			process(cmd);
 		//hist_push_back();
-		free(input);
-		input = NULL;
+		free(line);
+		line = NULL;
 		free_cmd(cmd);
 		cmd = NULL;
 	}
-	return (0);
+	return (SUCCESS);
 }

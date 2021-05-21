@@ -6,6 +6,7 @@ SRCS	= main.c utils_env.c utils_sig.c utils.c get_line.c \
 		  termcap.c handle_keycode.c \
 		  exec_command.c ft_echo.c ft_pwd.c ft_env.c ft_cd.c \
 		  ft_export.c ft_unset.c ft_exit.c extern_func.c
+OBJS	= $(SRCS:.c=.o)
 CC		= gcc
 CFLAGS	= -Wall -Werror -Wextra
 SANITIZE	= -fsanitize=address
@@ -20,8 +21,11 @@ all: $(NAME)
 $(LIBFT):
 	$(MAKE) -C ./libft
 
-$(NAME): $(LIBFT)
-	$(CC) $(SANITIZE) $(SRCS) $(LIBS) -o $(NAME)
+$(NAME): $(LIBFT) $(OBJS)
+	$(CC) $(LIBS) -o $(NAME) $(OBJS)
+
+%.o: %.c
+	$(CC) -g -o $@ -c $<
 
 clean:
 	$(MAKE) -C ./libft clean
