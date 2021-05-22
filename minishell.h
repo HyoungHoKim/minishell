@@ -49,6 +49,7 @@ typedef struct		s_state
 	int				ext;
 	char			**env;
 	t_hist			*hist;
+	struct termios	backup;
 }					t_state;
 
 extern t_state		g_state;

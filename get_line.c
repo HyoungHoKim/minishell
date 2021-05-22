@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:11:15 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/22 19:23:09 by hari3o           ###   ########.fr       */
+/*   Updated: 2021/05/22 20:11:54 by hari3o           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,15 @@
 
 static int	handle_key(int c, t_input *input, t_hist **hist)
 {
-	if (c == KEY_LEFT)
-		handle_move_left(input);
-	else if (c == KEY_RIGHT)
-		handle_move_right(input);
-	else if (c == KEY_UP)
-		print_prev_hist(hist, input);
-	else if (c == KEY_DOWN)
+	if (c == KEY_UP)
 		print_next_hist(hist, input);
+	else if (c == KEY_DOWN)
+		print_prev_hist(hist, input);
 	else if (c == BACK_SPACE)
 		handle_backspace(input);
 	else if (c == CTRL_D && input->x == 0)
 		return (FAILURE);
-	else if (ft_isprint(c))
+	else if (ft_isprint(c) || c == '\n')
 		handle_insert(input, c);
 	return (SUCCESS);
 }
@@ -52,17 +48,17 @@ int			get_line(char **line)
 	c = 0;
 	while ((n = read(STDIN_FILENO, &c, sizeof(c))) > 0)
 	{
-		if (c == '\n')
-			break ;
 		if (handle_key(c, input, &hist))
 			return (0);
+		if (c == '\n')
+			break ;
 		c = 0;
 	}
-	reset_input_mode(input);
-	ft_putchar('\n');
-	hist_pop_front(&hist);
+	reset_input_mode();
+	if (hist)
+		hist_pop_front(&hist);
 	if (n == -1)
 		return (-1);
-	*line = ft_strdup(input->buf);
+	*line = input->buf;
 	return (1);
 }

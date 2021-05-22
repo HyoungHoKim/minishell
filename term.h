@@ -18,18 +18,15 @@
 typedef struct	s_input
 {
 	int				x;
-	struct termios	backup;
-	char			buf[BUF_SIZE];
+	char			*buf;
 }				t_input;
 
 int				init_termios(t_input **input);
 t_input			*get_input(void);
 
-void			handle_backspace(t_input *input);
-void			handle_move_left(t_input *input);
-void			handle_move_right(t_input *input);
-void			handle_insert(t_input *input, int c);
+int				handle_backspace(t_input *input);
+int				handle_insert(t_input *input, int c);
 
-void			show_new_line(void);
-void			reset_input_mode(t_input *input);
+int				show_new_line(void);
+void			reset_input_mode(void);
 #endif

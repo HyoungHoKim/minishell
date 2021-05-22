@@ -13,6 +13,8 @@ void		hist_pop_front(t_hist **head)
 
 	if (!*head)
 		return ;
+	while ((*head)->prev)
+		(*head) = (*head)->prev;
 	next_hist = (*head)->next;
 	free_hist(*head);
 	*head = next_hist;
@@ -72,5 +74,4 @@ void		print_prev_hist(t_hist **hist, t_input *input)
 	i = 0;
 	while ((*hist)->line[i])
 		handle_insert(input, (*hist)->line[i++]);
-	(*hist) = (*hist)->next;
 }

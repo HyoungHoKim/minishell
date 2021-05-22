@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/22 19:22:55 by hari3o           ###   ########.fr       */
+/*   Updated: 2021/05/22 19:33:58 by hari3o           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	init(char **line, char **envp)
 	g_state.env = copy_envp(envp);
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, handle_signal);
-	tcgetattr(STDIN_FILENO, &(get_input()->backup));
+	tcgetattr(STDIN_FILENO, &g_state.backup);
 	if (!(termtype = getenv("TERM")))
 		return (FAILURE);
 	if ((n = tgetent(NULL, getenv("TERM"))) < 1)
