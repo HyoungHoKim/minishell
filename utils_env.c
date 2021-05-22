@@ -6,7 +6,7 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:41:35 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/21 18:42:35 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/22 17:04:31 by hari3o           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char		*get_env_key(char *env)
 	int		pos;
 
 	pos = get_chr_pos(env, '=');
-	if (pos == ft_strlen(env) + 1)
+	if (pos == (int)ft_strlen(env) + 1)
 		return (ft_strdup(env));
 	key = ft_substr(env, 0, pos);
 	return (key);

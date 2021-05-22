@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:11:15 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/21 18:52:10 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/22 17:06:10 by hari3o           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,7 @@ int			get_line(char **line)
 	int		c;
 	t_input	*input;
 
-	input = get_input();
-	input->x = 0;
-	ft_memset(input->buf, 0, BUF_SIZE);
-	if (init_termios(input))
+	if (init_termios(&input))
 		return (-1);
 	c = 0;
 	while ((n = read(STDIN_FILENO, &c, sizeof(c))) > 0)

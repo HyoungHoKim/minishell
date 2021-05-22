@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/22 16:33:59 by hari3o           ###   ########.fr       */
+/*   Updated: 2021/05/22 17:03:50 by hari3o           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static int	init(char **line, char **envp)
 {
 	char		*termtype;
 	int			n;
-	t_input		*input;
 
 	*line = NULL;
 	g_state.env = copy_envp(envp);

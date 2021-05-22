@@ -20,7 +20,7 @@ typedef struct	s_input
 	char			buf[BUF_SIZE];
 }				t_input;
 
-int				init_termios(t_input *input);
+int				init_termios(t_input **input);
 t_input			*get_input(void);
 
 void			handle_backspace(t_input *input);

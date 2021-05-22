@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 13:14:21 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/21 18:50:24 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/22 17:08:09 by hari3o           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ void		print_sort_env(void)
 
 void		replace_env(char *token, char *key)
 {
-	char	*value;
 	char	**exist_env;
 
 	exist_env = &g_state.env[get_env_idx(key)];

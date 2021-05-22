@@ -6,7 +6,7 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:41:26 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/22 16:33:00 by hari3o           ###   ########.fr       */
+/*   Updated: 2021/05/22 17:06:34 by hari3o           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ t_input		*get_input(void)
 	return (&input);
 }
 
-int			init_termios(t_input *input)
+int			init_termios(t_input **input)
 {
 	struct termios	term;
-	int				n;
 
+	*input = get_input();
+	(*input)->x = 0;
+	ft_memset((*input)->buf, 0, BUF_SIZE);
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ICANON | ECHO);
 	term.c_cc[VMIN] = 1;
