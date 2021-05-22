@@ -5,8 +5,10 @@
 # include <termcap.h>
 
 # define BUF_SIZE 4096
-# define LEFT_ARW 4479771
-# define RIGHT_ARW 4414235
+# define KEY_LEFT 4479771
+# define KEY_RIGHT 4414235
+# define KEY_UP 4283163
+# define KEY_DOWN 4348699
 # define BACK_SPACE 127
 # define CTRL_D 4
 # define CTRL_C 3

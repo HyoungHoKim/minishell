@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/22 17:03:50 by hari3o           ###   ########.fr       */
+/*   Updated: 2021/05/22 19:22:55 by hari3o           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ int			main(int argc, char **argv, char **envp)
 		show_prompt();
 		if (get_line(&line) < 1)
 		{
-			free(line);
 			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			exit(0);
 		}
@@ -78,7 +77,10 @@ int			main(int argc, char **argv, char **envp)
 		if (parser(line, cmd))
 			ft_putstr_fd("bash: error\n", STDOUT_FILENO);
 		else
+		{
 			process(cmd);
+			hist_push_front(&g_state.hist, line);
+		}
 		reset(&line, &cmd);
 	}
 	return (SUCCESS);

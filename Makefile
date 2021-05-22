@@ -19,6 +19,7 @@ SRCS	= main.c \
 		  expand_var_util.c \
 		  termcap.c \
 		  handle_keycode.c \
+		  history.c \
 		  exec_command.c \
 		  ft_echo.c \
 		  ft_pwd.c \

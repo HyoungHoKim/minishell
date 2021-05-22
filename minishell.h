@@ -48,6 +48,7 @@ typedef struct		s_state
 {
 	int				ext;
 	char			**env;
+	t_hist			*hist;
 }					t_state;
 
 extern t_state		g_state;
@@ -55,6 +56,12 @@ extern t_state		g_state;
 void				show_prompt();
 char				**copy_envp(char **envp);
 void				handle_signal(int signo);
+
+void				free_hist(t_hist *hist);
+void				hist_pop_front(t_hist **head);
+void				hist_push_front(t_hist **head, char *line);
+void				print_prev_hist(t_hist **hist, t_input *input);
+void				print_next_hist(t_hist **hist, t_input *input);
 
 int					get_line(char **line);
 int					get_chr_pos(char *line, char c);
