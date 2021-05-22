@@ -6,7 +6,7 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:37:44 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/21 18:38:07 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/22 16:00:45 by hari3o           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	handle_backspace(t_input *input)
 {
 	if (input->x <= 0)
 		return ;
-	(input->x)--;
 	ft_memmove(input->buf + input->x - 1, input->buf + input->x,
 			sizeof(input->buf));
+	(input->x)--;
 	tputs(tgetstr("le", NULL), 1, ft_putchar);
 	tputs(tgetstr("dm", NULL), 1, ft_putchar);
 	tputs(tgetstr("dc", NULL), 1, ft_putchar);
