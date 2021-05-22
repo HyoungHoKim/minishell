@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/21 18:57:08 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/22 16:33:59 by hari3o           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,47 +16,40 @@
 
 t_state		g_state;
 
-int			check_double_semi(t_cmd *cmd)
-{
-	int		is_null;
-	t_cmd	*temp;
-
-	is_null = 0;
-	temp = cmd;
-	while (temp)
-	{
-		if (temp->token[0] == NULL)
-		{
-			if (is_null)
-				return (FAILURE);
-			is_null = 1;
-		}
-		temp = temp->next;
-	}
-	return (SUCCESS);
-}
-
 void		process(t_cmd *cmd)
 {
-	t_cmd	*temp;
-
 	print_cmd_token(cmd);
-	if (check_double_semi(cmd))
-		return ;
-	temp = cmd;
-	while (temp)
+	while (cmd)
 	{
-		if (temp->flag == 0)
-			exec_command(temp->token);
+		if (cmd->flag == 0)
+			exec_command(cmd->token);
 		//else if (temp->flag == 1)
 		//	exec_pipe(cmd);
 		//else if (temp->flag == 2)
 		//	exec_redir(cmd);
-		temp = temp->next;
+		cmd = cmd->next;
 	}
 }
 
-static void	free_all(char **line, t_cmd **cmd)
+static int	init(char **line, char **envp)
+{
+	char		*termtype;
+	int			n;
+	t_input		*input;
+
+	*line = NULL;
+	g_state.env = copy_envp(envp);
+	signal(SIGINT, handle_signal);
+	signal(SIGQUIT, handle_signal);
+	tcgetattr(STDIN_FILENO, &(get_input()->backup));
+	if (!(termtype = getenv("TERM")))
+		return (FAILURE);
+	if ((n = tgetent(NULL, getenv("TERM"))) < 1)
+		return (FAILURE);
+	return (SUCCESS);
+}
+
+static void	reset(char **line, t_cmd **cmd)
 {
 	free(*line);
 	*line = NULL;
@@ -87,7 +80,7 @@ int			main(int argc, char **argv, char **envp)
 			ft_putstr_fd("bash: error\n", STDOUT_FILENO);
 		else
 			process(cmd);
-		free_all(&line, &cmd);
+		reset(&line, &cmd);
 	}
 	return (SUCCESS);
 }

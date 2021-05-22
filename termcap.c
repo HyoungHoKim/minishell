@@ -6,7 +6,7 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:41:26 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/21 18:41:27 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/22 16:33:00 by hari3o           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,6 @@ t_input		*get_input(void)
 	static t_input	input;
 
 	return (&input);
-}
-
-int			init(char **line, char **envp)
-{
-	char		*termtype;
-	int			n;
-	t_input		*input;
-
-	input = NULL;
-	g_state.env = copy_envp(envp);
-	signal(SIGINT, handle_signal);
-	signal(SIGQUIT, handle_signal);
-	tcgetattr(STDIN_FILENO, &(get_input()->backup));
-	if (!(termtype = getenv("TERM")))
-		return (FAILURE);
-	if ((n = tgetent(NULL, getenv("TERM"))) < 1)
-		return (FAILURE);
-	return (SUCCESS);
 }
 
 int			init_termios(t_input *input)
