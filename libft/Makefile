@@ -6,7 +6,7 @@
 #    By: hyoukim <hyoukim@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/22 22:08:16 by hyoukim           #+#    #+#              #
-#    Updated: 2021/05/21 15:56:27 by seushin          ###   ########.fr        #
+#    Updated: 2021/05/22 17:02:38 by hari3o           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,19 +22,23 @@ SRCS		=	ft_atoi.c ft_isalpha.c ft_isdigit.c ft_isprint.c ft_putchar_fd.c ft_putn
 				ft_putchar.c ft_numlen.c
 SRCS_B		=	ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c \
 				ft_lstclear.c ft_lstiter.c ft_lstmap.c
-OBJS 		= 	$(SRCS:.c=.o)
-OBJS_B		=	$(SRCS_B:.c=.o)
+D_OBJS		=	obj
+OBJS 		= 	$(addprefix $(D_OBJS)/, $(SRCS:.c=.o))
+OBJS_B		=	$(addprefix $(D_OBJS)/, $(SRCS_B:.c=.o))
 
 all: $(NAME)
 
-.c.o:
-	$(CC) $(CFLAGS) -c $< -o $(<:.c=.o) 
-
-$(NAME): $(OBJS) $(OBJS_B)
+$(NAME): $(D_OBJS) $(OBJS) $(OBJS_B)
 	ar rcs $(NAME) $(OBJS) $(OBJS_B)
 
+$(D_OBJS):
+	mkdir -p $(D_OBJS)
+
+$(D_OBJS)/%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
 clean:
-	rm -f $(OBJS) $(OBJS_B)
+	rm -rf $(D_OBJS)
 
 fclean: clean
 	rm -f $(NAME)
