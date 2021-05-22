@@ -22,7 +22,7 @@ $(LIBFT):
 	$(MAKE) -C ./libft
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(LIBS) -o $(NAME) $(OBJS)
+	$(CC) $(LIBS) $(SANITIZE) -o $(NAME) $(OBJS)
 
 %.o: %.c
 	$(CC) -g -o $@ -c $<
