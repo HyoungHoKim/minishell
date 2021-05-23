@@ -6,7 +6,7 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:41:35 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/22 17:04:31 by hari3o           ###   ########.fr       */
+/*   Updated: 2021/05/23 17:43:02 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,20 @@
 char		**copy_envp(char **envp)
 {
 	char	**res;
-	int		size;
 	int		i;
 
-	size = token_size(envp);
-	if (!(res = malloc(sizeof(char *) * (size + 1))))
+	if (!(res = create_token()))
 		return (NULL);
 	i = 0;
-	while (i < size)
+	while (envp[i])
 	{
-		res[i] = ft_strdup(envp[i]);
+		if (token_push_back(&res, ft_strdup(envp[i])) == FAILURE)
+		{
+			free_token(res);
+			return (NULL);
+		}
 		i++;
 	}
-	res[i] = NULL;
 	return (res);
 }
 
