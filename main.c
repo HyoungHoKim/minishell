@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/23 17:51:26 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/23 23:40:42 by hari3o           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ static int	init(char **line, char **envp)
 	char		*termtype;
 	int			n;
 
-	*line = NULL;
 	if (!(g_state.env = copy_envp(envp)))
 		return (FAILURE);
+	if (!(termtype = getenv("TERM")))
+		return (FAILURE);
+	if ((n = tgetent(NULL, termtype)) < 1)
+		return (FAILURE);
+	*line = NULL;
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, handle_signal);
 	tcgetattr(STDIN_FILENO, &g_state.backup);
-	if (!(termtype = getenv("TERM")))
-		return (FAILURE);
-	if ((n = tgetent(NULL, getenv("TERM"))) < 1)
-		return (FAILURE);
 	return (SUCCESS);
 }
 
@@ -62,7 +62,7 @@ static void	reset(char **line, t_cmd **cmd)
 
 static void	handle_ctrl_d(void)
 {
-	ft_putstr_fd("\nexit\n", STDOUT_FILENO);
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
 	exit(g_state.errno);
 }
 
@@ -82,6 +82,10 @@ int			main(int argc, char **argv, char **envp)
 			handle_ctrl_d();
 		cmd = create_cmd();
 		if (parser(line, cmd))
+			/*
+			** double semi/pipe or unclosed quote
+			** TODO: set g_state.errno and write err msg
+			*/
 			ft_putstr_fd("bash: error\n", STDOUT_FILENO);
 		else
 			process(line, cmd);
