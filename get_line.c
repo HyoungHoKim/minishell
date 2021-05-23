@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:11:15 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/22 20:11:54 by hari3o           ###   ########.fr       */
+/*   Updated: 2021/05/23 17:12:26 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int			get_line(char **line)
 	t_input	*input;
 	t_hist	*hist;
 
-	if (init_termios(&input))
+	if (init_termios(&input) == FAILURE)
 		return (-1);
 	hist = NULL;
 	c = 0;
