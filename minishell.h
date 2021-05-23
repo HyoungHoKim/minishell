@@ -46,7 +46,7 @@ typedef struct		s_parse
 
 typedef struct		s_state
 {
-	int				ext;
+	int				errno;
 	char			**env;
 	t_hist			*hist;
 	struct termios	backup;

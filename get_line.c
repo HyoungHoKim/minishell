@@ -6,11 +6,11 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:11:15 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/23 17:12:26 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/23 18:02:27 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include <unistd.h>
 #include "minishell.h"
 #include "term.h"
 

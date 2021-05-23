@@ -6,13 +6,12 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:41:26 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/23 17:11:57 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/23 17:58:21 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
-#include "libft/libft.h"
 #include "minishell.h"
 #include "term.h"
 

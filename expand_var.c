@@ -6,11 +6,11 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:43:09 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/21 18:43:10 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/23 18:03:07 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
+#include <stdlib.h>
 #include "minishell.h"
 
 static int	get_var_len(char *buf)

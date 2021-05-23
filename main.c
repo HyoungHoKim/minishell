@@ -6,17 +6,18 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/23 17:18:17 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/23 17:51:26 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
+#include <termios.h>
 #include <unistd.h>
 
 t_state		g_state;
 
-void		process(t_cmd *cmd, char *line)
+void		process(char *line, t_cmd *cmd)
 {
 	print_cmd_token(cmd);
 	while (cmd)
@@ -39,7 +40,8 @@ static int	init(char **line, char **envp)
 	int			n;
 
 	*line = NULL;
-	g_state.env = copy_envp(envp);
+	if (!(g_state.env = copy_envp(envp)))
+		return (FAILURE);
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, handle_signal);
 	tcgetattr(STDIN_FILENO, &g_state.backup);
@@ -61,7 +63,7 @@ static void	reset(char **line, t_cmd **cmd)
 static void	handle_ctrl_d(void)
 {
 	ft_putstr_fd("\nexit\n", STDOUT_FILENO);
-	exit(0);
+	exit(g_state.errno);
 }
 
 int			main(int argc, char **argv, char **envp)
@@ -72,7 +74,7 @@ int			main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	if (init(&line, envp))
-		return (FAILURE);
+		return (g_state.errno);
 	while (1)
 	{
 		show_prompt();
@@ -82,7 +84,7 @@ int			main(int argc, char **argv, char **envp)
 		if (parser(line, cmd))
 			ft_putstr_fd("bash: error\n", STDOUT_FILENO);
 		else
-			process(cmd, line);
+			process(line, cmd);
 		reset(&line, &cmd);
 	}
 	return (SUCCESS);

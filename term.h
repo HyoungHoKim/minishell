@@ -14,7 +14,6 @@
 # define CTRL_C 3
 # define CTRL_BS 28
 
-// TODO: buf 동적배열로 변경. BUF_SIZE를 초과하는 입력에 대해 처리가 부족함.
 typedef struct	s_input
 {
 	int				x;
@@ -29,4 +28,5 @@ int				handle_insert(t_input *input, int c);
 
 int				show_new_line(void);
 void			reset_input_mode(void);
+
 #endif

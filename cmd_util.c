@@ -6,10 +6,11 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:38:24 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/21 18:38:25 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/23 18:04:05 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "minishell.h"
 
 t_cmd		*create_cmd(void)

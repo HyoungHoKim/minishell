@@ -6,12 +6,13 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:37:44 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/22 20:08:32 by hari3o           ###   ########.fr       */
+/*   Updated: 2021/05/23 18:01:17 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "minishell.h"
-#include <termcap.h>
+#include "term.h"
 
 static char	*delete_char(char *str)
 {
