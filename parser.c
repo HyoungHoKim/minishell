@@ -6,10 +6,11 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:58:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/21 18:51:38 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/23 17:58:47 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "minishell.h"
 
 static int			free_parse(t_parse *parse)

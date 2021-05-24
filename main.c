@@ -6,17 +6,18 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/24 12:29:31 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/24 13:04:16 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdlib.h>
+#include <termios.h>
 #include <unistd.h>
 
 t_state		g_state;
 
-void		process(t_cmd *cmd)
+void		process(char *line, t_cmd *cmd)
 {
 	print_cmd_token(cmd);
 	while (cmd)
@@ -29,6 +30,8 @@ void		process(t_cmd *cmd)
 		//	exec_redir(cmd);
 		cmd = cmd->next;
 	}
+	if (ft_strlen(line))
+		hist_push_front(&g_state.hist, line);
 }
 
 static int	init(char **line, char **envp)
@@ -36,15 +39,16 @@ static int	init(char **line, char **envp)
 	char		*termtype;
 	int			n;
 
-	*line = NULL;
-	g_state.env = copy_envp(envp);
-	signal(SIGINT, handle_signal);
-	signal(SIGQUIT, handle_signal);
-	tcgetattr(STDIN_FILENO, &(get_input()->backup));
+	if (!(g_state.env = copy_envp(envp)))
+		return (FAILURE);
 	if (!(termtype = getenv("TERM")))
 		return (FAILURE);
-	if ((n = tgetent(NULL, getenv("TERM"))) < 1)
+	if ((n = tgetent(NULL, termtype)) < 1)
 		return (FAILURE);
+	*line = NULL;
+	signal(SIGINT, handle_signal);
+	signal(SIGQUIT, handle_signal);
+	tcgetattr(STDIN_FILENO, &g_state.backup);
 	return (SUCCESS);
 }
 
@@ -56,6 +60,12 @@ static void	reset(char **line, t_cmd **cmd)
 	*cmd = NULL;
 }
 
+static void	handle_ctrl_d(void)
+{
+	ft_putstr_fd("exit\n", STDOUT_FILENO);
+	exit(g_state.errno);
+}
+
 int			main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -64,21 +74,21 @@ int			main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	if (init(&line, envp))
-		return (FAILURE);
+		return (g_state.errno);
 	while (1)
 	{
 		show_prompt();
 		if (get_line(&line) < 1)
-		{
-			free(line);
-			ft_putstr_fd("exit\n", STDOUT_FILENO);
-			exit(0);
-		}
+			handle_ctrl_d();
 		cmd = create_cmd();
 		if (parser(line, cmd))
+			/*
+			** double semi/pipe or unclosed quote
+			** TODO: set g_state.errno and write err msg
+			*/
 			ft_putstr_fd("bash: error\n", STDOUT_FILENO);
 		else
-			process(cmd);
+			process(line, cmd);
 		reset(&line, &cmd);
 	}
 	return (SUCCESS);

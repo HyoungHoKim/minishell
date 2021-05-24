@@ -6,13 +6,12 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:41:26 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/22 17:06:34 by hari3o           ###   ########.fr       */
+/*   Updated: 2021/05/23 17:58:21 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
-#include "libft/libft.h"
 #include "minishell.h"
 #include "term.h"
 
@@ -23,13 +22,21 @@ t_input		*get_input(void)
 	return (&input);
 }
 
+static int	init_input(t_input **input)
+{
+	*input = get_input();
+	if (!((*input)->buf = ft_strdup("")))
+		return (FAILURE);
+	(*input)->x = 0;
+	return (SUCCESS);
+}
+
 int			init_termios(t_input **input)
 {
 	struct termios	term;
 
-	*input = get_input();
-	(*input)->x = 0;
-	ft_memset((*input)->buf, 0, BUF_SIZE);
+	if (init_input(input) == FAILURE)
+		return (FAILURE);
 	tcgetattr(STDIN_FILENO, &term);
 	term.c_lflag &= ~(ICANON | ECHO);
 	term.c_cc[VMIN] = 1;
@@ -38,19 +45,22 @@ int			init_termios(t_input **input)
 	return (SUCCESS);
 }
 
-void		show_new_line(void)
+int			show_new_line(void)
 {
 	t_input	*input;
 
 	input = get_input();
 	tputs(tgetstr("do", NULL), 1, ft_putchar);
 	tputs(tgetstr("ll", NULL), 1, ft_putchar);
-	ft_memset(input->buf, 0, sizeof(input->buf));
+	free(input->buf);
+	if (!(input->buf = ft_strdup("")))
+		return (FAILURE);
 	input->x = 0;
 	show_prompt();
+	return (SUCCESS);
 }
 
-void		reset_input_mode(t_input *input)
+void		reset_input_mode(void)
 {
-	tcsetattr(STDIN_FILENO, TCSAFLUSH, &(input->backup));
+	tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_state.backup);
 }

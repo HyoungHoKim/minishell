@@ -6,51 +6,73 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:37:44 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/22 16:00:45 by hari3o           ###   ########.fr       */
+/*   Updated: 2021/05/23 18:01:17 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "minishell.h"
-#include <termcap.h>
+#include "term.h"
 
-void	handle_backspace(t_input *input)
+static char	*delete_char(char *str)
 {
+	int		size;
+	char	*res;
+
+	size = ft_strlen(str);
+	if (!(res = ft_calloc(sizeof(char), size)))
+		return (NULL);
+	ft_strlcpy(res, str, size);
+	return (res);
+}
+
+static char	*insert_char(char *str, int c)
+{
+	int		size;
+	char	*res;
+
+	size = ft_strlen(str);
+	if (!(res = ft_calloc(sizeof(char), size + 2)))
+		return (NULL);
+	ft_strlcpy(res, str, size + 2);
+	res[size] = c;
+	return (res);
+}
+
+int			handle_backspace(t_input *input)
+{
+	char	*tmp;
+
 	if (input->x <= 0)
-		return ;
-	ft_memmove(input->buf + input->x - 1, input->buf + input->x,
-			sizeof(input->buf));
+		return (SUCCESS);
+	if (!(tmp = delete_char(input->buf)))
+		return (FAILURE);
+	free(input->buf);
+	input->buf = tmp;
 	(input->x)--;
 	tputs(tgetstr("le", NULL), 1, ft_putchar);
 	tputs(tgetstr("dm", NULL), 1, ft_putchar);
 	tputs(tgetstr("dc", NULL), 1, ft_putchar);
 	tputs(tgetstr("ed", NULL), 1, ft_putchar);
+	return (SUCCESS);
 }
 
-void	handle_move_left(t_input *input)
+int			handle_insert(t_input *input, int c)
 {
-	if (input->x <= 0)
-		return ;
-	(input->x)--;
-	tputs(tgetstr("le", NULL), 1, ft_putchar);
-}
+	char	*tmp;
 
-void	handle_move_right(t_input *input)
-{
-	if (input->buf[input->x] == 0)
-		return ;
-	(input->x)++;
-	tputs(tgetstr("nd", NULL), 1, ft_putchar);
-}
-
-void	handle_insert(t_input *input, int c)
-{
-	ft_memmove(input->buf + input->x + 1, input->buf + input->x,
-			sizeof(input->buf));
-	input->buf[input->x] = c;
-	(input->x)++;
+	if (c != '\n')
+	{
+		if (!(tmp = insert_char(input->buf, c)))
+			return (FAILURE);
+		free(input->buf);
+		input->buf = tmp;
+		(input->x)++;
+	}
 	tputs(tgetstr("im", NULL), 1, ft_putchar);
 	tputs(tgetstr("ic", NULL), 1, ft_putchar);
 	ft_putchar(c);
 	tputs(tgetstr("ip", NULL), 1, ft_putchar);
 	tputs(tgetstr("ei", NULL), 1, ft_putchar);
+	return (SUCCESS);
 }

@@ -6,11 +6,12 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:42:58 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/21 18:42:59 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/23 17:53:44 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
 
 char		**create_token(void)
 {
