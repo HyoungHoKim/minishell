@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:44:14 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/24 12:54:56 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/24 14:53:36 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ int			extern_func(char **token)
 	if (pid == 0)
 	{
 		if ((ret = execve(dir, token, g_state.env)) == -1)
+		{
 			ft_putstr_fd("command not found\n", STDIN);
+			exit(0);
+		}
 	}
 	else
 	{

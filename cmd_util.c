@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_util.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:38:24 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/23 18:04:05 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/24 21:17:44 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_cmd		*create_cmd(void)
 		free(res);
 		res = NULL;
 	}
+	res->fd[0] = 0;
+	res->fd[1] = 0;
 	res->prev = NULL;
 	res->next = NULL;
 	return (res);
