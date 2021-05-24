@@ -101,6 +101,6 @@ int					check_builtin(char **token);
 int					extern_func(char **token);
 char				*find_extern_dir(char *token);
 
-int					exec_pipe(t_cmd *cmd);
+int					exec_pipe(t_cmd **cmd);
 
 #endif

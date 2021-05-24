@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/23 15:44:09 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/24 12:29:31 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		process(t_cmd *cmd)
 		if (cmd->flag == 0)
 			exec_command(cmd->token);
 		else if (cmd->flag == 1)
-			exec_pipe(cmd);
+			exec_pipe(&cmd);
 		//else if (temp->flag == 2)
 		//	exec_redir(cmd);
 		cmd = cmd->next;
