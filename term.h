@@ -4,7 +4,6 @@
 # include <sys/termios.h>
 # include <termcap.h>
 
-# define BUF_SIZE 4096
 # define KEY_LEFT 4479771
 # define KEY_RIGHT 4414235
 # define KEY_UP 4283163
