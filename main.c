@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/23 23:40:42 by hari3o           ###   ########.fr       */
+/*   Updated: 2021/05/24 15:05:23 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,14 @@ int			main(int argc, char **argv, char **envp)
 		if (get_line(&line) < 1)
 			handle_ctrl_d();
 		cmd = create_cmd();
-		if (parser(line, cmd))
+		if (parser(line, cmd) == SUCCESS)
+			process(line, cmd);
 			/*
 			** double semi/pipe or unclosed quote
 			** TODO: set g_state.errno and write err msg
 			*/
-			ft_putstr_fd("bash: error\n", STDOUT_FILENO);
 		else
-			process(line, cmd);
+			ft_putstr_fd("bash: error\n", STDOUT_FILENO);
 		reset(&line, &cmd);
 	}
 	return (SUCCESS);

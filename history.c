@@ -6,7 +6,7 @@
 /*   By: seushin <seushin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 17:19:47 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/23 17:59:53 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/24 15:08:18 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ void		print_next_hist(t_hist **hist, t_input *input)
 		*hist = g_state.hist;
 		hist_push_front(hist, input->buf);
 	}
+	if (input->x == 0)
+		while ((*hist)->prev)
+			*hist = (*hist)->prev;
 	if (!(*hist)->next)
 		return ;
 	*hist = (*hist)->next;
