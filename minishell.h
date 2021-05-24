@@ -95,6 +95,12 @@ int					ft_export(char **token);
 int					ft_unset(char **token);
 void				ft_exit(char **token);
 
+void				exec_builtin(char **token);
+int					check_builtin(char **token);
+
 int					extern_func(char **token);
+char				*find_extern_dir(char *token);
+
+int					exec_pipe(t_cmd *cmd);
 
 #endif
