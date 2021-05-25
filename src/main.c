@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/25 17:46:20 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/25 20:56:11 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int			process(char *line, t_cmd *cmd)
 			exec_command(cmd);
 		else if (cmd->prev->flag == 0)
 			exec_command(cmd);
-		else if (cmd->prev->flag == 1 || cmd->flag == 1)
+		else if (cmd->prev->flag > 0 || cmd->flag > 0)
 		{
 			exec_pipe(cmd);
 			//else if (cmd->prev->flag == 2)
