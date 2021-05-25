@@ -109,4 +109,5 @@ char				*find_extern_dir(char *token);
 
 int					exec_pipe(t_cmd *cmd);
 
+int					err_msg(char *err_type, char *comment, int errno);
 #endif

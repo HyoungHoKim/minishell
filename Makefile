@@ -21,6 +21,7 @@ SRCS	= main.c \
 		  termcap.c \
 		  handle_keycode.c \
 		  history.c \
+		  err_msg.c \
 		  ft_echo.c \
 		  ft_pwd.c \
 		  ft_env.c \
