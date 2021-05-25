@@ -6,7 +6,7 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:43:09 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/25 15:09:38 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/25 18:06:25 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	get_var_len(char *buf)
 
 	len = 0;
 	i = 1;
-	if (ft_isdigit(buf[i]) || buf[i] == '$')
+	if (ft_isdigit(buf[i]) || is_set(buf[i], "$?"))
 		return (1);
 	while (buf[i] == '_' || ft_isalnum(buf[i]))
 	{
@@ -38,7 +38,9 @@ static char	*get_var(char *buf)
 
 	len = get_var_len(buf);
 	key = ft_substr(buf, 1, len);
-	if ((value = get_env_value(key)))
+	if (ft_strncmp(key, "?", 2) == 0)
+		value = ft_itoa(g_state.errno);
+	else if ((value = get_env_value(key)))
 		value = ft_strdup(value);
 	else
 		value = ft_strdup("");
