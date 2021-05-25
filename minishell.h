@@ -76,6 +76,7 @@ char				**create_token(void);
 int					token_size(char **token);
 int					token_push_back(char ***token, char *str);
 void				free_token(char **token);
+char				*join_token(char **token);
 
 t_cmd				*create_cmd(void);
 t_cmd				*add_cmd(t_cmd *cur);

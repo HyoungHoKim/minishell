@@ -13,6 +13,7 @@ SRCS	= main.c \
 		  parser.c \
 		  tokenizer.c \
 		  token_util.c \
+		  join_token.c \
 		  cmd_util.c \
 		  expand_var.c \
 		  parser_util.c \

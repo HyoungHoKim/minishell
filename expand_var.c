@@ -6,7 +6,7 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:43:09 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/23 18:03:07 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/25 15:09:38 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,36 +74,13 @@ static char	**split_buf(char *buf)
 	return (res);
 }
 
-static int	get_total_len(char **token)
-{
-	int		len;
-	int		i;
-
-	len = 0;
-	i = 0;
-	while (token[i])
-	{
-		len += ft_strlen(token[i]);
-		i++;
-	}
-	return (len);
-}
-
 char		*expand_var(char *buf)
 {
 	char	*res;
 	char	**token;
-	int		len;
-	int		i;
 
 	token = split_buf(buf);
-	len = get_total_len(token);
-	if (!(res = (char *)malloc(sizeof(char) * (len + 1))))
-		return (NULL);
-	res[0] = '\0';
-	i = -1;
-	while (token[++i])
-		ft_strlcat(res, token[i], len + 1);
+	res = join_token(token);
 	free_token(token);
 	return (res);
 }
