@@ -6,13 +6,11 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:55:04 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/21 18:49:19 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/25 18:24:02 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_state		g_state;
 
 void		env_delete(int env_idx)
 {
@@ -30,7 +28,7 @@ void		env_delete(int env_idx)
 	g_state.env = new_env;
 }
 
-int			ft_unset(char **token)
+void		ft_unset(char **token)
 {
 	int		idx;
 	char	*key;
@@ -41,9 +39,9 @@ int			ft_unset(char **token)
 	{
 		key = get_env_key(token[idx]);
 		if (check_invalid_key(key))
-			return (FAILURE);
+			break ;
 		if ((env_idx = get_env_idx(key)) != -1)
 			env_delete(env_idx);
 	}
-	return (SUCCESS);
+	g_state.errno = SUCCESS;
 }

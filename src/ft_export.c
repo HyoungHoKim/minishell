@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 13:14:21 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/25 13:29:22 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/25 19:40:41 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,20 @@
 
 t_state		g_state;
 
-int			compare_key(char *env1, char *env2)
+int			value_size(char *value)
 {
-	char	*key1;
-	char	*key2;
-	int		ret;
-
-	key1 = get_env_key(env1);
-	key2 = get_env_key(env2);
-	ret = ft_strcmp(key1, key2);
-	free(key1);
-	free(key2);
-	return (ret);
-}
-
-char		**sort_env(char **env)
-{
-	char	*temp_env;
 	int		i;
-	int		j;
+	int		size;
 
 	i = -1;
-	while (env[++i] != NULL)
+	size = 0;
+	while (value[++i] != '\0')
 	{
-		j = i;
-		while (env[++j] != NULL)
-		{
-			if (compare_key(env[i], env[j]) > 0)
-			{
-				temp_env = env[i];
-				env[i] = env[j];
-				env[j] = temp_env;
-			}
-		}
+		if (value[i] == '\\' || value[i] == '\"' || value[i] == '$')
+			size++;
 	}
-	return (env);
+	size += ft_strlen(value);
+	return (size);
 }
 
 char		*add_back_slash(char *value)
@@ -61,13 +40,7 @@ char		*add_back_slash(char *value)
 	if (value == NULL)
 		return (NULL);
 	i = -1;
-	size = 0;
-	while (value[++i] != '\0')
-	{
-		if (value[i] == '\\' || value[i] == '\"' || value[i] == '$')
-			size++;
-	}
-	size += ft_strlen(value);
+	size = value_size(value);
 	ret = (char *)malloc(sizeof(char) * (size + 1));
 	ret[size] = '\0';
 	i = 0;
@@ -81,36 +54,6 @@ char		*add_back_slash(char *value)
 	return (ret);
 }
 
-void		print_sort_env(void)
-{
-	char	**env;
-	char	**sorted_env;
-	char	*key;
-	char	*value;
-
-	env = copy_envp(g_state.env);
-	sorted_env = sort_env(env);
-	while (*sorted_env != NULL)
-	{
-		key = get_env_key(*sorted_env);
-		value = add_back_slash(get_env_value(key));
-		ft_putstr_fd("declare -x ", STDOUT_FILENO);
-		ft_putstr_fd(key, STDOUT_FILENO);
-		if (value != NULL)
-		{
-			ft_putstr_fd("=\"", STDOUT_FILENO);
-			ft_putstr_fd(value, STDOUT_FILENO);
-			ft_putstr_fd("\"", STDOUT_FILENO);
-		}
-		ft_putstr_fd("\n", STDOUT_FILENO);
-		free(value);
-		free(key);
-		sorted_env++;
-	}
-	free_token(env);
-	return ;
-}
-
 void		replace_env(char *token, char *key)
 {
 	char	**exist_env;
@@ -120,7 +63,7 @@ void		replace_env(char *token, char *key)
 	*exist_env = ft_strdup(token);
 }
 
-int			ft_export(char **token)
+void		ft_export(char **token)
 {
 	int		idx;
 	char	*key;
@@ -134,7 +77,11 @@ int			ft_export(char **token)
 		{
 			key = get_env_key(token[idx]);
 			if (check_invalid_key(key))
-				return (FAILURE);
+			{
+				err_msg_export(token[0], token[1], "not a valid identifier", 1);
+				free(key);
+				break ;
+			}
 			if (!(get_env(key)))
 				token_push_back(&g_state.env, ft_strdup(token[idx]));
 			else
@@ -142,5 +89,4 @@ int			ft_export(char **token)
 			free(key);
 		}
 	}
-	return (SUCCESS);
 }

@@ -94,12 +94,15 @@ char				*expand_var(char *buf);
 int					get_split_idx(char *buf, int *bs_idx, int *dr_idx);
 int					is_set(char c, char *set);
 
+void				print_sort_env(void);
+char				*add_back_slash(char *value);
+
 void				ft_echo(char **token);
 void				ft_pwd(void);
 void				ft_env(char **token);
-int					ft_cd(char **token);
-int					ft_export(char **token);
-int					ft_unset(char **token);
+void				ft_cd(char **token);
+void				ft_export(char **token);
+void				ft_unset(char **token);
 void				ft_exit(char **token);
 
 void				exec_command(t_cmd *cmd);
@@ -108,5 +111,6 @@ int					check_builtin(char **token);
 char				*find_extern_dir(char *token);
 int					exec_pipe(t_cmd *cmd);
 
-int					err_msg(char *err_type, char *comment, int errno);
+int					err_msg(char *command, char *err_type, char *comment, int errno);
+int					err_msg_export(char *command, char *err_type, char *comment, int errno);
 #endif
