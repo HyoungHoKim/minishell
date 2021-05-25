@@ -6,13 +6,37 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 15:45:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/25 13:42:35 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/25 17:21:25 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 t_state		g_state;
+
+char		*find_extern_dir(char *token)
+{
+	char		**path_list;
+	char		**head;
+	char		*dir;
+	struct stat	sb;
+
+	path_list = ft_split(get_env_value("PATH"), ':');
+	head = path_list;
+	token = ft_strjoin("/", token);
+	while (*path_list != NULL)
+	{
+		dir = ft_strjoin(*path_list, token);
+		if (stat(dir, &sb) == 0)
+			break ;
+		free(*path_list);
+		free(dir);
+		path_list++;
+	}
+	free(head);
+	free(token);
+	return (dir);
+}
 
 void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 {
@@ -39,9 +63,8 @@ void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 	else
 		ret = execve(path, cmd->token, g_state.env);
 	if (ret == -1)
-		ft_putstr_fd("command not found", STDOUT_FILENO);
+		ft_putstr_fd("command not found\n", STDOUT_FILENO);
 	exit(ret);
-	
 }
 
 int			exec_pipe(t_cmd *cmd)

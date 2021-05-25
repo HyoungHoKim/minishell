@@ -80,6 +80,7 @@ t_cmd				*create_cmd(void);
 t_cmd				*add_cmd(t_cmd *cur);
 t_cmd				*rewind_cmd(t_cmd *cmd);
 void				free_cmd(t_cmd *cmd);
+int					cmd_size(t_cmd *cmd);
 
 char				*get_env(char *key);
 int					get_env_idx(char *key);
@@ -100,12 +101,10 @@ int					ft_export(char **token);
 int					ft_unset(char **token);
 void				ft_exit(char **token);
 
+void				exec_command(t_cmd *cmd);
 void				exec_builtin(char **token);
 int					check_builtin(char **token);
-
-int					extern_func(char **token);
 char				*find_extern_dir(char *token);
-
 int					exec_pipe(t_cmd *cmd);
 
 #endif
