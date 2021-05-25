@@ -29,7 +29,7 @@ SRCS	= main.c \
 		  ft_export.c \
 		  ft_unset.c \
 		  ft_exit.c \
-		  extern_func.c \
+		  exec_command.c \
 		  exec_builtin.c \
 		  exec_pipe.c
 OBJS	= $(addprefix $(D_OBJS)/, $(SRCS:.c=.o))

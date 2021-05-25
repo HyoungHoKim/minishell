@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   exec_command.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/17 18:47:28 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/25 17:29:33 by hyoukim          ###   ########.fr       */
+/*   Created: 2021/05/21 14:44:14 by hyoukim           #+#    #+#             */
+/*   Updated: 2021/05/25 16:30:00 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_state		g_state;
-
-void		ft_env(char **token)
+void		exec_command(t_cmd *cmd)
 {
-	if (token_size(token) == 1)
-		print_env();
+	if (check_builtin(cmd->token) && cmd->flag == 0)
+		exec_builtin(cmd->token);
+	else
+		exec_pipe(cmd);
 }

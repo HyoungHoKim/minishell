@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:38:24 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/25 13:30:33 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/25 16:04:44 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,17 @@ void		free_cmd(t_cmd *cmd)
 		free(prev);
 		prev = NULL;
 	}
+}
+
+int			cmd_size(t_cmd *cmd)
+{
+	int cnt;
+
+	cnt = 0;
+	while (cmd != NULL)
+	{
+		cnt++;
+		cmd = cmd->next;
+	}
+	return (cnt);
 }
