@@ -21,7 +21,6 @@ SRCS	= main.c \
 		  termcap.c \
 		  handle_keycode.c \
 		  history.c \
-		  exec_command.c \
 		  ft_echo.c \
 		  ft_pwd.c \
 		  ft_env.c \
@@ -29,7 +28,9 @@ SRCS	= main.c \
 		  ft_export.c \
 		  ft_unset.c \
 		  ft_exit.c \
-		  extern_func.c
+		  extern_func.c \
+		  exec_builtin.c \
+		  exec_pipe.c
 OBJS	= $(addprefix $(D_OBJS)/, $(SRCS:.c=.o))
 
 CC			= gcc

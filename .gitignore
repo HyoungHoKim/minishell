@@ -1,6 +1,7 @@
 *.o
 *.a
 *.dSYM
+*.txt
 /minishell
 obj/
 libft/obj/

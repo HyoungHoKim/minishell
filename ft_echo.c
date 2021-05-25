@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 21:15:12 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/17 16:38:48 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/25 13:28:28 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		ft_echo(char **token)
 	idx = 0;
 	is_n = 0;
 	if (token_size(token) == 1)
-		ft_putstr_fd("\n", STDIN);
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	else
 	{
 		while (token[++idx] != NULL)
@@ -49,11 +49,11 @@ void		ft_echo(char **token)
 		}
 		while (token[idx] != NULL)
 		{
-			ft_putstr_fd(token[idx++], STDIN);
+			ft_putstr_fd(token[idx++], STDOUT_FILENO);
 			if (token[idx] != NULL)
-				ft_putstr_fd(" ", STDIN);
+				ft_putstr_fd(" ", STDOUT_FILENO);
 		}
 		if (!is_n)
-			ft_putstr_fd("\n", STDIN);
+			ft_putstr_fd("\n", STDOUT_FILENO);
 	}
 }

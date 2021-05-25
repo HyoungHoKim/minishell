@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:41:35 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/23 17:53:30 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/25 13:28:52 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ void		print_env(void)
 		value = get_env_value(key);
 		if (value != NULL)
 		{
-			ft_putstr_fd(g_state.env[idx], STDIN);
-			ft_putstr_fd("\n", STDIN);
+			ft_putstr_fd(g_state.env[idx], STDOUT_FILENO);
+			ft_putstr_fd("\n", STDOUT_FILENO);
 		}
 		free(key);
 	}

@@ -10,7 +10,6 @@
 # include "libft/libft.h"
 # include "term.h"
 
-# define STDIN		0
 # define MAXSIZE	1024
 # define SUCCESS	0
 # define FAILURE	1
@@ -94,8 +93,6 @@ char				*expand_var(char *buf);
 int					get_split_idx(char *buf, int *bs_idx, int *dr_idx);
 int					is_set(char c, char *set);
 
-int					exec_command(char **token);
-
 void				ft_echo(char **token);
 void				ft_pwd(void);
 void				ft_env(char **token);
@@ -104,6 +101,12 @@ int					ft_export(char **token);
 int					ft_unset(char **token);
 void				ft_exit(char **token);
 
+void				exec_builtin(char **token);
+int					check_builtin(char **token);
+
 int					extern_func(char **token);
+char				*find_extern_dir(char *token);
+
+int					exec_pipe(t_cmd *cmd);
 
 #endif
