@@ -1,13 +1,13 @@
-NAME	= minishell
+NAME	:= minishell
 
-D_LIBFT	= libft
-D_OBJS	= obj
-D_SRCS	= src
-D_INC	= include
+D_LIBFT	:= libft
+D_OBJS	:= obj
+D_SRCS	:= src
+D_INC	:= include
 
-LIBFT	= $(D_LIBFT)/libft.a
+LIBFT	:= $(D_LIBFT)/libft.a
 
-SRC		= main.c \
+SRC		:= main.c \
 		  utils_env.c \
 		  utils_sig.c \
 		  utils.c \
@@ -35,18 +35,18 @@ SRC		= main.c \
 		  exec_builtin.c \
 		  exec_pipe.c
 SRCS	:= $(addprefix, $(D_SRCS)/, $(SRC))
-OBJS	= $(addprefix $(D_OBJS)/, $(SRC:.c=.o))
+OBJS	:= $(addprefix $(D_OBJS)/, $(SRC:.c=.o))
 
-CC			= gcc
-CFLAGS		= -Wall -Werror -Wextra
-SANITIZE	= -fsanitize=address -g
+CC			:= gcc
+CFLAGS		:= -Wall -Werror -Wextra
+SANITIZE	:= -fsanitize=address -g
 CFLAGS		+= $(SANITIZE)
-RM			= rm -rf
+RM			:= rm -rf
 
-INC		= -I$(D_LIBFT)/
+INC		:= -I$(D_LIBFT)/
 INC		+= -I$(D_INC)/
 
-LIBS	= -L$(D_LIBFT)/
+LIBS	:= -L$(D_LIBFT)/
 LIBS	+= -lft
 LIBS	+= -ltermcap
 
