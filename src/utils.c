@@ -6,11 +6,10 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:39:34 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/21 18:40:03 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/25 17:46:45 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "minishell.h"
 #include <unistd.h>
 

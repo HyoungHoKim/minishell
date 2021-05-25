@@ -2,10 +2,12 @@ NAME	= minishell
 
 D_LIBFT	= libft
 D_OBJS	= obj
+D_SRCS	= src
+D_INC	= include
 
 LIBFT	= $(D_LIBFT)/libft.a
 
-SRCS	= main.c \
+SRC		= main.c \
 		  utils_env.c \
 		  utils_sig.c \
 		  utils.c \
@@ -32,7 +34,8 @@ SRCS	= main.c \
 		  exec_command.c \
 		  exec_builtin.c \
 		  exec_pipe.c
-OBJS	= $(addprefix $(D_OBJS)/, $(SRCS:.c=.o))
+SRCS	:= $(addprefix, $(D_SRCS)/, $(SRC))
+OBJS	= $(addprefix $(D_OBJS)/, $(SRC:.c=.o))
 
 CC			= gcc
 CFLAGS		= -Wall -Werror -Wextra
@@ -40,7 +43,8 @@ SANITIZE	= -fsanitize=address -g
 CFLAGS		+= $(SANITIZE)
 RM			= rm -rf
 
-INC		= -I$(D_LIBFT)
+INC		= -I$(D_LIBFT)/
+INC		+= -I$(D_INC)/
 
 LIBS	= -L$(D_LIBFT)/
 LIBS	+= -lft
@@ -59,7 +63,7 @@ $(NAME): $(LIBFT) $(D_OBJS) $(OBJS)
 $(D_OBJS):
 	mkdir -p $(D_OBJS)
 
-$(D_OBJS)/%.o: %.c
+$(D_OBJS)/%.o: $(D_SRCS)/%.c
 	$(CC) $(CFLAGS) $(INC) -o $@ -c $<
 
 clean:

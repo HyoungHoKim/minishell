@@ -7,7 +7,7 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <unistd.h>
-# include "libft/libft.h"
+# include "libft.h"
 # include "term.h"
 
 # define MAXSIZE	1024

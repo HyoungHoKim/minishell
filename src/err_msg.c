@@ -6,11 +6,10 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 15:37:42 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/25 15:41:15 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/25 17:47:23 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "minishell.h"
 
 int		err_msg(char *err_type, char *comment, int errno)

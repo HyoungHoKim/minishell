@@ -2,6 +2,7 @@
 *.a
 *.dSYM
 *.txt
+!compile_flags.txt
 /minishell
 obj/
 libft/obj/
