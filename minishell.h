@@ -10,7 +10,6 @@
 # include "libft/libft.h"
 # include "term.h"
 
-# define STDIN		0
 # define MAXSIZE	1024
 # define SUCCESS	0
 # define FAILURE	1

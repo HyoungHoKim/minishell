@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 15:45:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/24 21:16:07 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/25 13:42:35 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,22 @@ void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 	if (cmd->flag == 1)
 	{
 		dup2(next_cmd->fd[1], 1);
-		close(next_cmd->fd[1]);
+		close(next_cmd->fd[0]);
 	}
-	ft_putstr_fd("test1 \n", STDIN);
 	if (cmd->fd[0] != 0)
 	{
 		dup2(cmd->fd[0], 0);
 		close(cmd->fd[0]);
 	}
-	ft_putstr_fd("test2 \n", STDIN);
 	if (check_builtin(cmd->token))
 	{
-		ft_putstr_fd("builtin exec \n", STDIN);
 		exec_builtin(cmd->token);
+		close(next_cmd->fd[1]);
 	}
 	else
-	{
-		ft_putstr_fd("extern_func exec \n", STDIN);
 		ret = execve(path, cmd->token, g_state.env);
-	}
 	if (ret == -1)
-		ft_putstr_fd("command not found", STDIN);
+		ft_putstr_fd("command not found", STDOUT_FILENO);
 	exit(ret);
 	
 }
@@ -63,11 +58,9 @@ int			exec_pipe(t_cmd *cmd)
 	}
 	pid = fork();
 	if (pid == 0)
-	{
-		ft_putstr_fd("child process start \n", STDIN);
 		exec_child_process(cmd, next_cmd);
-	}
-	waitpid(pid, &status, 0);
+	else
+		waitpid(pid, &status, 0);
 	if (cmd->flag == 1)
 		close(next_cmd->fd[1]);
 	if (cmd->fd[0] != 0)

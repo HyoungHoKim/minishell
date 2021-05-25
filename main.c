@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/24 20:44:34 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/25 13:39:38 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,8 @@ int			process(char *line, t_cmd *cmd)
 	{
 		if (cmd->token[0] == NULL)
 			return (FAILURE);
-		if (cmd->flag == 0 && check_builtin(cmd->token))
-		{
-			ft_putstr_fd("basic builtin exec \n", STDIN);
-			exec_builtin(cmd->token);
-		}
+		//if (cmd->flag == 0 && check_builtin(cmd->token))
+			//exec_builtin(cmd->token);
 		else
 			exec_pipe(cmd);
 		//else if (temp->flag == 2)
