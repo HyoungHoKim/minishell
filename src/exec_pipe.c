@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 15:45:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/25 21:33:59 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/26 00:33:05 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,9 @@ void		exec_redirection(t_cmd *cmd)
 		dup2(fd, STDOUT_FILENO);
 		close(fd);
 	}
-	// TODO: Bad filedescriptor 고치기
 	else if (cmd->flag == REIN)
 	{
-		if ((fd = open(cmd->next->token[0], O_RDONLY, 0644) < 0))
+		if ((fd = open(cmd->next->token[0], O_RDONLY, 0644)) < 0)
 			ft_putstr_fd("open error\n", STDERR_FILENO);
 		dup2(fd, STDIN_FILENO);
 		close(fd);
@@ -77,7 +76,7 @@ void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 	}
 	else if (cmd->flag > PIPE)
 		exec_redirection(cmd);
-	if (cmd->fd[0] != 0)
+	if (cmd->prev && cmd->prev->flag == PIPE)
 	{
 		dup2(cmd->fd[0], STDIN_FILENO);
 		close(cmd->fd[0]);
