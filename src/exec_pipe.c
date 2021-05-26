@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 15:45:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/26 14:50:51 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/26 15:16:41 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,27 +50,6 @@ char		*find_extern_dir(char *token)
 	return (dir);
 }
 
-void		exec_redirection(t_cmd *cmd)
-{
-	int		fd;
-
-	if (cmd->flag == REOUT)
-	{
-		if ((fd = open(cmd->next->token[0],
-						(O_CREAT | O_TRUNC | O_WRONLY), 0644)) < 0)
-			ft_putstr_fd("open error\n", STDERR_FILENO);
-		dup2(fd, STDOUT_FILENO);
-		close(fd);
-	}
-	else if (cmd->flag == REIN)
-	{
-		if ((fd = open(cmd->next->token[0], O_RDONLY, 0644)) < 0)
-			ft_putstr_fd("open error\n", STDERR_FILENO);
-		dup2(fd, STDIN_FILENO);
-		close(fd);
-	}
-}
-
 void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 {
 	int		ret;
@@ -85,15 +64,15 @@ void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 		close(next_cmd->fd[1]);
 		close(next_cmd->fd[0]);
 	}
-	else if (cmd->flag > PIPE)
-		exec_redirection(cmd);
 	if (cmd->prev && cmd->prev->flag == PIPE)
 	{
 		dup2(cmd->fd[0], STDIN_FILENO);
 		close(cmd->fd[0]);
 	}
+	if (find_redirection(cmd))
+		ft_putstr_fd("bash: redirection error\n", STDERR_FILENO);
 	if (check_builtin(cmd->token))
-		exec_builtin(cmd->token);
+		exec_builtin(cmd);
 	else
 		ret = execve(path, cmd->token, g_state.env);
 	if (ret == -1)
@@ -116,8 +95,6 @@ int			exec_pipe(t_cmd *cmd)
 		next_cmd = cmd->next;
 		pipe(next_cmd->fd);
 	}
-	else if (cmd->prev && cmd->prev->flag > PIPE)
-		return (SUCCESS);
 	pid = fork();
 	if (pid == 0)
 		exec_child_process(cmd, next_cmd);

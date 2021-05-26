@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 14:44:14 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/25 16:30:00 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/26 13:16:28 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void		exec_command(t_cmd *cmd)
 {
 	if (check_builtin(cmd->token) && cmd->flag == 0)
-		exec_builtin(cmd->token);
+		exec_builtin(cmd);
 	else
 		exec_pipe(cmd);
 }
