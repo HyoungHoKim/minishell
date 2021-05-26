@@ -108,10 +108,11 @@ void				ft_export(char **token);
 void				ft_unset(char **token);
 void				ft_exit(char **token);
 
-void				exec_command(t_cmd *cmd);
+void				exec_command(t_cmd **cmd);
 void				exec_builtin(t_cmd *cmd);
 int					check_builtin(char **token);
 char				*find_extern_dir(char *token);
+void				exec_pipe_set(t_cmd **cmd);
 int					exec_pipe(t_cmd *cmd);
 
 int					find_redirection(t_cmd *cmd);

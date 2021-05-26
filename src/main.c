@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/26 16:29:33 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/26 17:14:26 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_state		g_state;
 
 int			process(char *line, t_cmd *cmd)
 {
-	int status;
 	print_cmd_token(cmd);
 	
 	while (cmd)
@@ -27,13 +26,10 @@ int			process(char *line, t_cmd *cmd)
 		if (cmd->token[0] == NULL)
 			return (FAILURE);
 		if (cmd->flag == PIPE || (cmd->prev && cmd->prev->flag == PIPE))
-			exec_pipe(cmd);
+			exec_pipe_set(&cmd);
 		else
-			exec_command(cmd);
-		cmd = cmd->next;
+			exec_command(&cmd);
 	}
-	for (int i = 0; i < 3; i++)
-		wait(&status);
 	if (ft_strlen(line))
 		hist_push_front(&g_state.hist, line);
 	return (SUCCESS);
