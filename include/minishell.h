@@ -116,4 +116,6 @@ int					exec_pipe(t_cmd *cmd);
 
 int					err_msg(char *command, char *err_type, char *comment, int my_errno);
 int					err_msg_export(char *command, char *err_type, char *comment, int my_errno);
+int					err_msg_extern(char *err_type, char *comment);
+
 #endif

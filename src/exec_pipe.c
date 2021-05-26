@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 15:45:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/26 13:25:42 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/26 14:50:51 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 	char	*path;
 
 	ret = SUCCESS;
-	if (cmd->flag == 1)
+	if (cmd->flag == 1 || cmd->flag == 0)
 		path = find_extern_dir(cmd->token[0]);
 	if (cmd->flag == PIPE)
 	{
@@ -97,8 +97,11 @@ void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 	else
 		ret = execve(path, cmd->token, g_state.env);
 	if (ret == -1)
-		err_msg(cmd->token[0], cmd->token[1], strerror(errno), errno);
-	exit(ret);
+	{
+		err_msg_extern(cmd->token[1], strerror(errno));
+		exit(errno);
+	}
+	exit(SUCCESS);
 }
 
 int			exec_pipe(t_cmd *cmd)
@@ -124,5 +127,6 @@ int			exec_pipe(t_cmd *cmd)
 		close(next_cmd->fd[1]);
 	if (cmd->fd[0] != 0)
 		close(cmd->fd[0]);
+	g_state.my_errno = WEXITSTATUS(status);
 	return (SUCCESS);
 }
