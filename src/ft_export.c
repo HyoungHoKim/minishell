@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/18 13:14:21 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/25 19:40:41 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/26 13:05:49 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void		ft_export(char **token)
 			{
 				err_msg_export(token[0], token[1], "not a valid identifier", 1);
 				free(key);
-				break ;
+				return ;
 			}
 			if (!(get_env(key)))
 				token_push_back(&g_state.env, ft_strdup(token[idx]));
@@ -89,4 +89,5 @@ void		ft_export(char **token)
 			free(key);
 		}
 	}
+	g_state.my_errno = SUCCESS;
 }

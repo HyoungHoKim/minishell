@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/16 21:15:12 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/25 18:15:50 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/26 13:03:53 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,5 @@ void		ft_echo(char **token)
 	}
 	if (!is_n)
 		ft_putstr_fd("\n", STDOUT_FILENO);
-	g_state.errno = SUCCESS;
+	g_state.my_errno = SUCCESS;
 }

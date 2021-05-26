@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 19:17:09 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/25 19:05:30 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/26 13:06:46 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void		ft_cd(char **token)
 	free(dir);
 	if (is_go == -1)
 	{
-		g_state.errno = 1;
+		g_state.my_errno = 1;
 		err_msg(token[0], token[1], "No such file or directory", 1);
 	}
-	g_state.errno = SUCCESS;
+	g_state.my_errno = SUCCESS;
 }

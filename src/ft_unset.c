@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/20 13:55:04 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/25 18:24:02 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/26 13:06:13 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,5 @@ void		ft_unset(char **token)
 		if ((env_idx = get_env_idx(key)) != -1)
 			env_delete(env_idx);
 	}
-	g_state.errno = SUCCESS;
+	g_state.my_errno = SUCCESS;
 }

@@ -7,6 +7,8 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <errno.h>
+# include <string.h>
 # include "libft.h"
 # include "term.h"
 
@@ -45,7 +47,7 @@ typedef struct		s_parse
 
 typedef struct		s_state
 {
-	int				errno;
+	int				my_errno;
 	char			**env;
 	t_hist			*hist;
 	struct termios	backup;
@@ -111,6 +113,6 @@ int					check_builtin(char **token);
 char				*find_extern_dir(char *token);
 int					exec_pipe(t_cmd *cmd);
 
-int					err_msg(char *command, char *err_type, char *comment, int errno);
-int					err_msg_export(char *command, char *err_type, char *comment, int errno);
+int					err_msg(char *command, char *err_type, char *comment, int my_errno);
+int					err_msg_export(char *command, char *err_type, char *comment, int my_errno);
 #endif
