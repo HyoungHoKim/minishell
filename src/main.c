@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/25 20:56:11 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/26 14:58:13 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,15 @@ t_state		g_state;
 
 int			process(char *line, t_cmd *cmd)
 {
-	if (cmd->token[0] == NULL)
-		return (FAILURE);
 	print_cmd_token(cmd);
 	while (cmd)
 	{
-		if (cmd->prev == NULL)
-			exec_command(cmd);
-		else if (cmd->prev->flag == 0)
-			exec_command(cmd);
-		else if (cmd->prev->flag > 0 || cmd->flag > 0)
-		{
+		if (cmd->token[0] == NULL)
+			return (FAILURE);
+		if (cmd->flag == PIPE || (cmd->prev && cmd->prev->flag == PIPE))
 			exec_pipe(cmd);
-			//else if (cmd->prev->flag == 2)
-			//	exec_redir(cmd);
-		}
+		else
+			exec_command(cmd);
 		cmd = cmd->next;
 	}
 	if (ft_strlen(line))

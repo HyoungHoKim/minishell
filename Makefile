@@ -33,7 +33,8 @@ SRC		:= main.c \
 		  ft_exit.c \
 		  exec_command.c \
 		  exec_builtin.c \
-		  exec_pipe.c
+		  exec_pipe.c \
+		  redirection.c
 SRCS	:= $(addprefix, $(D_SRCS)/, $(SRC))
 OBJS	:= $(addprefix $(D_OBJS)/, $(SRC:.c=.o))
 

@@ -6,7 +6,7 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:48:59 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/25 20:17:02 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/26 11:49:32 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,5 @@ int			get_flag(char c)
 {
 	if (c == '|')
 		return (PIPE);
-	else if (c == '<')
-		return (REIN);
-	else if (c == '>')
-		return (REOUT);
 	return (0);
 }
