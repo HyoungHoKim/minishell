@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 15:45:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/26 17:27:17 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/26 18:08:50 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,4 +128,5 @@ void		exec_pipe_set(t_cmd **cmd)
 	*cmd = (*cmd)->next;
 	while (pipe_cnt-- >= 0)
 		wait(&status);
+	g_state.my_errno = (status >> 8);
 }
