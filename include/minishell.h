@@ -18,7 +18,8 @@
 
 # define SEMI		0
 # define PIPE		1
-# define REDIR		2
+# define REOUT		2
+# define REIN		3
 
 typedef struct		s_hist
 {

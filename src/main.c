@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/25 17:46:20 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/26 13:43:12 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int			process(char *line, t_cmd *cmd)
 			exec_command(cmd);
 		else if (cmd->prev->flag == 0)
 			exec_command(cmd);
-		else if (cmd->prev->flag == 1 || cmd->flag == 1)
+		else if (cmd->prev->flag > 0 || cmd->flag > 0)
 		{
 			exec_pipe(cmd);
 			//else if (cmd->prev->flag == 2)
@@ -70,7 +70,7 @@ static void	reset(char **line, t_cmd **cmd)
 static void	handle_ctrl_d(void)
 {
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
-	exit(g_state.errno);
+	exit(g_state.my_errno);
 }
 
 int			main(int argc, char **argv, char **envp)
@@ -81,7 +81,7 @@ int			main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	if (init(&line, envp))
-		return (g_state.errno);
+		return (g_state.my_errno);
 	while (1)
 	{
 		show_prompt();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_sig.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:40:13 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/25 17:46:37 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/26 13:43:29 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,15 @@ void		handle_signal(int signo)
 	if (signo == SIGINT)
 	{
 		if (pid == -1)
+		{
 			show_new_line();
+			g_state.my_errno = 1;
+		}
 		else
+		{
 			ft_putstr_fd("\n", STDOUT_FILENO);
+			g_state.my_errno = status + 128;
+		}
 	}
 	else if (signo == SIGQUIT)
 	{
@@ -36,7 +42,7 @@ void		handle_signal(int signo)
 			ft_putstr_fd("Quit: ", STDOUT_FILENO);
 			ft_putnbr_fd(status, STDOUT_FILENO);
 			ft_putchar_fd('\n', STDOUT_FILENO);
-			g_state.errno = status;
+			g_state.my_errno = status + 128;
 		}
 	}
 }

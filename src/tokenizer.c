@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 14:27:59 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/21 18:41:18 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/25 20:02:23 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ static void			add_token(t_cmd *cmd, t_parse *parse, int *buf_i)
 		single_token = ft_strdup(parse->buf);
 	else
 		single_token = expand_var(parse->buf);
-	token_push_back(&(cmd->token), single_token);
+	if (token_size(cmd->token) &&
+			cmd->prev && (cmd->prev->flag == REIN || cmd->prev->flag == REOUT))
+		token_push_back(&(cmd->prev->token), single_token);
+	else
+		token_push_back(&(cmd->token), single_token);
 	ft_memset(parse->buf, 0, sizeof(parse->buf));
 }
 
@@ -31,7 +35,7 @@ static int			parse_single_char(t_cmd **cmd, t_parse *parse, int *buf_i)
 {
 	if (is_set(*parse->input, "\"\'"))
 		parse->quote = *parse->input;
-	else if (is_set(*parse->input, ";|"))
+	else if (is_set(*parse->input, ";|<>"))
 	{
 		add_token(*cmd, parse, buf_i);
 		(*cmd)->flag = get_flag(*parse->input);

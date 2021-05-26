@@ -6,11 +6,23 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 15:45:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/26 13:02:17 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/26 13:25:42 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <sys/fcntl.h>
+#include <unistd.h>
+
+int			check_dir_token(char *token)
+{
+	if (token[0] == '/')
+		return (1);
+	else if (ft_strncmp(token, "./", 3) == 0)
+		return (1);
+	else
+		return (0);
+}
 
 char		*find_extern_dir(char *token)
 {
@@ -19,6 +31,8 @@ char		*find_extern_dir(char *token)
 	char		*dir;
 	struct stat	sb;
 
+	if (check_dir_token(token))
+		return (token);
 	path_list = ft_split(get_env_value("PATH"), ':');
 	head = path_list;
 	token = ft_strjoin("/", token);
@@ -36,14 +50,25 @@ char		*find_extern_dir(char *token)
 	return (dir);
 }
 
-int			check_dir_token(char *token)
+void		exec_redirection(t_cmd *cmd)
 {
-	if (token[0] == '/')
-		return (1);
-	else if (ft_strncmp(token, "./", 3) == 0)
-		return (1);
-	else
-		return (0);
+	int		fd;
+
+	if (cmd->flag == REOUT)
+	{
+		if ((fd = open(cmd->next->token[0],
+						(O_CREAT | O_TRUNC | O_WRONLY), 0644)) < 0)
+			ft_putstr_fd("open error\n", STDERR_FILENO);
+		dup2(fd, STDOUT_FILENO);
+		close(fd);
+	}
+	else if (cmd->flag == REIN)
+	{
+		if ((fd = open(cmd->next->token[0], O_RDONLY, 0644)) < 0)
+			ft_putstr_fd("open error\n", STDERR_FILENO);
+		dup2(fd, STDIN_FILENO);
+		close(fd);
+	}
 }
 
 void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
@@ -52,25 +77,23 @@ void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 	char	*path;
 
 	ret = SUCCESS;
-	if (check_dir_token(cmd->token[0]))
-		path = cmd->token[0];
-	else
-		path = find_extern_dir(cmd->token[0]);
 	if (cmd->flag == 1)
+		path = find_extern_dir(cmd->token[0]);
+	if (cmd->flag == PIPE)
 	{
-		dup2(next_cmd->fd[1], 1);
+		dup2(next_cmd->fd[1], STDOUT_FILENO);
+		close(next_cmd->fd[1]);
 		close(next_cmd->fd[0]);
 	}
-	if (cmd->fd[0] != 0)
+	else if (cmd->flag > PIPE)
+		exec_redirection(cmd);
+	if (cmd->prev && cmd->prev->flag == PIPE)
 	{
-		dup2(cmd->fd[0], 0);
+		dup2(cmd->fd[0], STDIN_FILENO);
 		close(cmd->fd[0]);
 	}
 	if (check_builtin(cmd->token))
-	{
 		exec_builtin(cmd->token);
-		close(next_cmd->fd[1]);
-	}
 	else
 		ret = execve(path, cmd->token, g_state.env);
 	if (ret == -1)
@@ -85,17 +108,19 @@ int			exec_pipe(t_cmd *cmd)
 	int		status;
 
 	next_cmd = cmd;
-	if (cmd->flag == 1)
+	if (cmd->flag == PIPE)
 	{
 		next_cmd = cmd->next;
 		pipe(next_cmd->fd);
 	}
+	else if (cmd->prev && cmd->prev->flag > PIPE)
+		return (SUCCESS);
 	pid = fork();
 	if (pid == 0)
 		exec_child_process(cmd, next_cmd);
 	else
 		waitpid(pid, &status, 0);
-	if (cmd->flag == 1)
+	if (cmd->flag == PIPE)
 		close(next_cmd->fd[1]);
 	if (cmd->fd[0] != 0)
 		close(cmd->fd[0]);
