@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 15:45:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/26 13:17:30 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/26 15:04:26 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,15 @@
 #include <sys/fcntl.h>
 #include <unistd.h>
 
-t_state		g_state;
+int			check_dir_token(char *token)
+{
+	if (token[0] == '/')
+		return (1);
+	else if (ft_strncmp(token, "./", 3) == 0)
+		return (1);
+	else
+		return (0);
+}
 
 char		*find_extern_dir(char *token)
 {
@@ -23,6 +31,8 @@ char		*find_extern_dir(char *token)
 	char		*dir;
 	struct stat	sb;
 
+	if (check_dir_token(token))
+		return (token);
 	path_list = ft_split(get_env_value("PATH"), ':');
 	head = path_list;
 	token = ft_strjoin("/", token);
@@ -46,7 +56,8 @@ void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 	char	*path;
 
 	ret = SUCCESS;
-	path = find_extern_dir(cmd->token[0]);
+	if (cmd->flag == 1)
+		path = find_extern_dir(cmd->token[0]);
 	if (cmd->flag == PIPE)
 	{
 		dup2(next_cmd->fd[1], STDOUT_FILENO);
@@ -65,7 +76,7 @@ void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 	else
 		ret = execve(path, cmd->token, g_state.env);
 	if (ret == -1)
-		ft_putstr_fd("command not found\n", STDOUT_FILENO);
+		err_msg(cmd->token[0], cmd->token[1], strerror(errno), errno);
 	exit(ret);
 }
 

@@ -7,6 +7,8 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include <errno.h>
+# include <string.h>
 # include "libft.h"
 # include "term.h"
 
@@ -46,7 +48,7 @@ typedef struct		s_parse
 
 typedef struct		s_state
 {
-	int				errno;
+	int				my_errno;
 	char			**env;
 	t_hist			*hist;
 	struct termios	backup;
@@ -95,12 +97,15 @@ char				*expand_var(char *buf);
 int					get_split_idx(char *buf, int *bs_idx, int *dr_idx);
 int					is_set(char c, char *set);
 
+void				print_sort_env(void);
+char				*add_back_slash(char *value);
+
 void				ft_echo(char **token);
 void				ft_pwd(void);
 void				ft_env(char **token);
-int					ft_cd(char **token);
-int					ft_export(char **token);
-int					ft_unset(char **token);
+void				ft_cd(char **token);
+void				ft_export(char **token);
+void				ft_unset(char **token);
 void				ft_exit(char **token);
 
 void				exec_command(t_cmd *cmd);
@@ -111,5 +116,6 @@ int					exec_pipe(t_cmd *cmd);
 
 int					find_redirection(t_cmd *cmd);
 
-int					err_msg(char *err_type, char *comment, int errno);
+int					err_msg(char *command, char *err_type, char *comment, int my_errno);
+int					err_msg_export(char *command, char *err_type, char *comment, int my_errno);
 #endif

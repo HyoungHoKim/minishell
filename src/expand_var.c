@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:43:09 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/25 18:06:25 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/26 13:43:45 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*get_var(char *buf)
 	len = get_var_len(buf);
 	key = ft_substr(buf, 1, len);
 	if (ft_strncmp(key, "?", 2) == 0)
-		value = ft_itoa(g_state.errno);
+		value = ft_itoa(g_state.my_errno);
 	else if ((value = get_env_value(key)))
 		value = ft_strdup(value);
 	else

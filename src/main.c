@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/26 14:58:13 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/26 15:04:38 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	reset(char **line, t_cmd **cmd)
 static void	handle_ctrl_d(void)
 {
 	ft_putstr_fd("exit\n", STDOUT_FILENO);
-	exit(g_state.errno);
+	exit(g_state.my_errno);
 }
 
 int			main(int argc, char **argv, char **envp)
@@ -75,7 +75,7 @@ int			main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	if (init(&line, envp))
-		return (g_state.errno);
+		return (g_state.my_errno);
 	while (1)
 	{
 		show_prompt();
