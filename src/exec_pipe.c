@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 15:45:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/26 15:16:41 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/26 16:24:15 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int			exec_pipe(t_cmd *cmd)
 {
 	pid_t	pid;
 	t_cmd	*next_cmd;
-	int		status;
+	//int		status;
 
 	next_cmd = cmd;
 	if (cmd->flag == PIPE)
@@ -98,12 +98,12 @@ int			exec_pipe(t_cmd *cmd)
 	pid = fork();
 	if (pid == 0)
 		exec_child_process(cmd, next_cmd);
-	else
-		waitpid(pid, &status, 0);
+	//else
+	//	waitpid(pid, &status, 0);
 	if (cmd->flag == PIPE)
 		close(next_cmd->fd[1]);
 	if (cmd->fd[0] != 0)
 		close(cmd->fd[0]);
-	g_state.my_errno = WEXITSTATUS(status);
+	//g_state.my_errno = WEXITSTATUS(status);
 	return (SUCCESS);
 }

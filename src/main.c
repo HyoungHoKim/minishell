@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/26 15:04:38 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/26 16:29:33 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ t_state		g_state;
 
 int			process(char *line, t_cmd *cmd)
 {
+	int status;
 	print_cmd_token(cmd);
+	
 	while (cmd)
 	{
 		if (cmd->token[0] == NULL)
@@ -30,6 +32,8 @@ int			process(char *line, t_cmd *cmd)
 			exec_command(cmd);
 		cmd = cmd->next;
 	}
+	for (int i = 0; i < 3; i++)
+		wait(&status);
 	if (ft_strlen(line))
 		hist_push_front(&g_state.hist, line);
 	return (SUCCESS);
