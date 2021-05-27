@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:40:13 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/27 14:33:03 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/27 19:07:10 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void		handle_signal(int signo)
 			g_state.my_errno = status + 128;
 		}
 	}
-	else if (signo == SIGQUIT && pid != 1)
+	else if (signo == SIGQUIT && pid != -1)
 	{
 		printf("Quit: %d\n", status);
 		g_state.my_errno = status + 128;
