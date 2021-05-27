@@ -14,6 +14,7 @@ SRC		:= main.c \
 		  get_line.c \
 		  parser.c \
 		  tokenizer.c \
+		  tokenizer_util.c \
 		  token_util.c \
 		  join_token.c \
 		  cmd_util.c \
