@@ -6,19 +6,20 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 17:19:36 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/27 17:36:30 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/27 17:50:03 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char		*join_save_token(char *save, char *token)
+static char		*join_save_token(char **save, char *token)
 {
 	char			*res;
 
-	res = ft_strjoin(save, token);
-	free(save);
+	res = ft_strjoin(*save, token);
+	free(*save);
 	free(token);
+	*save = NULL;
 	return (res);
 }
 
@@ -41,10 +42,7 @@ void			add_token(t_cmd *cmd, t_parse *parse, int *buf_i, int flag)
 	else
 		single_token = expand_var(parse->buf);
 	if (save)
-	{
-		single_token = join_save_token(save, single_token);
-		save = NULL;
-	}
+		single_token = join_save_token(&save, single_token);
 	if (ft_strlen(single_token))
 		token_push_back(&(cmd->token), single_token);
 	else

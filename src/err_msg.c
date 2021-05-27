@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 15:37:42 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/27 14:28:30 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/27 17:52:38 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int		err_msg(char *command, char *err_type, char *comment, int my_errno)
 	return (FAILURE);
 }
 
-int		err_msg_export(char *command, char *err_type, char *comment, int my_errno)
+int		err_msg_export(
+		char *command, char *err_type, char *comment, int my_errno)
 {
 	ft_putstr_fd("bash: ", STDERR_FILENO);
 	ft_putstr_fd(command, STDERR_FILENO);
