@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 15:45:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/27 17:50:23 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/27 20:01:20 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char		*find_extern_dir(char *token)
 	if (check_dir_token(token))
 		return (token);
 	path_list = ft_split(get_env_value("PATH"), ':');
+	if (path_list == NULL)
+		return (token);
 	head = path_list;
 	token = ft_strjoin("/", token);
 	while (*path_list != NULL)
@@ -47,6 +49,8 @@ char		*find_extern_dir(char *token)
 	}
 	free(head);
 	free(token);
+	if (stat(dir, &sb) != 0)
+		return (NULL);
 	return (dir);
 }
 
@@ -56,8 +60,14 @@ void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 	char	*path;
 
 	ret = SUCCESS;
+	if (find_redirection(cmd) || token_size(cmd->token) == 0)
+		exit(g_state.my_errno);
 	if (cmd->flag == 1 || cmd->flag == 0)
-		path = find_extern_dir(cmd->token[0]);
+		if ((path = find_extern_dir(cmd->token[0])) == NULL)
+		{
+			err_msg_extern(cmd->token[0], "command not found");
+			exit(g_state.my_errno);
+		}
 	if (cmd->flag == PIPE)
 	{
 		dup2(next_cmd->fd[1], STDOUT_FILENO);
@@ -69,15 +79,16 @@ void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 		dup2(cmd->fd[0], STDIN_FILENO);
 		close(cmd->fd[0]);
 	}
-	if (find_redirection(cmd))
-		return ;
 	if (check_builtin(cmd->token))
 		exec_builtin(cmd);
 	else
 		ret = execve(path, cmd->token, g_state.env);
 	if (ret == -1)
 	{
-		err_msg_extern(cmd->token[1], strerror(errno));
+		if (errno == 2)
+			err_msg_extern(cmd->token[0], strerror(errno));
+		else
+			err_msg_extern(cmd->token[1], strerror(errno));
 		exit(errno);
 	}
 	exit(SUCCESS);
