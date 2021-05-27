@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:41:35 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/25 13:28:52 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/27 17:06:28 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,12 @@ int			get_env_idx(char *key)
 	int		size;
 	int		i;
 
-	size = ft_strlen(key);
 	i = 0;
 	while (g_state.env[i])
 	{
+		size = ft_strchr(g_state.env[i], '=') ?
+			ft_strchr(g_state.env[i], '=') - g_state.env[i] :
+			ft_strlen(g_state.env[i]);
 		if (ft_strncmp(g_state.env[i], key, size) == 0)
 			return (i);
 		i++;

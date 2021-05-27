@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 15:45:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/27 17:49:17 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/27 17:50:23 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 		close(cmd->fd[0]);
 	}
 	if (find_redirection(cmd))
-		ft_putstr_fd("bash: redirection error\n", STDERR_FILENO);
+		return ;
 	if (check_builtin(cmd->token))
 		exec_builtin(cmd);
 	else

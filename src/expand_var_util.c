@@ -6,7 +6,7 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:43:20 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/21 18:43:34 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/27 17:48:03 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	get_dollar_idx(char *buf)
 
 	if ((dolr_loc = ft_strchr(buf, '$')))
 	{
-		if (*(dolr_loc + 1) == '\0' || *(dolr_loc + 1) == ' ')
+		if (is_set(*(dolr_loc + 1), " /%^=") || *(dolr_loc + 1) == '\0')
 			return (-1);
 		if (buf <= (dolr_loc - 1) && *(dolr_loc - 1) == '\\')
 			return (get_dollar_idx(dolr_loc + 1));
