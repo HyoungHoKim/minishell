@@ -6,10 +6,11 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 13:13:36 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/27 14:14:38 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/27 14:53:44 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 #include <sys/fcntl.h>
 
@@ -67,8 +68,6 @@ static int	cut_off_redirection(t_cmd *cmd)
 
 static int	dup_fd_to_stdio(t_cmd *cmd, int fd[2])
 {
-	if (fd[0] == -1 || fd[1] == -1)
-		return (FAILURE);
 	if (fd[0])
 	{
 		dup2(fd[0], STDIN_FILENO);
@@ -83,29 +82,41 @@ static int	dup_fd_to_stdio(t_cmd *cmd, int fd[2])
 	return (SUCCESS);
 }
 
+static int	handle_redirection_err(t_cmd *cmd, int i)
+{
+	if (cmd->token[i + 1] == NULL || cmd->token[i + 1][0] == 0)
+	{
+		ft_putstr_fd("bash: syntax error near unexpected token `newline`\n",
+				STDERR_FILENO);
+		g_state.my_errno = 258;
+	}
+	else
+		err_msg_extern(cmd->token[i + 1], strerror(errno));
+	return (FAILURE);
+}
+
 int			find_redirection(t_cmd *cmd)
 {
-	char	**token;
 	int		fd[2];
 	int		i;
 
-	token = cmd->token;
 	ft_memset(fd, 0, sizeof(fd));
-	i = 0;
-	while (token[i])
+	i = -1;
+	while (cmd->token[++i])
 	{
-		if (token[i][0] == '<')
-			fd[0] = open(token[i + 1], O_RDONLY, 0644);
-		else if (token[i][0] == '>')
+		if (cmd->token[i][0] == '<')
+			fd[0] = open(cmd->token[i + 1], O_RDONLY, 0644);
+		else if (cmd->token[i][0] == '>')
 		{
-			if (token[i][1] == '>')
-				fd[1] = open(token[i + 1],
+			if (cmd->token[i][1] == '>')
+				fd[1] = open(cmd->token[i + 1],
 						(O_CREAT | O_APPEND | O_WRONLY), 0644);
 			else
-				fd[1] = open(token[i + 1],
+				fd[1] = open(cmd->token[i + 1],
 						(O_CREAT | O_TRUNC | O_WRONLY), 0644);
 		}
-		i++;
+		if (fd[0] == -1 || fd[1] == -1)
+			return (handle_redirection_err(cmd, i));
 	}
 	return (dup_fd_to_stdio(cmd, fd));
 }
