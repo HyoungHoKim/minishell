@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/27 18:25:55 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/27 19:54:04 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static int	init(char **line, char **envp)
 	char		*termtype;
 	int			n;
 
+	g_state.my_errno = 1;
 	if (!(g_state.env = copy_envp(envp)))
 		return (FAILURE);
 	if (!(termtype = getenv("TERM")))
@@ -49,6 +50,7 @@ static int	init(char **line, char **envp)
 	signal(SIGINT, handle_signal);
 	signal(SIGQUIT, handle_signal);
 	tcgetattr(STDIN_FILENO, &g_state.backup);
+	g_state.my_errno = 0;
 	return (SUCCESS);
 }
 
@@ -83,12 +85,6 @@ int			main(int argc, char **argv, char **envp)
 		cmd = create_cmd();
 		if (parser(line, cmd) == SUCCESS)
 			process(line, cmd);
-			/*
-			** double semi/pipe or unclosed quote
-			** TODO: set g_state.errno and write err msg
-			*/
-		else
-			ft_putstr_fd("bash: error\n", STDOUT_FILENO);
 		reset(&line, &cmd);
 	}
 	return (SUCCESS);

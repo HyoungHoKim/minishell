@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 14:27:59 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/27 18:24:29 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/27 19:51:47 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,21 @@ static int			syntax_error(char *token)
 	if (is_set(*(token + 1), ";|"))
 		ft_putchar_fd(*(token + 1), STDERR_FILENO);
 	ft_putstr_fd("`\n", STDERR_FILENO);
+	g_state.my_errno = 258;
 	return (FAILURE);
 }
 
-static void			add_redirction_token(t_cmd *cmd, t_parse *parse, int *buf_i)
+static int			add_redirction_token(t_cmd *cmd, t_parse *parse, int *buf_i)
 {
 	add_token(cmd, parse, buf_i);
+	if (token_size(cmd->token) &&
+			is_set(cmd->token[token_size(cmd->token) - 1][0], "<>"))
+		return (syntax_error(parse->input));
 	parse->buf[(*buf_i)++] = *parse->input;
 	if (*parse->input == '>' && *(parse->input + 1) == '>')
 		parse->buf[(*buf_i)++] = *parse->input++;
 	add_token(cmd, parse, buf_i);
+	return (SUCCESS);
 }
 
 static int			parse_single_char(t_cmd **cmd, t_parse *parse, int *buf_i)
@@ -41,6 +46,8 @@ static int			parse_single_char(t_cmd **cmd, t_parse *parse, int *buf_i)
 	}
 	else if (is_set(*parse->input, ";|"))
 	{
+		if (is_set(*(parse->input + 1), ";|"))
+			return (syntax_error(parse->input));
 		add_token(*cmd, parse, buf_i);
 		(*cmd)->flag = get_flag(*parse->input);
 		if (!*(*cmd)->token)
@@ -50,7 +57,10 @@ static int			parse_single_char(t_cmd **cmd, t_parse *parse, int *buf_i)
 	else if (*parse->input == ' ')
 		add_token(*cmd, parse, buf_i);
 	else if (is_set(*parse->input, "<>"))
-		add_redirction_token(*cmd, parse, buf_i);
+	{
+		if (add_redirction_token(*cmd, parse, buf_i))
+			return (FAILURE);
+	}
 	else if (*parse->input != '\\')
 		parse->buf[(*buf_i)++] = *parse->input;
 	return (SUCCESS);
@@ -89,9 +99,11 @@ int					tokenizer(t_parse *parse, t_cmd *cmd)
 	while (*parse->input != '\0')
 	{
 		if (parse->quote == 0)
-			err |= parse_single_char(&cmd, parse, &buf_i);
+			err = parse_single_char(&cmd, parse, &buf_i);
 		else
 			parse_in_quote(cmd, parse, &buf_i);
+		if (err)
+			break;
 		parse->input++;
 	}
 	add_token(cmd, parse, &buf_i);

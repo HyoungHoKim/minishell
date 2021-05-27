@@ -6,7 +6,7 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 13:13:36 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/27 14:53:44 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/27 19:52:54 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,10 @@ static int	handle_redirection_err(t_cmd *cmd, int i)
 		g_state.my_errno = 258;
 	}
 	else
+	{
 		err_msg_extern(cmd->token[i + 1], strerror(errno));
+		g_state.my_errno = 1;
+	}
 	return (FAILURE);
 }
 
