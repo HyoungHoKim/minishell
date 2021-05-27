@@ -6,7 +6,7 @@
 /*   By: seushin <seushin@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 17:53:44 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/27 17:53:45 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/27 18:18:35 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void				print_cmd_token(t_cmd *cmd);
 
 int					parser(char *line, t_cmd *cmd);
 int					tokenizer(t_parse *parse, t_cmd *cmd);
-void				add_token(t_cmd *cmd, t_parse *parse, int *buf_i, int flag);
+void				add_token(t_cmd *cmd, t_parse *parse, int *buf_i);
 int					get_flag(char c);
 
 char				**create_token(void);
