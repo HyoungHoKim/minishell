@@ -6,7 +6,7 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 17:19:36 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/27 17:24:46 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/27 17:36:30 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ void			add_token(t_cmd *cmd, t_parse *parse, int *buf_i, int flag)
 		single_token = join_save_token(save, single_token);
 		save = NULL;
 	}
-	token_push_back(&(cmd->token), single_token);
+	if (ft_strlen(single_token))
+		token_push_back(&(cmd->token), single_token);
+	else
+		free(single_token);
 	ft_memset(parse->buf, 0, sizeof(parse->buf));
 }
