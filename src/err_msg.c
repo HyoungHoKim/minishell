@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 15:37:42 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/27 17:52:38 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/27 20:24:46 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,17 @@ int		err_msg_export(
 	ft_putstr_fd("'", STDERR_FILENO);
 	ft_putstr_fd(err_type, STDERR_FILENO);
 	ft_putstr_fd("'", STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(comment, STDERR_FILENO);
+	ft_putchar_fd('\n', STDERR_FILENO);
+	g_state.my_errno = my_errno;
+	return (FAILURE);
+}
+
+int		err_msg_builtin(char *err_type, char *comment, int my_errno)
+{
+	ft_putstr_fd("bash: ", STDERR_FILENO);
+	ft_putstr_fd(err_type, STDERR_FILENO);
 	ft_putstr_fd(": ", STDERR_FILENO);
 	ft_putstr_fd(comment, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);

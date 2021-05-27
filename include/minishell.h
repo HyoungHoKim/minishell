@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: seushin <seushin@student.42seoul.kr>       +#+  +:+       +#+        */
+/*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 17:53:44 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/27 18:18:35 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/27 20:25:17 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,8 @@ int					err_msg(char *command, char *err_type,
 int					err_msg_export(char *command, char *err_type,
 		char *comment, int my_errno);
 int					err_msg_extern(char *err_type, char *comment);
+int					err_msg_builtin(char *err_type, char *comment,
+		 int my_errno);
 void				err_msg_multiline(int my_errno);
 
 #endif

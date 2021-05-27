@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:41:35 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/27 17:51:34 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/27 18:57:12 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int			check_invalid_key(char *key)
 	int		idx;
 
 	idx = -1;
-	if (ft_isdigit(key[0]))
+	if (ft_isdigit(key[0]) || key[0] == '\0')
 		return (FAILURE);
 	while (key[++idx] != '\0')
 	{
