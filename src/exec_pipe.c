@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 15:45:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/26 18:08:50 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/27 14:38:29 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 	exit(SUCCESS);
 }
 
-int			exec_pipe(t_cmd *cmd)
+pid_t		exec_pipe(t_cmd *cmd)
 {
 	pid_t	pid;
 	t_cmd	*next_cmd;
@@ -101,16 +101,15 @@ int			exec_pipe(t_cmd *cmd)
 		close(next_cmd->fd[1]);
 	if (cmd->fd[0] != 0)
 		close(cmd->fd[0]);
-	return (SUCCESS);
+	return (pid);
 }
 
-void		exec_pipe_set(t_cmd **cmd)
+int			get_pipe_cnt(t_cmd *cmd)
 {
-	t_cmd	*temp;
 	int		pipe_cnt;
-	int		status;
+	t_cmd	*temp;
 
-	temp = *cmd;
+	temp = cmd;
 	pipe_cnt = 1;
 	while (temp)
 	{
@@ -119,14 +118,27 @@ void		exec_pipe_set(t_cmd **cmd)
 		pipe_cnt++;
 		temp = temp->next;
 	}
+	return (pipe_cnt);
+}
+
+void		exec_pipe_set(t_cmd **cmd)
+{
+	int		pipe_cnt;
+	int		status;
+	pid_t	pid;
+
+	pipe_cnt = get_pipe_cnt(*cmd);
 	while ((*cmd)->flag != 0)
 	{
 		exec_pipe(*cmd);
 		*cmd = (*cmd)->next;
 	}
-	exec_pipe(*cmd);
+	if ((*cmd)->token[0] == NULL)
+		return (err_msg_multiline(1));
+	pid = exec_pipe(*cmd);
 	*cmd = (*cmd)->next;
-	while (pipe_cnt-- >= 0)
-		wait(&status);
-	g_state.my_errno = (status >> 8);
+	while (pipe_cnt-- > 0)
+		if (pid == wait(&status))
+			if ((status & 0xff) == 0)
+				g_state.my_errno = ((status >> 8) & 0xff);
 }

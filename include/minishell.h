@@ -113,12 +113,13 @@ void				exec_builtin(t_cmd *cmd);
 int					check_builtin(char **token);
 char				*find_extern_dir(char *token);
 void				exec_pipe_set(t_cmd **cmd);
-int					exec_pipe(t_cmd *cmd);
+pid_t				exec_pipe(t_cmd *cmd);
 
 int					find_redirection(t_cmd *cmd);
 
 int					err_msg(char *command, char *err_type, char *comment, int my_errno);
 int					err_msg_export(char *command, char *err_type, char *comment, int my_errno);
 int					err_msg_extern(char *err_type, char *comment);
+void				err_msg_multiline(int my_errno);
 
 #endif
