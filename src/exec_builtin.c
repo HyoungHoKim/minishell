@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 16:21:16 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/26 14:56:09 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/27 15:40:39 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		exec_builtin(t_cmd *cmd)
 	fd[0] = dup(STDIN_FILENO);
 	fd[1] = dup(STDOUT_FILENO);
 	if (find_redirection(cmd))
-		printf("err\n");
+		return ;
 	token = cmd->token;
 	if (ft_strncmp(token[0], "echo", 5) == 0)
 		ft_echo(token);
