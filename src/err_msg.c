@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 15:37:42 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/26 13:50:07 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/27 14:28:30 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,10 @@ int		err_msg_extern(char *err_type, char *comment)
 	ft_putstr_fd(comment, STDERR_FILENO);
 	ft_putchar_fd('\n', STDERR_FILENO);
 	return (FAILURE);
+}
+
+void	err_msg_multiline(int my_errno)
+{
+	ft_putstr_fd("Not support multiline\n", STDOUT_FILENO);
+	g_state.my_errno = my_errno;
 }
