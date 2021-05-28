@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 17:53:44 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/28 15:26:23 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/28 15:56:39 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,6 @@ void				ft_export(char **token);
 void				ft_unset(char **token);
 void				ft_exit(char **token);
 
-void				exec_command(t_cmd **cmd);
 void				exec_builtin(t_cmd *cmd);
 int					exec_extern(t_cmd *cmd);
 int					check_builtin(char **token);

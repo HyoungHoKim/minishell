@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/28 14:49:13 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/28 15:55:02 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,15 @@ static void	handle_ctrl_d(void)
 
 static int	process(t_cmd *cmd)
 {
-	print_cmd_token(cmd);
 	while (cmd)
 	{
 		if (cmd->token[0] == NULL)
 			return (FAILURE);
-		if (cmd->flag == PIPE || (cmd->prev && cmd->prev->flag == PIPE))
-			exec_pipe_set(&cmd);
+		if (check_builtin(cmd->token) && cmd->flag == 0)
+			exec_builtin(cmd);
 		else
-			exec_command(&cmd);
+			exec_pipe_set(&cmd);
+		cmd = cmd->next;
 	}
 	return (SUCCESS);
 }

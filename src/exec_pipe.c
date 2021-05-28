@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 15:45:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/28 15:31:40 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/28 15:55:11 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ void		exec_pipe_set(t_cmd **cmd)
 	if ((*cmd)->token[0] == NULL)
 		return (err_msg_multiline(1));
 	pid = exec_pipe(*cmd);
-	*cmd = (*cmd)->next;
 	while (pipe_cnt-- > 0)
 		if (pid == wait(&status))
 			if ((status & 0xff) == 0)
