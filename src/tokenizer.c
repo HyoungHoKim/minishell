@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 14:27:59 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/28 15:26:41 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/28 15:49:43 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,20 @@ static int			parse_single_char(t_cmd **cmd, t_parse *parse, int *buf_i)
 		if (is_set(*(parse->input + 1), ";|"))
 			return (syntax_error(parse->input));
 		add_token(*cmd, parse, buf_i);
-		(*cmd)->flag = get_flag(*parse->input);
 		if (!*(*cmd)->token)
 			return (syntax_error(parse->input));
+		(*cmd)->flag = get_flag(*parse->input);
 		*cmd = add_cmd(*cmd);
 	}
 	else if (*parse->input == ' ')
 		add_token(*cmd, parse, buf_i);
+	else if (*parse->input != '\\')
+		parse->buf[(*buf_i)++] = *parse->input;
 	else if (is_set(*parse->input, "<>"))
 	{
 		if (add_redirction_token(*cmd, parse, buf_i))
 			return (FAILURE);
 	}
-	else if (*parse->input != '\\')
-		parse->buf[(*buf_i)++] = *parse->input;
 	return (SUCCESS);
 }
 
