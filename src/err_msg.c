@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/25 15:37:42 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/27 20:24:46 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/28 17:18:54 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ int		err_msg_extern(char *err_type, char *comment)
 
 void	err_msg_multiline(int my_errno)
 {
-	ft_putstr_fd("Not support multiline\n", STDOUT_FILENO);
+	ft_putstr_fd("bash: Not support multiline\n", STDERR_FILENO);
 	g_state.my_errno = my_errno;
 }
