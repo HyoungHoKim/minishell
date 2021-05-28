@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_sig.c                                        :+:      :+:    :+:   */
+/*   handle_signal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:40:13 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/27 19:07:10 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/28 23:00:30 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,21 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <signal.h>
+
+int			show_new_line(void)
+{
+	t_input	*input;
+
+	tputs(tgetstr("do", NULL), 1, ft_putchar);
+	tputs(tgetstr("ll", NULL), 1, ft_putchar);
+	input = get_input();
+	free(input->buf);
+	if (!(input->buf = ft_strdup("")))
+		return (FAILURE);
+	input->x = 0;
+	show_prompt();
+	return (SUCCESS);
+}
 
 void		handle_signal(int signo)
 {

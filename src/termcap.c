@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:41:26 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/28 16:11:41 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/28 22:55:15 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,6 @@ int			init_termios(t_input **input)
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
 	tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	return (SUCCESS);
-}
-
-int			show_new_line(void)
-{
-	t_input	*input;
-
-	input = get_input();
-	tputs(tgetstr("do", NULL), 1, ft_putchar);
-	tputs(tgetstr("ll", NULL), 1, ft_putchar);
-	free(input->buf);
-	if (!(input->buf = ft_strdup("")))
-		return (FAILURE);
-	input->x = 0;
-	show_prompt();
 	return (SUCCESS);
 }
 

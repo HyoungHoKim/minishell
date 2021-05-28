@@ -9,13 +9,12 @@ LIBFT	:= $(D_LIBFT)/libft.a
 
 SRC		:= main.c \
 		  utils_env.c \
-		  utils_sig.c \
 		  utils.c \
 		  get_line.c \
 		  parser.c \
 		  tokenizer.c \
 		  tokenizer_util.c \
-		  token_util.c \
+		  token.c \
 		  join_token.c \
 		  cmd_util.c \
 		  expand_var.c \
@@ -23,6 +22,7 @@ SRC		:= main.c \
 		  expand_var_util.c \
 		  termcap.c \
 		  handle_keycode.c \
+		  handle_signal.c \
 		  history.c \
 		  err_msg.c \
 		  ft_echo.c \
