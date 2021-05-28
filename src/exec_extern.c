@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 15:17:59 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/28 16:00:50 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/28 20:23:54 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int			exec_extern(t_cmd *cmd)
 		if ((path = find_extern_dir(cmd->token[0])) == NULL)
 		{
 			err_msg_extern(cmd->token[0], "command not found");
-			exit(g_state.my_errno);
+			exit(127);
 		}
 	ret = execve(path, cmd->token, g_state.env);
 	return (ret);
