@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 14:27:59 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/27 20:29:12 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/28 15:26:41 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int					tokenizer(t_parse *parse, t_cmd *cmd)
 		else
 			parse_in_quote(cmd, parse, &buf_i);
 		if (err)
-			break;
+			break ;
 		parse->input++;
 	}
 	add_token(cmd, parse, &buf_i);

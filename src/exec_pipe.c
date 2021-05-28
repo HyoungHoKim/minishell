@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 15:45:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/28 15:21:53 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/28 15:31:40 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,8 @@
 #include <sys/fcntl.h>
 #include <unistd.h>
 
-int			check_dir_token(char *token)
+void		set_pipe(t_cmd *cmd, t_cmd *next_cmd)
 {
-	if (token[0] == '/')
-		return (1);
-	else if (ft_strncmp(token, "./", 3) == 0)
-		return (1);
-	else
-		return (0);
-}
-
-char		*find_extern_dir(char *token)
-{
-	char		**path_list;
-	char		**head;
-	char		*dir;
-	struct stat	sb;
-
-	if (check_dir_token(token))
-		return (token);
-	path_list = ft_split(get_env_value("PATH"), ':');
-	if (path_list == NULL)
-		return (token);
-	head = path_list;
-	token = ft_strjoin("/", token);
-	while (*path_list != NULL)
-	{
-		dir = ft_strjoin(*path_list, token);
-		if (stat(dir, &sb) == 0)
-			break ;
-		free(*path_list);
-		free(dir);
-		path_list++;
-	}
-	free(head);
-	free(token);
-	if (stat(dir, &sb) != 0)
-		return (NULL);
-	return (dir);
-}
-
-void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
-{
-	int		ret;
-
-	ret = SUCCESS;
 	if (cmd->flag == PIPE)
 	{
 		dup2(next_cmd->fd[1], STDOUT_FILENO);
@@ -70,9 +27,16 @@ void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 		dup2(cmd->fd[0], STDIN_FILENO);
 		close(cmd->fd[0]);
 	}
+}
+
+void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
+{
+	int		ret;
+
+	ret = SUCCESS;
+	set_pipe(cmd, next_cmd);
 	if (find_redirection(cmd) || token_size(cmd->token) == 0)
 		exit(g_state.my_errno);
-	
 	if (check_builtin(cmd->token))
 		exec_builtin(cmd);
 	else

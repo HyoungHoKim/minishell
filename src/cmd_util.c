@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:38:24 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/27 18:10:38 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/28 15:26:34 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 t_cmd		*create_cmd(void)
 {
 	t_cmd	*res;
-	
+
 	res = ft_calloc(sizeof(t_cmd), 1);
 	if (!res)
 		return (NULL);

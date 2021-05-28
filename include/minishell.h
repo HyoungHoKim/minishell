@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 17:53:44 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/28 15:20:57 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/28 15:26:23 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int					err_msg_export(char *command, char *err_type,
 		char *comment, int my_errno);
 int					err_msg_extern(char *err_type, char *comment);
 int					err_msg_builtin(char *err_type, char *comment,
-		 int my_errno);
+		int my_errno);
 void				err_msg_multiline(int my_errno);
 
 #endif
