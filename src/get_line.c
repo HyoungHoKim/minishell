@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:11:15 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/28 14:49:45 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/28 16:11:55 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ int			get_line(char **line)
 	if (n == -1)
 		return (handle_gnl_error(errno));
 	*line = input->buf;
+	input->buf = NULL;
 	return (1);
 }

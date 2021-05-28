@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/28 15:17:59 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/28 15:29:12 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/28 16:00:50 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int			check_dir_token(char *token)
 {
 	if (token[0] == '/')
 		return (1);
-	else if (ft_strncmp(token, "./", 3) == 0)
+	else if (ft_strncmp(token, "./", 2) == 0)
 		return (1);
 	else
 		return (0);

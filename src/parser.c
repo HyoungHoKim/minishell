@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:58:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/23 17:58:47 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/28 16:10:39 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,18 @@ static t_parse		*init_parse(char *line)
 	return (res);
 }
 
-int					parser(char *line, t_cmd *cmd)
+int					parser(char **line, t_cmd *cmd)
 {
 	t_parse			*parse;
 
-	if (!(parse = init_parse(line)))
+	if (!(parse = init_parse(*line)))
 		return (FAILURE);
 	if (tokenizer(parse, cmd) == FAILURE)
 		return (free_parse(parse));
 	free_parse(parse);
+	if (ft_strlen(*line))
+		hist_push_front(&g_state.hist, *line);
+	free(*line);
+	*line = NULL;
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/28 15:55:02 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/28 16:09:14 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,8 @@ int			main(int argc, char **argv, char **envp)
 		if (get_line(&line) < 1)
 			handle_ctrl_d();
 		cmd = create_cmd();
-		if (parser(line, cmd) == SUCCESS)
+		if (parser(&line, cmd) == SUCCESS)
 			process(cmd);
-		if (ft_strlen(line))
-			hist_push_front(&g_state.hist, line);
 		reset(&line, &cmd);
 	}
 	return (SUCCESS);
