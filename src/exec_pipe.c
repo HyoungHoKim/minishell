@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 15:45:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/27 20:01:20 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/28 14:17:56 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,6 @@ void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 	char	*path;
 
 	ret = SUCCESS;
-	if (find_redirection(cmd) || token_size(cmd->token) == 0)
-		exit(g_state.my_errno);
-	if (cmd->flag == 1 || cmd->flag == 0)
-		if ((path = find_extern_dir(cmd->token[0])) == NULL)
-		{
-			err_msg_extern(cmd->token[0], "command not found");
-			exit(g_state.my_errno);
-		}
 	if (cmd->flag == PIPE)
 	{
 		dup2(next_cmd->fd[1], STDOUT_FILENO);
@@ -79,6 +71,14 @@ void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 		dup2(cmd->fd[0], STDIN_FILENO);
 		close(cmd->fd[0]);
 	}
+	if (find_redirection(cmd) || token_size(cmd->token) == 0)
+		exit(g_state.my_errno);
+	if (cmd->flag == 1 || cmd->flag == 0)
+		if ((path = find_extern_dir(cmd->token[0])) == NULL)
+		{
+			err_msg_extern(cmd->token[0], "command not found");
+			exit(g_state.my_errno);
+		}
 	if (check_builtin(cmd->token))
 		exec_builtin(cmd);
 	else
