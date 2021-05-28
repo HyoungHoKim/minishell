@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/27 20:29:05 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/28 14:49:13 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,6 @@
 #include <unistd.h>
 
 t_state		g_state;
-
-int			process(char *line, t_cmd *cmd)
-{
-	print_cmd_token(cmd);
-	while (cmd)
-	{
-		if (cmd->token[0] == NULL)
-			return (FAILURE);
-		if (cmd->flag == PIPE || (cmd->prev && cmd->prev->flag == PIPE))
-			exec_pipe_set(&cmd);
-		else
-			exec_command(&cmd);
-	}
-	if (ft_strlen(line))
-		hist_push_front(&g_state.hist, line);
-	return (SUCCESS);
-}
 
 static int	init(char **line, char **envp)
 {
@@ -68,6 +51,21 @@ static void	handle_ctrl_d(void)
 	exit(g_state.my_errno);
 }
 
+static int	process(t_cmd *cmd)
+{
+	print_cmd_token(cmd);
+	while (cmd)
+	{
+		if (cmd->token[0] == NULL)
+			return (FAILURE);
+		if (cmd->flag == PIPE || (cmd->prev && cmd->prev->flag == PIPE))
+			exec_pipe_set(&cmd);
+		else
+			exec_command(&cmd);
+	}
+	return (SUCCESS);
+}
+
 int			main(int argc, char **argv, char **envp)
 {
 	char	*line;
@@ -84,7 +82,9 @@ int			main(int argc, char **argv, char **envp)
 			handle_ctrl_d();
 		cmd = create_cmd();
 		if (parser(line, cmd) == SUCCESS)
-			process(line, cmd);
+			process(cmd);
+		if (ft_strlen(line))
+			hist_push_front(&g_state.hist, line);
 		reset(&line, &cmd);
 	}
 	return (SUCCESS);
