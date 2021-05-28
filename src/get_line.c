@@ -6,13 +6,19 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:11:15 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/23 18:02:27 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/28 14:49:45 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include "minishell.h"
 #include "term.h"
+
+int			handle_gnl_error(int my_errno)
+{
+	err_msg_builtin("get_next_line", strerror(my_errno), my_errno);
+	return (-1);
+}
 
 static int	handle_key(int c, t_input *input, t_hist **hist)
 {
@@ -43,7 +49,7 @@ int			get_line(char **line)
 	t_hist	*hist;
 
 	if (init_termios(&input) == FAILURE)
-		return (-1);
+		return (handle_gnl_error(errno));
 	hist = NULL;
 	c = 0;
 	while ((n = read(STDIN_FILENO, &c, sizeof(c))) > 0)
@@ -58,7 +64,7 @@ int			get_line(char **line)
 	if (hist)
 		hist_pop_front(&hist);
 	if (n == -1)
-		return (-1);
+		return (handle_gnl_error(errno));
 	*line = input->buf;
 	return (1);
 }
