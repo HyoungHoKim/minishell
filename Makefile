@@ -37,7 +37,8 @@ SRC		:= main.c \
 		  exec_pipe.c \
 		  redirection.c \
 		  get_env.c \
-		  sort_env.c
+		  sort_env.c \
+		  exec_extern.c
 SRCS	:= $(addprefix, $(D_SRCS)/, $(SRC))
 OBJS	:= $(addprefix $(D_OBJS)/, $(SRC:.c=.o))
 

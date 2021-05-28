@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 15:45:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/28 14:17:56 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/28 15:21:53 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ char		*find_extern_dir(char *token)
 void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 {
 	int		ret;
-	char	*path;
 
 	ret = SUCCESS;
 	if (cmd->flag == PIPE)
@@ -73,16 +72,11 @@ void		exec_child_process(t_cmd *cmd, t_cmd *next_cmd)
 	}
 	if (find_redirection(cmd) || token_size(cmd->token) == 0)
 		exit(g_state.my_errno);
-	if (cmd->flag == 1 || cmd->flag == 0)
-		if ((path = find_extern_dir(cmd->token[0])) == NULL)
-		{
-			err_msg_extern(cmd->token[0], "command not found");
-			exit(g_state.my_errno);
-		}
+	
 	if (check_builtin(cmd->token))
 		exec_builtin(cmd);
 	else
-		ret = execve(path, cmd->token, g_state.env);
+		ret = exec_extern(cmd);
 	if (ret == -1)
 	{
 		if (errno == 2)
