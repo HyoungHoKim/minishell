@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/17 18:34:55 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/26 13:06:25 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/28 22:49:10 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,10 @@
 
 void		ft_pwd(void)
 {
-	char	*buf;
+	char	*path;
 
-	buf = NULL;
-	buf = getcwd(buf, 0);
-	ft_putstr_fd(buf, STDOUT_FILENO);
-	ft_putstr_fd("\n", STDOUT_FILENO);
-	free(buf);
+	path = getcwd(NULL, 0);
+	printf("%s\n", path);
+	free(path);
 	g_state.my_errno = SUCCESS;
 }

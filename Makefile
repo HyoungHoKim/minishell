@@ -44,7 +44,7 @@ OBJS	:= $(addprefix $(D_OBJS)/, $(SRC:.c=.o))
 CC			:= gcc
 CFLAGS		:= -Wall -Werror -Wextra
 SANITIZE	:= -fsanitize=address -g
-CFLAGS		+= $(SANITIZE)
+#CFLAGS		+= $(SANITIZE)
 RM			:= rm -rf
 
 INC		:= -I$(D_LIBFT)/

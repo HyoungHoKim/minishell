@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 13:13:36 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/28 14:02:00 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/28 22:35:44 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,27 @@
 #include "minishell.h"
 #include <sys/fcntl.h>
 
-static char	**create_new_token(char **token, int *len)
+static char	**create_new_token(char **token)
 {
 	char	**res;
+	int		len;
 	int		i;
 
-	*len = 0;
+	len = 0;
 	i = 0;
 	while (token[i])
 	{
 		if (token[i][0] == '>' || token[i][0] == '<')
 		{
-			(*len)++;
+			len++;
 			i++;
 		}
 		i++;
 	}
-	if (*len == 0)
+	if (len == 0)
 		return (NULL);
-	*len = token_size(token) - *len * 2;
-	if (!(res = ft_calloc(sizeof(char *), *len + 1)))
+	len = token_size(token) - len * 2;
+	if (!(res = ft_calloc(sizeof(char *), len + 1)))
 		return (NULL);
 	return (res);
 }
@@ -41,15 +42,14 @@ static char	**create_new_token(char **token, int *len)
 static int	cut_off_redirection(t_cmd *cmd)
 {
 	char	**res;
-	int		len;
 	int		i;
 	int		j;
 
-	if (!(res = create_new_token(cmd->token, &len)))
+	if (!(res = create_new_token(cmd->token)))
 		return (FAILURE);
 	i = 0;
 	j = 0;
-	while (i < len)
+	while (cmd->token[j])
 	{
 		if (cmd->token[j] &&
 				(cmd->token[j][0] == '>' || cmd->token[j][0] == '<'))
@@ -66,7 +66,7 @@ static int	cut_off_redirection(t_cmd *cmd)
 	return (SUCCESS);
 }
 
-static int	dup_fd_to_stdio(t_cmd *cmd, int fd[2])
+static void	dup_fd_to_stdio(t_cmd *cmd, int fd[2])
 {
 	if (fd[0])
 	{
@@ -79,7 +79,6 @@ static int	dup_fd_to_stdio(t_cmd *cmd, int fd[2])
 		close(fd[1]);
 	}
 	cut_off_redirection(cmd);
-	return (SUCCESS);
 }
 
 static int	handle_redirection_err(t_cmd *cmd, int i)
@@ -121,5 +120,6 @@ int			find_redirection(t_cmd *cmd)
 		if (fd[0] == -1 || fd[1] == -1)
 			return (handle_redirection_err(cmd, i));
 	}
-	return (dup_fd_to_stdio(cmd, fd));
+	dup_fd_to_stdio(cmd, fd);
+	return (SUCCESS);
 }
