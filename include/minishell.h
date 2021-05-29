@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 17:53:44 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/29 12:47:00 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/29 13:27:35 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ void				exec_pipe_set(t_cmd **cmd);
 pid_t				exec_pipe(t_cmd *cmd);
 
 int					find_redirection(t_cmd *cmd);
+int					handle_redirection_err(t_cmd *cmd, int i);
 
 int					err_msg(char *command, char *err_type,
 		char *comment, int my_errno);

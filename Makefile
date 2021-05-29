@@ -34,6 +34,7 @@ SRC		:= main.c \
 		  exec_builtin.c \
 		  exec_pipe.c \
 		  redirection.c \
+		  redirection_util.c \
 		  get_env.c \
 		  sort_env.c \
 		  exec_extern.c

@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 13:13:36 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/28 22:35:44 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/29 13:26:41 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	cut_off_redirection(t_cmd *cmd)
 	return (SUCCESS);
 }
 
-static void	dup_fd_to_stdio(t_cmd *cmd, int fd[2])
+static void	redirection_stdio(t_cmd *cmd, int fd[2])
 {
 	if (fd[0])
 	{
@@ -81,20 +81,15 @@ static void	dup_fd_to_stdio(t_cmd *cmd, int fd[2])
 	cut_off_redirection(cmd);
 }
 
-static int	handle_redirection_err(t_cmd *cmd, int i)
+static int	output_redirection(char **token, int i)
 {
-	if (cmd->token[i + 1] == NULL || cmd->token[i + 1][0] == 0)
-	{
-		ft_putstr_fd("bash: syntax error near unexpected token `newline`\n",
-				STDERR_FILENO);
-		g_state.my_errno = 258;
-	}
+	int		fd;
+
+	if (token[i][1] == '>')
+		fd = open(token[i + 1], (O_CREAT | O_APPEND | O_WRONLY), 0644);
 	else
-	{
-		err_msg_extern(cmd->token[i + 1], strerror(errno));
-		g_state.my_errno = 1;
-	}
-	return (FAILURE);
+		fd = open(token[i + 1], (O_CREAT | O_TRUNC | O_WRONLY), 0644);
+	return (fd);
 }
 
 int			find_redirection(t_cmd *cmd)
@@ -107,19 +102,20 @@ int			find_redirection(t_cmd *cmd)
 	while (cmd->token[++i])
 	{
 		if (cmd->token[i][0] == '<')
+		{
+			if (fd[0] > 0)
+				close(fd[0]);
 			fd[0] = open(cmd->token[i + 1], O_RDONLY, 0644);
+		}
 		else if (cmd->token[i][0] == '>')
 		{
-			if (cmd->token[i][1] == '>')
-				fd[1] = open(cmd->token[i + 1],
-						(O_CREAT | O_APPEND | O_WRONLY), 0644);
-			else
-				fd[1] = open(cmd->token[i + 1],
-						(O_CREAT | O_TRUNC | O_WRONLY), 0644);
+			if (fd[1] > 0)
+				close(fd[1]);
+			fd[1] = output_redirection(cmd->token, i);
 		}
 		if (fd[0] == -1 || fd[1] == -1)
 			return (handle_redirection_err(cmd, i));
 	}
-	dup_fd_to_stdio(cmd, fd);
+	redirection_stdio(cmd, fd);
 	return (SUCCESS);
 }
