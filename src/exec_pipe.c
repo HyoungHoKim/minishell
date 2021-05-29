@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 15:45:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/29 12:59:27 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/29 13:37:06 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,13 @@ void		exec_pipe_set(t_cmd **cmd)
 	pid = exec_pipe(*cmd);
 	child_cnt++;
 	while (child_cnt-- > 0)
+	{
 		if (pid == wait(&status))
+		{
 			if ((status & 0xff) == 0)
 				g_state.my_errno = ((status >> 8) & 0xff);
+			else
+				g_state.my_errno = (status & 0xff) + 128;
+		}
+	}
 }
