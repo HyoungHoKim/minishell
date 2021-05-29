@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 17:53:44 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/29 13:27:35 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/29 14:05:28 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 
 # define NONE		0
 # define PIPE		1
+# define REDI		2
 
 typedef struct		s_hist
 {

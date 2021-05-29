@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/29 12:48:45 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/29 14:37:43 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	process(t_cmd *cmd)
 	{
 		if (cmd->token[0] == NULL)
 			return (FAILURE);
-		if (check_builtin(cmd->token) && cmd->flag == NONE)
+		if (check_builtin(cmd->token) && !(cmd->flag & PIPE))
 			exec_builtin(cmd);
 		else
 			exec_pipe_set(&cmd);
