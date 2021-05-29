@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 17:53:44 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/28 16:09:42 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/29 12:47:00 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,8 @@
 # define SUCCESS	0
 # define FAILURE	1
 
-# define SEMI		0
+# define NONE		0
 # define PIPE		1
-# define REOUT		2
-# define REIN		3
 
 typedef struct		s_hist
 {
@@ -85,7 +83,6 @@ void				print_cmd_token(t_cmd *cmd);
 int					parser(char **line, t_cmd *cmd);
 int					tokenizer(t_parse *parse, t_cmd *cmd);
 void				add_token(t_cmd *cmd, t_parse *parse, int *buf_i);
-int					get_flag(char c);
 
 char				**create_token(void);
 int					token_size(char **token);

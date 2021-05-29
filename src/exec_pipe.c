@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/23 15:45:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/28 15:55:11 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/29 12:59:27 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,39 +73,24 @@ pid_t		exec_pipe(t_cmd *cmd)
 	return (pid);
 }
 
-int			get_pipe_cnt(t_cmd *cmd)
-{
-	int		pipe_cnt;
-	t_cmd	*temp;
-
-	temp = cmd;
-	pipe_cnt = 1;
-	while (temp)
-	{
-		if (temp->flag == 0)
-			break ;
-		pipe_cnt++;
-		temp = temp->next;
-	}
-	return (pipe_cnt);
-}
-
 void		exec_pipe_set(t_cmd **cmd)
 {
-	int		pipe_cnt;
+	int		child_cnt;
 	int		status;
 	pid_t	pid;
 
-	pipe_cnt = get_pipe_cnt(*cmd);
-	while ((*cmd)->flag != 0)
+	child_cnt = 0;
+	while ((*cmd)->flag == PIPE)
 	{
 		exec_pipe(*cmd);
+		child_cnt++;
 		*cmd = (*cmd)->next;
 	}
 	if ((*cmd)->token[0] == NULL)
 		return (err_msg_multiline(1));
 	pid = exec_pipe(*cmd);
-	while (pipe_cnt-- > 0)
+	child_cnt++;
+	while (child_cnt-- > 0)
 		if (pid == wait(&status))
 			if ((status & 0xff) == 0)
 				g_state.my_errno = ((status >> 8) & 0xff);

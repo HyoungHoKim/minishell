@@ -18,7 +18,6 @@ SRC		:= main.c \
 		  join_token.c \
 		  cmd_util.c \
 		  expand_var.c \
-		  parser_util.c \
 		  expand_var_util.c \
 		  termcap.c \
 		  handle_keycode.c \
