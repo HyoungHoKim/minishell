@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 17:53:44 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/29 14:05:28 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/30 15:00:30 by hyoukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int					get_split_idx(char *buf, int *bs_idx, int *dr_idx);
 int					is_set(char c, char *set);
 
 void				print_sort_env(void);
+void				replace_env(char *token, char *key);
 char				*add_back_slash(char *value);
 
 void				ft_echo(char **token);
@@ -129,12 +130,12 @@ pid_t				exec_pipe(t_cmd *cmd);
 int					find_redirection(t_cmd *cmd);
 int					handle_redirection_err(t_cmd *cmd, int i);
 
-int					err_msg(char *command, char *err_type,
+void				err_msg(char *command, char *err_type,
 		char *comment, int my_errno);
-int					err_msg_export(char *command, char *err_type,
+void				err_msg_export(char *command, char *err_type,
 		char *comment, int my_errno);
-int					err_msg_extern(char *err_type, char *comment);
-int					err_msg_builtin(char *err_type, char *comment,
+void				err_msg_extern(char *err_type, char *comment);
+void				err_msg_builtin(char *err_type, char *comment,
 		int my_errno);
 void				err_msg_multiline(int my_errno);
 
