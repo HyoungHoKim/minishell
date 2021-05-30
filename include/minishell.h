@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 17:53:44 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/30 15:00:30 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/30 15:53:33 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include "libft.h"
 # include "term.h"
 
-# define MAXSIZE	1024
 # define SUCCESS	0
 # define FAILURE	1
 
@@ -84,6 +83,7 @@ void				print_cmd_token(t_cmd *cmd);
 int					parser(char **line, t_cmd *cmd);
 int					tokenizer(t_parse *parse, t_cmd *cmd);
 void				add_token(t_cmd *cmd, t_parse *parse, int *buf_i);
+int					end_of_quote(t_parse *parse, t_cmd *cmd);
 
 char				**create_token(void);
 int					token_size(char **token);

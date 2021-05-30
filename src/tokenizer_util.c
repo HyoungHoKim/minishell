@@ -6,11 +6,23 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/27 17:19:36 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/27 18:29:04 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/30 15:57:02 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int				end_of_quote(t_parse *parse, t_cmd *cmd)
+{
+	int				dummy;
+
+	parse->quote = 0;
+	add_token(cmd, parse, &dummy);
+	ft_putstr_fd("bash: syntax error near unexpected token `newline`\n",
+			STDERR_FILENO);
+	g_state.my_errno = 258;
+	return (FAILURE);
+}
 
 static char		*join_save_token(char **save, char *token)
 {

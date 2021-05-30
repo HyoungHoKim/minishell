@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:44:01 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/30 14:36:00 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/30 15:11:55 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static int	init(char **line, char **envp)
 	g_state.my_errno = 1;
 	if (!(g_state.env = copy_envp(envp)))
 		return (FAILURE);
-	token_push_back(&g_state.env, ft_strdup("OLDPWD"));
 	if (!(termtype = getenv("TERM")))
 		return (FAILURE);
 	if ((n = tgetent(NULL, termtype)) < 1)

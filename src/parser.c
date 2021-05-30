@@ -6,7 +6,7 @@
 /*   By: hyoukim <hyoukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/13 13:58:25 by hyoukim           #+#    #+#             */
-/*   Updated: 2021/05/28 16:10:39 by hyoukim          ###   ########.fr       */
+/*   Updated: 2021/05/30 15:59:16 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static int			free_parse(t_parse *parse)
 		return (FAILURE);
 	free(parse->input);
 	free(parse->buf);
+	parse->input = NULL;
+	parse->buf = NULL;
 	free(parse);
 	return (FAILURE);
 }
@@ -47,15 +49,15 @@ static t_parse		*init_parse(char *line)
 int					parser(char **line, t_cmd *cmd)
 {
 	t_parse			*parse;
+	int				res;
 
 	if (!(parse = init_parse(*line)))
 		return (FAILURE);
-	if (tokenizer(parse, cmd) == FAILURE)
-		return (free_parse(parse));
+	res = tokenizer(parse, cmd);
 	free_parse(parse);
 	if (ft_strlen(*line))
 		hist_push_front(&g_state.hist, *line);
 	free(*line);
 	*line = NULL;
-	return (SUCCESS);
+	return (res);
 }
