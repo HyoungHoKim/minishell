@@ -6,7 +6,7 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/29 13:27:03 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/29 13:27:12 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/30 14:54:55 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,3 @@ int		handle_redirection_err(t_cmd *cmd, int i)
 	}
 	return (FAILURE);
 }
-
