@@ -6,7 +6,7 @@
 /*   By: seushin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 18:39:34 by seushin           #+#    #+#             */
-/*   Updated: 2021/05/25 17:46:45 by seushin          ###   ########.fr       */
+/*   Updated: 2021/05/30 13:59:28 by seushin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ int				get_chr_pos(char *line, char c)
 
 void			show_prompt(void)
 {
-	static char	*path;
+	const char	*prompt = "minishell";
 
-	path = getcwd(path, MAXSIZE);
-	ft_putstr_fd(path, STDOUT_FILENO);
+	ft_putstr_fd((char *)prompt, STDOUT_FILENO);
 	ft_putstr_fd("$ ", STDOUT_FILENO);
 }
 
